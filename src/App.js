@@ -1,34 +1,26 @@
 import logo from './logo.svg';
 import './App.css';
 import Score from './components/score';
-import ScoreClass from './components/scoreClass';
 import React, { useRef, useEffect, useState, Component } from 'react'
+import Composer from './components/composePanel';
+import { useBeforeunload } from 'react-beforeunload';
+import { useRecoilState, useRecoilValue,useResetRecoilState } from 'recoil'
+
+import { musicNotes as musicNotesAtom, notePointer as notePointerAtom, noteCount as noteCountAtom } from './redux/store'
 
 
 function App() {
-  
+ 
+  const [musicNotes, setMusicNotes] = useRecoilState(musicNotesAtom);
+  const [notePointer, setNotePointer] = useRecoilState(notePointerAtom);
+  const [noteCount, setNoteCounter] = useRecoilState(noteCountAtom);
+
 
   
-  const childRef = useRef();
-  const childRef2 = useRef();
-  const [notes, setNotes] = useState([])
   
   
-  useEffect(() => {
-    const notes = JSON.parse(localStorage.getItem("note-List"))
-    if (notes) {
-      setNotes(notes)
-      console.log(notes)
-    }
-    
-  }, [])
 
-  useEffect(() => {
-
-    localStorage.setItem("note-List",JSON.stringify(notes))
-  },[notes])
-
-  const goLeft = () => {
+  /*const goLeft = () => {
     if (currentNotePointer >= 1) {
       currentNotePointer--
       console.log(currentNotePointer)
@@ -68,7 +60,7 @@ function App() {
         /*console.log(notes)
         
         notes = notes.splice(currentNotePointer,1)
-        console.log(notes)*/
+        console.log(notes)
         notes.splice(currentNotePointer,1)
         localStorage.setItem("note-List",JSON.stringify(notes))
         
@@ -85,7 +77,7 @@ function App() {
 
       
   }
-
+*/
   
 
   /*let notes = [{ keys: ["c/4"], duration: "q" },
@@ -101,24 +93,23 @@ function App() {
           { keys: ["d/4"], duration: "q" },
         ]
 */
-  let amountOfNotes = notes.length
-  let currentNotePointer = amountOfNotes - 1
 
-  
+   
   return (
    <div> 
-    <Score  ref={[childRef,childRef2]} note={notes}/>
+     
      <div>
-       <button onClick={deleteNote}> Delete </button>
-       <button onClick={addNote}> AddNote </button>
-     </div>
-        <div>
-        <button onClick={goLeft}>
-          left
-        </button>
-          <button onClick={goRight}>right</button>
-      
+    <Score />
+          
       </div>
+
+      <div>
+    <Composer />
+          
+      </div>
+      
+
+
     </div>
 
    
@@ -127,6 +118,5 @@ function App() {
   
 
   
-}
-
+  }
 export default App;

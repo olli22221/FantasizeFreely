@@ -1,5 +1,7 @@
-import React, { useRef, useEffect ,useImperativeHandle ,forwardRef} from 'react'
+import React, { useRef, useEffect} from 'react'
 import VexFlow, { BoundingBox } from 'vexflow'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { musicNotes as musicNotesAtom, noteCount as noteCountAtom, notePointer as notePointerAtom } from '../redux/store'
 
 const VF = VexFlow.Flow
 const { Formatter, Renderer, Stave, StaveNote ,Beam} = VF
@@ -9,29 +11,58 @@ const timeWidth = 30;
 
 
 
-const Score = React.forwardRef((props,ref) => {
-  
+const Score = (props,ref) => {
+
+  const [musicNotes, setMusicNotes] = useRecoilState(musicNotesAtom);
+  const [notePointer, setNotePointer] = useRecoilState(notePointerAtom);
+  const [noteCount, setNoteCounter] = useRecoilState(noteCountAtom);
   const container = useRef()
   const rendererRef = useRef()
-  let note = JSON.parse(localStorage.getItem("note-List"))
 
   useEffect(() => {
-    note = JSON.parse(localStorage.getItem("note-List"))
+    
+    
+      let count = musicNotes.length
+      console.log(musicNotes.length)
+      setNoteCounter(count)
+      console.log(noteCount)
+      
+  
 
-    console.log(note)
+    let pointer = noteCount-1
+    setNotePointer(pointer)
+      
+  
+
+    console.log(notePointer)
+    console.log(musicNotes)
+    console.log(noteCount)
     if (rendererRef.current == null) {
       rendererRef.current = new Renderer(
         container.current,
         Renderer.Backends.SVG
       )
     }
-    const renderer = rendererRef.current
-    renderer.resize(1800, 200)
-    const context = renderer.getContext()
-    global.context = context
-    const group = context.openGroup();
-    global.group = group
-    console.log(group)
+
+    if(global.context === undefined){
+      const renderer = rendererRef.current
+      renderer.resize(1800, 200)
+      global.context = renderer.getContext()
+      const context = global.context
+      global.group = context.openGroup();
+    }
+    else{
+      global.context.closeGroup();
+      global.context.svg.removeChild(global.group)
+      console.log(global.context)
+      
+      const context = global.context
+      global.group = context.openGroup();
+      
+
+    }
+    const context = global.context
+    const group = global.group
     context.setFont('Arial', 10, '').setBackgroundFillStyle('#eed')
     const staveFirstMeasure = new Stave(25, 50, 400);
     staveFirstMeasure.addClef("treble").addTimeSignature("4/4").setContext(context).draw();
@@ -56,8 +87,18 @@ const Score = React.forwardRef((props,ref) => {
     const measureNotes2 = []
     let holdEightnotes = []
     let durationThreshold = 0
-    for (let index = 0; index < note.length; index++) {
-      const element = note[index];
+    let tempnoteCount = 0
+    if (noteCount != musicNotes.length) {
+      tempnoteCount = musicNotes.length
+    }
+    else{
+      tempnoteCount = noteCount
+    }
+    
+    for (let index = 0; index < tempnoteCount; index++) {
+      const element = musicNotes[index];
+      console.log(noteCount)
+      console.log(element)
 
       if ( durationThreshold < 4) {
         switch (element.duration) {
@@ -123,13 +164,13 @@ const Score = React.forwardRef((props,ref) => {
 
     }
 
-    if (group.childNodes.length > 5) {
+    if (group.childNodes.length > 4) {
 
-      if (global.pointerNodeNote === undefined) {
-        global.pointerNodeNote = group.childNodes[4].childNodes[1]
-      }
+      const pointerNodeIndex = notePointer + 4
+      console.log(pointerNodeIndex)
 
-      let pointerNodeNote = global.pointerNodeNote
+      let pointerNodeNote = group.childNodes[pointerNodeIndex].childNodes[1]
+      console.log(pointerNodeNote)
       context.setFillStyle("blue");
       context.setLineWidth(10.0)
       console.log(pointerNodeNote.getBBox())
@@ -189,7 +230,7 @@ const Score = React.forwardRef((props,ref) => {
     // Helper function to justify and draw a 4/4 voice.
     //Formatter.FormatAndDraw(context, stave, notes);
 
-,[]);
+,[musicNotes]);
 
   React.useImperativeHandle(ref[1], () => ({
     updateScore(){
@@ -299,7 +340,6 @@ const Score = React.forwardRef((props,ref) => {
   React.useImperativeHandle(ref[0], () => ({
     deleteScore(){
       
-      console.log("HelloWorld")
      global.context.closeGroup();
      global.context.svg.removeChild(global.group)
      console.log(global.context)
@@ -317,6 +357,6 @@ const Score = React.forwardRef((props,ref) => {
 
 
 
-})
+}
 
 export default Score;
