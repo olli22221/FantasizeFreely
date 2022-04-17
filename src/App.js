@@ -93,12 +93,16 @@ function App() {
           { keys: ["d/4"], duration: "q" },
         ]
 */
-
+const divStyleNotePanel = {
+  display:'flex',
+  justifyContent: 'center',
+  
+};
    
   return (
    <div> 
      
-     <div>
+     <div style={divStyleNotePanel}>
     <Score />
           
       </div>

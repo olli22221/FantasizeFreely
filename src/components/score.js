@@ -102,6 +102,10 @@ const Score = (props,ref) => {
 
       if ( durationThreshold < 4) {
         switch (element.duration) {
+          case "w":
+            measureNotes1.push(new StaveNote(element))
+            durationThreshold=durationThreshold+4
+            break;
           case "h":
             measureNotes1.push(new StaveNote(element))
             durationThreshold=durationThreshold+2
@@ -119,6 +123,10 @@ const Score = (props,ref) => {
             measureNotes1.push(new StaveNote(element))
             durationThreshold=durationThreshold+0.5
             break;
+          case "16d":
+            measureNotes1.push(new StaveNote(element))
+            durationThreshold=durationThreshold+0.5
+            break;
         
           default:
             break;
@@ -128,6 +136,10 @@ const Score = (props,ref) => {
       else{
 
         switch (element.duration) {
+          case "w":
+            measureNotes2.push(new StaveNote(element))
+            durationThreshold=durationThreshold+4
+            break;
           case "h":
             measureNotes2.push(new StaveNote(element))
             durationThreshold=durationThreshold+2
@@ -142,6 +154,10 @@ const Score = (props,ref) => {
             durationThreshold=durationThreshold+1
             break;
           case "8d":
+            measureNotes2.push(new StaveNote(element))
+            durationThreshold=durationThreshold+0.5
+            break;
+          case "16d":
             measureNotes2.push(new StaveNote(element))
             durationThreshold=durationThreshold+0.5
             break;
@@ -169,7 +185,7 @@ const Score = (props,ref) => {
       const pointerNodeIndex = notePointer + 4
       console.log(pointerNodeIndex)
 
-      let pointerNodeNote = group.childNodes[pointerNodeIndex].childNodes[1]
+      let pointerNodeNote = group.childNodes[pointerNodeIndex].childNodes[0]
       console.log(pointerNodeNote)
       context.setFillStyle("blue");
       context.setLineWidth(10.0)
@@ -272,6 +288,10 @@ const Score = (props,ref) => {
 
       if ( durationThreshold < 4) {
         switch (element.duration) {
+          case "w":
+            measureNotes1.push(new StaveNote(element))
+            durationThreshold=durationThreshold+4
+            break;
           case "h":
             measureNotes1.push(new StaveNote(element))
             durationThreshold=durationThreshold+2
@@ -298,6 +318,11 @@ const Score = (props,ref) => {
       else{
 
         switch (element.duration) {
+
+          case "w":
+            measureNotes1.push(new StaveNote(element))
+            durationThreshold=durationThreshold+4
+            break;
           case "h":
             measureNotes2.push(new StaveNote(element))
             durationThreshold=durationThreshold+2

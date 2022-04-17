@@ -27,3 +27,15 @@ export const durationOption =  atom({
     default: 4,
     effects_UNSTABLE: [persistAtom],
 })
+
+export const pitchOption =  atom({
+    key: "pitchOption",
+    default: 4,
+    effects_UNSTABLE: [persistAtom],
+})
+
+export const composePanelState =  atom({
+    key: "panelOption",
+    default: 0,
+    effects_UNSTABLE: [persistAtom],
+})
