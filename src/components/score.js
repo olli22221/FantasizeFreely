@@ -29,8 +29,6 @@ const Score = (props,ref) => {
       
   
 
-    let pointer = noteCount-1
-    setNotePointer(pointer)
       
   
 
@@ -46,7 +44,7 @@ const Score = (props,ref) => {
 
     if(global.context === undefined){
       const renderer = rendererRef.current
-      renderer.resize(1800, 200)
+      renderer.resize(1800, 400)
       global.context = renderer.getContext()
       const context = global.context
       global.group = context.openGroup();
@@ -75,6 +73,17 @@ const Score = (props,ref) => {
     staveThirdMeasure.setContext(context).draw();
     const staveFourthMeasure = new Stave(staveThirdMeasure.width+staveThirdMeasure.x,50,400);
     staveFourthMeasure.setContext(context).draw();
+
+    const staveFifthMeasure = new Stave(25,150,400);
+    staveFifthMeasure.setContext(context).draw();
+
+    const staveSixthMeasure = new Stave(staveFifthMeasure.width+staveFifthMeasure.x,150,400);
+    staveSixthMeasure.setContext(context).draw();
+    const staveSeventhMeasure = new Stave(staveSixthMeasure.width+staveSixthMeasure.x,150,400);
+    staveSeventhMeasure.setContext(context).draw();
+
+    const staveEighthMeasure = new Stave(staveSeventhMeasure.width+staveSeventhMeasure.x,150,400);
+    staveEighthMeasure.setContext(context).draw();
     // Add a clef and time signature.
     
      //context.closeGroup();
@@ -85,6 +94,12 @@ const Score = (props,ref) => {
     // Connect it to the rendering context and draw!
     const measureNotes1 = []
     const measureNotes2 = []
+    const measureNotes3 = []
+    const measureNotes4 = []
+    const measureNotes5 = []
+    const measureNotes6 = []
+    const measureNotes7 = []
+    const measureNotes8 = []
     let holdEightnotes = []
     let durationThreshold = 0
     let tempnoteCount = 0
@@ -133,7 +148,8 @@ const Score = (props,ref) => {
         }
         
      }
-      else{
+      else if (durationThreshold < 8) 
+      {
 
         switch (element.duration) {
           case "w":
@@ -169,9 +185,124 @@ const Score = (props,ref) => {
         
 
       }
+      else if (durationThreshold < 12) 
+      {
+
+        switch (element.duration) {
+          case "w":
+            measureNotes3.push(new StaveNote(element))
+            durationThreshold=durationThreshold+4
+            break;
+          case "h":
+            measureNotes3.push(new StaveNote(element))
+            durationThreshold=durationThreshold+2
+            break;
+          case "q":
+            measureNotes3.push(new StaveNote(element))
+            durationThreshold=durationThreshold+1
+            break;
+
+          case "qr":
+            measureNotes3.push(new StaveNote(element))
+            durationThreshold=durationThreshold+1
+            break;
+          case "8d":
+            measureNotes3.push(new StaveNote(element))
+            durationThreshold=durationThreshold+0.5
+            break;
+          case "16d":
+            measureNotes3.push(new StaveNote(element))
+            durationThreshold=durationThreshold+0.5
+            break;
+        
+          default:
+            break;
+        }
+
+        
+
+      }
+
+      else if (durationThreshold < 16) 
+      {
+
+        switch (element.duration) {
+          case "w":
+            measureNotes4.push(new StaveNote(element))
+            durationThreshold=durationThreshold+4
+            break;
+          case "h":
+            measureNotes4.push(new StaveNote(element))
+            durationThreshold=durationThreshold+2
+            break;
+          case "q":
+            measureNotes4.push(new StaveNote(element))
+            durationThreshold=durationThreshold+1
+            break;
+
+          case "qr":
+            measureNotes4.push(new StaveNote(element))
+            durationThreshold=durationThreshold+1
+            break;
+          case "8d":
+            measureNotes4.push(new StaveNote(element))
+            durationThreshold=durationThreshold+0.5
+            break;
+          case "16d":
+            measureNotes4.push(new StaveNote(element))
+            durationThreshold=durationThreshold+0.5
+            break;
+        
+          default:
+            break;
+        }
+
+        
+
+      }
+
+      else if (durationThreshold < 20) 
+      {
+
+        switch (element.duration) {
+          case "w":
+            measureNotes5.push(new StaveNote(element))
+            durationThreshold=durationThreshold+4
+            break;
+          case "h":
+            measureNotes5.push(new StaveNote(element))
+            durationThreshold=durationThreshold+2
+            break;
+          case "q":
+            measureNotes5.push(new StaveNote(element))
+            durationThreshold=durationThreshold+1
+            break;
+
+          case "qr":
+            measureNotes5.push(new StaveNote(element))
+            durationThreshold=durationThreshold+1
+            break;
+          case "8d":
+            measureNotes5.push(new StaveNote(element))
+            durationThreshold=durationThreshold+0.5
+            break;
+          case "16d":
+            measureNotes5.push(new StaveNote(element))
+            durationThreshold=durationThreshold+0.5
+            break;
+        
+          default:
+            break;
+        }
+
+        
+
+      }
       
     }
 
+    console.log(measureNotes4)
+    console.log(measureNotes5)
     if (measureNotes1.length > 0) {
       Formatter.FormatAndDraw(context, staveFirstMeasure, measureNotes1);
     }
@@ -180,9 +311,24 @@ const Score = (props,ref) => {
 
     }
 
+    if (measureNotes3.length > 0) {
+      Formatter.FormatAndDraw(context, staveThirdMeasure, measureNotes3);
+  
+      }
+
+    if (measureNotes4.length > 0) {
+      Formatter.FormatAndDraw(context, staveFourthMeasure, measureNotes4);
+    
+      }
+
+      if (measureNotes5.length > 0) {
+        Formatter.FormatAndDraw(context, staveFifthMeasure, measureNotes5);
+      
+        }
+
     if (group.childNodes.length > 4) {
 
-      const pointerNodeIndex = notePointer + 4
+      const pointerNodeIndex = notePointer + 8
       console.log(pointerNodeIndex)
 
       let pointerNodeNote = group.childNodes[pointerNodeIndex].childNodes[0]
@@ -246,7 +392,7 @@ const Score = (props,ref) => {
     // Helper function to justify and draw a 4/4 voice.
     //Formatter.FormatAndDraw(context, stave, notes);
 
-,[musicNotes]);
+,[musicNotes, notePointer]);
 
   React.useImperativeHandle(ref[1], () => ({
     updateScore(){

@@ -54,7 +54,10 @@ const Composer = () =>{
             let tempDurationOption = 0
             setDurationOption(tempDurationOption)
         }
-
+        if ( notePointer < noteCount - 1) {
+          let composePanelStateTmp = 3
+        setComposePanelState(composePanelStateTmp)
+        }
         
        
 
@@ -80,10 +83,16 @@ const Composer = () =>{
 
     
     const addNote = () => {
+
+      
         let note = { keys: [pitchOptions[pitchOption]], duration: durationOptions[durationOption] }
-        let tmpNotes = [...musicNotes, note]
-        let tmpNotePointer = notePointer + 1
-        let tmpNoteCount = noteCount + 1
+        let tmpNotes
+        let tmpNoteCount
+        if ( notePointer == noteCount - 1) {
+          tmpNotes = [...musicNotes, note]
+          tmpNoteCount = noteCount + 1
+          let tmpNotePointer = notePointer + 1
+        
         setMusicNotes(tmpNotes)
         setNoteCounter(tmpNoteCount)
         setNotePointer(tmpNotePointer)
@@ -92,6 +101,10 @@ const Composer = () =>{
         console.log(noteCount)
         let composePanelStateTmp = 0
         setComposePanelState(composePanelStateTmp)
+        }
+        
+        
+        
     }
 
     const switchPitchRight = () => {
@@ -107,6 +120,14 @@ const Composer = () =>{
         setDurationOption(tempDurationOption)
         console.log(durationOption)
     }
+
+    else if(composePanelState == 2){
+      let notePointertmp = notePointer + 1
+      if (notePointertmp < noteCount) {
+        setNotePointer(notePointertmp)
+      }
+      
+  }
   }
 
     const switchPitchLeft = () => {
@@ -122,6 +143,14 @@ const Composer = () =>{
         setDurationOption(tempDurationOption)
         console.log(durationOption)
     }
+
+    else if(composePanelState == 2){
+      let notePointertmp = notePointer - 1
+      if (notePointertmp > -1) {
+        setNotePointer(notePointertmp)
+      }
+      
+  }
     }
 
     const deleteNote = () => {
@@ -147,6 +176,25 @@ const Composer = () =>{
         console.log(musicNotes)
         console.log(noteCount)
 
+    }
+
+    const insertLeft = () => {
+
+    }
+
+    const insertRight = () => {
+      let tmpNotes = [...musicNotes]
+      let tmpNotePointer = notePointer
+    }
+
+    const editNote = () => {
+      let composePanelStateTmp = 2
+      setComposePanelState(composePanelStateTmp)
+    }
+
+    const chooseNote = () => {
+      let composePanelStateTmp = 0
+      setComposePanelState(composePanelStateTmp)
     }
     
     const divStyle = {
@@ -175,9 +223,17 @@ const Composer = () =>{
         
       };
 
+      let goBackPanel
+      if (composePanelState == 1) {
+        
+        goBackPanel =  <button onClick={goBack}> Back to choose another Pitch </button>
+        
+      }
+      
+
       let RenderPanel;
       if(composePanelState == 0){
-        RenderPanel = <div style={divStyleNOte} onAuxClick onClick={switchPanel}>
+        RenderPanel = <div style={divStyleNOte}  onClick={switchPanel}>
         <Pitch type={pitchOptions[pitchOption]}/> 
     </div>
       }else if(composePanelState == 1){
@@ -185,13 +241,26 @@ const Composer = () =>{
         <Duration type={durationOptions[durationOption]}/> 
     </div>
       }
+      else if(composePanelState ===2){
+       RenderPanel= <button onClick={chooseNote}> Choose Note </button>
+      }
+      else if(composePanelState ===3){
+        RenderPanel = <div style={divStyleNOte} onClick={addNote}>
+        <Duration type={durationOptions[durationOption]}/> 
+    </div>
+      goBackPanel =<div style={divStyleButtonPanel}> <button onClick={insertRight}> Insert Right Side? </button>
+      <button onClick={insertLeft}> Insert Left Side?  </button></div>
+       }
 
 
     return(
         <div>
-            <div style={divStyleButtonPanel}>
-        <button onClick={goBack}> Back to choose another Pitch </button>
-        </div>
+          <div style={divStyleButtonPanel}>
+          <button onClick={editNote}> Edit Note? </button>
+            </div>
+          <div style={divStyleButtonPanel}>
+            {goBackPanel}
+            </div>
         <div style={divStyleButtonPanel}>
         <div style={divStyle} onClick={switchPitchLeft}>
         <img height="80px" width="80px" src={require("../media/lArrow.png")} />
