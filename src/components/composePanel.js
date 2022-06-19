@@ -47,6 +47,15 @@ const Composer = () =>{
        )
     }
 
+    useEffect(() => {
+
+      
+
+      console.log(composePanelState)
+      
+     
+
+  },[composePanelState])
 
     useEffect(() => {
 
@@ -54,10 +63,9 @@ const Composer = () =>{
             let tempDurationOption = 0
             setDurationOption(tempDurationOption)
         }
-        if ( notePointer < noteCount - 1) {
-          let composePanelStateTmp = 3
-        setComposePanelState(composePanelStateTmp)
-        }
+        
+
+
         
        
 
@@ -177,14 +185,24 @@ const Composer = () =>{
         console.log(noteCount)
 
     }
+    const replace = () => {
+
+    }
 
     const insertLeft = () => {
 
     }
 
     const insertRight = () => {
+      let note = { keys: [pitchOptions[pitchOption]], duration: durationOptions[durationOption] }
       let tmpNotes = [...musicNotes]
       let tmpNotePointer = notePointer
+      let tmpNoteCount
+      tmpNotes.splice(tmpNotePointer+1,0,note)
+
+      setMusicNotes(tmpNotes)
+      tmpNoteCount = noteCount + 1
+      setNoteCounter(tmpNoteCount)
     }
 
     const editNote = () => {
@@ -225,8 +243,17 @@ const Composer = () =>{
 
       let goBackPanel
       if (composePanelState == 1) {
+        if ( notePointer < noteCount - 1) {
+          goBackPanel =<div style={divStyleButtonPanel}> <button onClick={goBack}> Back to choose another Pitch </button>
+          <button onClick={insertRight}> Insert Right Side? </button>
+      <button onClick={replace}> Replace? </button>
+      <button onClick={insertLeft}> Insert Left Side?  </button></div>
+        }
+        else{
+          goBackPanel =  <button onClick={goBack}> Back to choose another Pitch </button>
+
+        }
         
-        goBackPanel =  <button onClick={goBack}> Back to choose another Pitch </button>
         
       }
       
@@ -249,6 +276,7 @@ const Composer = () =>{
         <Duration type={durationOptions[durationOption]}/> 
     </div>
       goBackPanel =<div style={divStyleButtonPanel}> <button onClick={insertRight}> Insert Right Side? </button>
+      <button onClick={replace}> Replace? </button>
       <button onClick={insertLeft}> Insert Left Side?  </button></div>
        }
 

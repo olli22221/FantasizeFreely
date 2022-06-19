@@ -5,8 +5,12 @@ import React, { useRef, useEffect, useState, Component } from 'react'
 import Composer from './components/composePanel';
 import { useBeforeunload } from 'react-beforeunload';
 import { useRecoilState, useRecoilValue,useResetRecoilState } from 'recoil'
-
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { musicNotes as musicNotesAtom, notePointer as notePointerAtom, noteCount as noteCountAtom } from './redux/store'
+import DragDrop from './components/fileDrop';
+import SubmitFile from './components/fileSubmit';
+import Main from './Main';
+import CreativityTask from './CreativityTask';
 
 
 function App() {
@@ -93,28 +97,20 @@ function App() {
           { keys: ["d/4"], duration: "q" },
         ]
 */
-const divStyleNotePanel = {
-  display:'flex',
-  justifyContent: 'center',
-  
-};
+
+
    
   return (
-   <div> 
-     
-     <div style={divStyleNotePanel}>
-    <Score />
-          
-      </div>
+    <Router>
 
-      <div>
-    <Composer />
-          
-      </div>
-      
+      <Routes>
+      <Route exact path='/' element={<Main/>}/>
+      <Route exact path='/CreativityTask' element={<CreativityTask/>}/>
+      </Routes>
+
+      </Router>
 
 
-    </div>
 
    
   );

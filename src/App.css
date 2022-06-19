@@ -17,11 +17,49 @@
   background-color: #282c34;
   min-height: 100vh;
   display: flex;
-  flex-direction: column;
+  flex: 1;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+}
+
+.score {
+  margin-top: 50px;
+  background-color: antiquewhite;
+  border: 5px solid rgb(172, 168, 162);
+
+}
+
+.file-upload-submit {
+  margin-top: 40px;
+  margin-left: 180px;
+}
+
+
+.test {
+  background-color: rgb(168, 177, 85);
+  margin-top: 160px;
+  margin-left: 160px;
+  width: 50px;
+  border: 5px solid black;
+  flex: 1;
+  display: flex;
+}
+
+.background {
+  color: rgb(73, 83, 76);
+}
+
+.dropMidi {
+  border: 5px solid rgb(172, 168, 162);
+  padding: auto;
+  background-color: antiquewhite;
+  margin-top: 50px;
+  flex: 1;
+  min-width: 200px;
+
+
 }
 
 .App-link {

@@ -44,7 +44,7 @@ const Score = (props,ref) => {
 
     if(global.context === undefined){
       const renderer = rendererRef.current
-      renderer.resize(1800, 400)
+      renderer.resize(800, 400)
       global.context = renderer.getContext()
       const context = global.context
       global.group = context.openGroup();
@@ -62,27 +62,27 @@ const Score = (props,ref) => {
     const context = global.context
     const group = global.group
     context.setFont('Arial', 10, '').setBackgroundFillStyle('#eed')
-    const staveFirstMeasure = new Stave(25, 50, 400);
+    const staveFirstMeasure = new Stave(25, 50, 200);
     staveFirstMeasure.addClef("treble").addTimeSignature("4/4").setContext(context).draw();
     
-    const staveSecondMeasure = new Stave(staveFirstMeasure.width+staveFirstMeasure.x,50,400);
+    const staveSecondMeasure = new Stave(staveFirstMeasure.width+staveFirstMeasure.x,50,200);
     staveSecondMeasure.setContext(context).draw();
 
 
-    const staveThirdMeasure = new Stave(staveSecondMeasure.width+staveSecondMeasure.x,50,400);
+    const staveThirdMeasure = new Stave(staveSecondMeasure.width+staveSecondMeasure.x,50,200);
     staveThirdMeasure.setContext(context).draw();
-    const staveFourthMeasure = new Stave(staveThirdMeasure.width+staveThirdMeasure.x,50,400);
+    const staveFourthMeasure = new Stave(staveThirdMeasure.width+staveThirdMeasure.x,50,200);
     staveFourthMeasure.setContext(context).draw();
 
-    const staveFifthMeasure = new Stave(25,150,400);
+    const staveFifthMeasure = new Stave(25,150,200);
     staveFifthMeasure.setContext(context).draw();
 
-    const staveSixthMeasure = new Stave(staveFifthMeasure.width+staveFifthMeasure.x,150,400);
+    const staveSixthMeasure = new Stave(staveFifthMeasure.width+staveFifthMeasure.x,150,200);
     staveSixthMeasure.setContext(context).draw();
-    const staveSeventhMeasure = new Stave(staveSixthMeasure.width+staveSixthMeasure.x,150,400);
+    const staveSeventhMeasure = new Stave(staveSixthMeasure.width+staveSixthMeasure.x,150,200);
     staveSeventhMeasure.setContext(context).draw();
 
-    const staveEighthMeasure = new Stave(staveSeventhMeasure.width+staveSeventhMeasure.x,150,400);
+    const staveEighthMeasure = new Stave(staveSeventhMeasure.width+staveSeventhMeasure.x,150,200);
     staveEighthMeasure.setContext(context).draw();
     // Add a clef and time signature.
     
@@ -298,6 +298,120 @@ const Score = (props,ref) => {
         
 
       }
+
+      else if (durationThreshold < 24) 
+      {
+
+        switch (element.duration) {
+          case "w":
+            measureNotes6.push(new StaveNote(element))
+            durationThreshold=durationThreshold+4
+            break;
+          case "h":
+            measureNotes6.push(new StaveNote(element))
+            durationThreshold=durationThreshold+2
+            break;
+          case "q":
+            measureNotes6.push(new StaveNote(element))
+            durationThreshold=durationThreshold+1
+            break;
+
+          case "qr":
+            measureNotes6.push(new StaveNote(element))
+            durationThreshold=durationThreshold+1
+            break;
+          case "8d":
+            measureNotes6.push(new StaveNote(element))
+            durationThreshold=durationThreshold+0.5
+            break;
+          case "16d":
+            measureNotes6.push(new StaveNote(element))
+            durationThreshold=durationThreshold+0.5
+            break;
+        
+          default:
+            break;
+        }
+
+        
+
+      }
+
+      else if (durationThreshold < 28) 
+      {
+
+        switch (element.duration) {
+          case "w":
+            measureNotes7.push(new StaveNote(element))
+            durationThreshold=durationThreshold+4
+            break;
+          case "h":
+            measureNotes7.push(new StaveNote(element))
+            durationThreshold=durationThreshold+2
+            break;
+          case "q":
+            measureNotes7.push(new StaveNote(element))
+            durationThreshold=durationThreshold+1
+            break;
+
+          case "qr":
+            measureNotes7.push(new StaveNote(element))
+            durationThreshold=durationThreshold+1
+            break;
+          case "8d":
+            measureNotes7.push(new StaveNote(element))
+            durationThreshold=durationThreshold+0.5
+            break;
+          case "16d":
+            measureNotes7.push(new StaveNote(element))
+            durationThreshold=durationThreshold+0.5
+            break;
+        
+          default:
+            break;
+        }
+
+        
+
+      }
+
+      else if (durationThreshold < 32) 
+      {
+
+        switch (element.duration) {
+          case "w":
+            measureNotes8.push(new StaveNote(element))
+            durationThreshold=durationThreshold+4
+            break;
+          case "h":
+            measureNotes8.push(new StaveNote(element))
+            durationThreshold=durationThreshold+2
+            break;
+          case "q":
+            measureNotes8.push(new StaveNote(element))
+            durationThreshold=durationThreshold+1
+            break;
+
+          case "qr":
+            measureNotes8.push(new StaveNote(element))
+            durationThreshold=durationThreshold+1
+            break;
+          case "8d":
+            measureNotes8.push(new StaveNote(element))
+            durationThreshold=durationThreshold+0.5
+            break;
+          case "16d":
+            measureNotes8.push(new StaveNote(element))
+            durationThreshold=durationThreshold+0.5
+            break;
+        
+          default:
+            break;
+        }
+
+        
+
+      }
       
     }
 
@@ -321,10 +435,22 @@ const Score = (props,ref) => {
     
       }
 
-      if (measureNotes5.length > 0) {
+    if (measureNotes5.length > 0) {
         Formatter.FormatAndDraw(context, staveFifthMeasure, measureNotes5);
       
         }
+    if (measureNotes6.length > 0) {
+        Formatter.FormatAndDraw(context, staveSixthMeasure, measureNotes6);
+        
+        }
+    if (measureNotes7.length > 0) {
+          Formatter.FormatAndDraw(context, staveSeventhMeasure, measureNotes7);
+          
+        }
+    if (measureNotes8.length > 0) {
+         Formatter.FormatAndDraw(context, staveEighthMeasure, measureNotes8);
+            
+         }
 
     if (group.childNodes.length > 4) {
 
@@ -337,7 +463,13 @@ const Score = (props,ref) => {
       context.setLineWidth(10.0)
       console.log(pointerNodeNote.getBBox())
       let bBox = pointerNodeNote.getBBox()
-      context.rect(bBox.x,bBox.y+50,bBox.width,bBox.height,{ 'stroke-width': 20, fill: "blue" })
+      if (bBox.y < 150 ) {
+        context.rect(bBox.x,145.915756,12,42,{ 'stroke-width': 20, fill: "blue" })
+      }
+
+      if (bBox.y >= 150 ) {
+        context.rect(bBox.x,245.915756,12,42,{ 'stroke-width': 20, fill: "blue" })
+      }
       context.setFillStyle("black");
       context.setLineWidth(1.0)
         
@@ -524,7 +656,7 @@ const Score = (props,ref) => {
 
     
 
-    return <div ref={container} />
+    return <div ref={container}  className='score'/>
 
 
 
