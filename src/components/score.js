@@ -458,7 +458,7 @@ const Score = (props,ref) => {
       console.log(pointerNodeIndex)
 
       let pointerNodeNote = group.childNodes[pointerNodeIndex].childNodes[0]
-      console.log(pointerNodeNote)
+      /*console.log(pointerNodeNote)
       context.setFillStyle("blue");
       context.setLineWidth(10.0)
       console.log(pointerNodeNote.getBBox())
@@ -471,7 +471,18 @@ const Score = (props,ref) => {
         context.rect(bBox.x,245.915756,12,42,{ 'stroke-width': 20, fill: "blue" })
       }
       context.setFillStyle("black");
-      context.setLineWidth(1.0)
+      context.setLineWidth(1.0) */
+
+      /* 
+        drawing an arc
+
+        ctx.beginPath();
+        ctx.moveTo(start.x, start.y);
+        ctx.arc(...);
+        ctx.lineWidth = lineWidth;
+        ctx.stroke();
+      */
+
         
     }
 

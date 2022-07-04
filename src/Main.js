@@ -21,14 +21,17 @@ function Main() {
     let nav = useNavigate();
     const handleStart = () => {
 
-        axios.get("http://192.168.178.46:5000/start").then((response) => {
+        /*axios.get("http://192.168.178.46:5000/start").then((response) => {
             console.log(response.data)
             setjwtToken(response.data)
             nav("/CreativityTask")
 
         }).catch((error) => {
             console.log(error)
-        });
+        });*/
+
+        nav("/CreativityTask")
+
         
 
     }

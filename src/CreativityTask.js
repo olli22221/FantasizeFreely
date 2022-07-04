@@ -4,6 +4,8 @@ import SubmitFile from './components/fileSubmit';
 import { useRecoilState, useRecoilValue,useResetRecoilState } from 'recoil'
 import Score from './components/score';
 import React from 'react';
+import { useNavigate } from "react-router-dom";
+
 
 
 
@@ -18,9 +20,37 @@ const divStyleNotePanel = {
     flex: 'auto'
     
   };
+
+  let nav = useNavigate();
+    const navToComposePanel = () => {
+
+       
+
+        nav("/Compose")
+
+        
+
+    }
   
   
     return(
+
+      <div>
+        <div className="row">
+        <div className="taskdscr" >
+          <DragDrop />
+          <SubmitFile />
+        </div>
+        <div className="taskdscr">
+          <button onClick={navToComposePanel}>Compose</button>
+        </div>
+        </div>
+
+
+
+      </div>
+
+      /*
         <div > 
     
      <div style={divStyleNotePanel}>
@@ -36,6 +66,8 @@ const divStyleNotePanel = {
       </div>
 
       </div>
+
+      */
     );
 
 

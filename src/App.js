@@ -11,6 +11,9 @@ import DragDrop from './components/fileDrop';
 import SubmitFile from './components/fileSubmit';
 import Main from './Main';
 import CreativityTask from './CreativityTask';
+import Compose from './components/compose';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { DndProvider } from 'react-dnd/dist/core';
 
 
 function App() {
@@ -101,14 +104,17 @@ function App() {
 
    
   return (
+    <DndProvider backend={HTML5Backend}>
     <Router>
 
       <Routes>
       <Route exact path='/' element={<Main/>}/>
       <Route exact path='/CreativityTask' element={<CreativityTask/>}/>
+      <Route exact path='/Compose' element={<Compose/>}/>
       </Routes>
 
       </Router>
+      </DndProvider>
 
 
 
