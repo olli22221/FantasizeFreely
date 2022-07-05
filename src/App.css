@@ -80,21 +80,38 @@
 
 .flex-container {
   display: flex;
-  min-height: 100px;
-  width: 400px;
+  height: 100px;
+  min-width: 450px;
   width: fit-content;
   border: 2px solid black;
-  flex-direction: row;
-  flex: auto ;
+  row-gap: 20px;
+  
+  
+}
+
+.flex-container-outer {
+  display: flex;
+  height: 100px;
+  min-width: 450px;
+  width: fit-content;
+  border: 2px solid black;
+  margin: 10px;
+  
+  
+  
+  
+}
+.div-top {
+  margin-top: 30px;
+  
 }
 
 .rowA {
-  width: 1600px;
+  margin: 10px;
+  
 }
 
-.Icon {
-  top: -40px;
-}
+
 
 
 .App-link {

@@ -9,6 +9,7 @@ import PitchesDraggable from './PitchesDraggable';
 import {dragging as dragAtom, hovering as hoverAtom} from '../redux/store'
 import { useRecoilValue,useRecoilState } from 'recoil';
 import {pitches} from '../data/composePanelData'
+import ScoreBox from './ScoreBox';
 
 
 
@@ -16,28 +17,23 @@ import {pitches} from '../data/composePanelData'
 function Compose() {
 
     const [board, setBoard] = useState([
-        {
-            id: 3,
-            index: 2,
-            src:require('../media/pitches/Gclef_E1_1-4.png'),
-        },
-        {
-        id: 1,
-        index: 0,
-        src:require('../media/pitches/Gclef_C1_1-4.png'),
-
-    },
-    {
-        id: 2,
-        index: 1,
-        src:require('../media/pitches/Gclef_D1_1-4.png'),
         
-    }
+    ])
+
+    const [board2, setBoard2] = useState([
+        
+    ])
+
+    const [board3, setBoard3] = useState([
+        
+    ])
+
+    const [board4, setBoard4] = useState([
+        
     ])
     
     const [hovering, setHover] = useRecoilState(hoverAtom);
     const dragging = useRecoilValue(dragAtom);
-    let scorebox =<div>HelloWorld</div> ;
     useEffect(() => {
         
 
@@ -112,53 +108,208 @@ function Compose() {
         }
 
         const addItem = 
-        (newItem, hoverIndex) => {
+        (newItem, hoverIndex,appendWhere) => {
+                       
+           
+            
+                if (appendWhere == "appendLeft"){
+
+                    setBoard(board => {
+    
+                        const updatedPets = [...board]
+                        
+                        
+                        const left = updatedPets.slice(0,hoverIndex)
+                        const right = updatedPets.slice(hoverIndex)
+                        const added = left.concat(newItem)
+                        
+                      
+                        return added.concat(right)
+                    })
+                }
+    
+                if (appendWhere == "appendRight"){
+    
+                    setBoard(board => {
+    
+                        const updatedPets = [...board]
+                        
+                        const left = updatedPets.slice(0,hoverIndex+1)
+                        const right = updatedPets.slice(hoverIndex+1)
+                        const added = left.concat(newItem)
+                      
+                        return added.concat(right)
+                    })
+                }
+
+                
+            
+
+        }
+
+        const deleteItem = 
+        (index) => {
                        
            
             setBoard(board => {
 
                 const updatedPets = [...board]
-                const left = updatedPets.slice(0,hoverIndex)
-                const right = updatedPets.slice(hoverIndex)
-                const added = left.concat(newItem)
+                updatedPets.splice(index,1)
               
-                return added.concat(right)
+                return updatedPets
             })
 
         }
+
+        const [,drop] = useDrop({
+            accept: ["Pitches"],
+            drop(item){
+                
+                setBoard(board => {
+
+                    const updatedPets = [item]
+                                   
+                    return updatedPets
+                })
+    
+        }})
+
+        const [,drop2] = useDrop({
+            accept: ["Pitches"],
+            drop(item){
+                
+                setBoard2(board2 => {
+
+                    const updatedPets = [item]
+                                   
+                    return updatedPets
+                })
+    
+        }})
+
+        const [,drop3] = useDrop({
+            accept: ["Pitches"],
+            drop(item){
+                
+                setBoard3(board3 => {
+
+                    const updatedPets = [item]
+                                   
+                    return updatedPets
+                })
+    
+        }})
+
+        const [,drop4] = useDrop({
+            accept: ["Pitches"],
+            drop(item){
+                
+                setBoard4(board4 => {
+
+                    const updatedPets = [item]
+                                   
+                    return updatedPets
+                })
+    
+        }})
 
         
 
     
 
     return(
-        <div>
+        <div className='div-top'>
 
            
 
             <div    className="row">
-                
-            <div onMouseEnter={()=>{setHover(true)}}   className="flex-container"  >
+                <div className='rowA'>
+            {board.length === 0
+            ? <div ref={drop}  className="flex-container"  ><ScoreBox/></div>
+            :
+            <div onMouseEnter={()=>{setHover(true)}} onMouseLeave={()=>{setHover(false)}}   className="flex-container"  >
                 
                 {dragging || hovering
                    ? <div className="flex-container">
                      
                 {board.map( (note ,idx) => {
-                    return <Pitches  url={note} moveItem={moveItem} index={idx} item={note} addItem={addItem} />
+                    return <Pitches  url={note} deleteItem={deleteItem} moveItem={moveItem} index={idx} item={note} addItem={addItem} />
                 })} </div>
 
-                :<div   >Test</div>}
+                :<div  className="flex-container" >
+                    <ScoreBox/>
+                    </div>}
                     
             </div>
-            
+            }
+
+</div>
             
             
             
 
-            <div className="rowA" >
+        <div className='rowA'>
+            {board2.length === 0
+            ? <div ref={drop2}  className="flex-container"  ><ScoreBox/></div>
+            :
+            <div onMouseEnter={()=>{setHover(true)}} onMouseLeave={()=>{setHover(false)}}   className="flex-container"  >
                 
-            
+                {dragging || hovering
+                   ? <div className="flex-container">
+                     
+                {board2.map( (note ,idx) => {
+                    return <Pitches  url={note} deleteItem={deleteItem} moveItem={moveItem} index={idx} item={note} addItem={addItem} />
+                })} </div>
+
+                :<div  className="flex-container" >
+                    <ScoreBox/>
+                    </div>}
+                    
             </div>
+            }
+            </div>
+            <div className='rowA'>
+            {board3.length === 0
+            ? <div ref={drop3}  className="flex-container"  ><ScoreBox/></div>
+            :
+            <div onMouseEnter={()=>{setHover(true)}} onMouseLeave={()=>{setHover(false)}}   className="flex-container"  >
+                
+                {dragging || hovering
+                   ? <div className="flex-container">
+                     
+                {board3.map( (note ,idx) => {
+                    return <Pitches  url={note} deleteItem={deleteItem} moveItem={moveItem} index={idx} item={note} addItem={addItem} />
+                })} </div>
+
+                :<div  className="flex-container" >
+                    <ScoreBox/>
+                    </div>}
+                    
+            </div>
+            }
+        </div>
+        <div className='rowA'>
+            {board4.length === 0
+            ? <div ref={drop4}  className="flex-container"  ><ScoreBox/></div>
+            :
+            <div onMouseEnter={()=>{setHover(true)}} onMouseLeave={()=>{setHover(false)}}   className="flex-container"  >
+                
+                {dragging || hovering
+                   ? <div className="flex-container">
+                     
+                {board4.map( (note ,idx) => {
+                    return <Pitches  url={note} deleteItem={deleteItem} moveItem={moveItem} index={idx} item={note} addItem={addItem} />
+                })} </div>
+
+                :<div  className="flex-container" >
+                    <ScoreBox/>
+                    </div>}
+                    
+            </div>
+            }
+                
+                </div>
+            
 
             </div>
             

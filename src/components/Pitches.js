@@ -3,7 +3,7 @@ import {useDrag,useDrop} from 'react-dnd'
 import Icon from "react-crud-icons";
 
 import "../../node_modules/react-crud-icons/dist/css/react-crud-icons.css";
-function Pitches({item ,url,index, moveItem, addItem}) {
+function Pitches({item ,url,index, deleteItem, moveItem, addItem}) {
     const ref = useRef(null)
     const [{isDragging}, drag] = useDrag( {
         type: "Pitches", 
@@ -22,19 +22,31 @@ function Pitches({item ,url,index, moveItem, addItem}) {
             if(!ref.current){
                 return;
             }
+            console.log(item.toString())
             const hoverIndex = index;
+            const newItem = {
+                id: item.id,
+                index: 99,
+                src: item.src,
+             }
             
             if(item.status === false){
-                console.log("Here we go!")
+            const hoveredRect = ref.current.getBoundingClientRect();
+            const hoverMiddleX = Math.abs((hoveredRect.left - hoveredRect.right) / 2)
+            const hoverActualX =  Math.abs(monitor.getClientOffset().x - hoveredRect.right)
+            if (hoverActualX > hoverMiddleX)  {
+                console.log("left")
+                addItem(newItem, hoverIndex, "appendLeft")
+            }
+            // if dragging up, continue only when hover is bigger than middle Y
+            if (hoverActualX < hoverMiddleX) {
+                console.log("right")
+                addItem(newItem, hoverIndex, "appendRight")
+            }
 
-                const newItem = {
-                    id: item.id,
-                    index: 99,
-                    src: item.src,
-                 }
+                
 
 
-                addItem(newItem,hoverIndex)
                 
 
 
@@ -109,25 +121,32 @@ function Pitches({item ,url,index, moveItem, addItem}) {
 
     return(
                 
-        <div className="flex-pitch">
-           
+        <div className="flex-pitch" style={{display: 'flex', alignItems: 'center'}}>
+           <div    className="column" >
+            
         <img 
             
-            height="50px" 
-            width="50px" 
+            height="45px" 
+            width="45px" 
             src={url.src} 
             style={{border: isDragging ? "5px solid darkblue": "0px"}} 
             ref={ref}
             
         /> 
+        
+</div>
+        <div    className="row">
          <Icon
-         top = "40px"
+         
         name = "remove"
-        theme = "light"
+        theme = ""
         size = "tiny"
-        onClick={()=>{console.log("HelloWorld")}}
+        onClick={()=>{deleteItem(index)}}
       />
+
+</div>
         </div>
+     
     )
 };
 
