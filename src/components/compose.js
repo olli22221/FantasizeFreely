@@ -108,9 +108,9 @@ function Compose() {
         }
 
         const addItem = 
-        (newItem, hoverIndex,appendWhere) => {
+        (newItem, hoverIndex,appendWhere, target) => {
                        
-           
+                if(target.length > 5) return
             
                 if (appendWhere == "appendLeft"){
 
@@ -225,7 +225,7 @@ function Compose() {
             <div    className="row">
                 <div className='rowA'>
             {board.length === 0
-            ? <div ref={drop}  className="flex-container"  ><ScoreBox/></div>
+            ? <div ref={drop}  className="flex-container"  ><ScoreBox notes={board} timeSign="4/4" violin={true}/></div>
             :
             <div onMouseEnter={()=>{setHover(true)}} onMouseLeave={()=>{setHover(false)}}   className="flex-container"  >
                 
@@ -233,11 +233,11 @@ function Compose() {
                    ? <div className="flex-container">
                      
                 {board.map( (note ,idx) => {
-                    return <Pitches  url={note} deleteItem={deleteItem} moveItem={moveItem} index={idx} item={note} addItem={addItem} />
+                    return <Pitches  url={note} deleteItem={deleteItem} moveItem={moveItem} index={idx} item={note} addItem={addItem} board={board}/>
                 })} </div>
 
                 :<div  className="flex-container" >
-                    <ScoreBox/>
+                    <ScoreBox notes={board} timeSign="4/4" violin={true} />
                     </div>}
                     
             </div>
@@ -250,7 +250,7 @@ function Compose() {
 
         <div className='rowA'>
             {board2.length === 0
-            ? <div ref={drop2}  className="flex-container"  ><ScoreBox/></div>
+            ? <div ref={drop2}  className="flex-container"  ><ScoreBox notes={board2} timeSign="4/4" violin={false}/></div>
             :
             <div onMouseEnter={()=>{setHover(true)}} onMouseLeave={()=>{setHover(false)}}   className="flex-container"  >
                 
@@ -262,7 +262,7 @@ function Compose() {
                 })} </div>
 
                 :<div  className="flex-container" >
-                    <ScoreBox/>
+                    <ScoreBox notes={board2} timeSign="4/4" violin={false}/>
                     </div>}
                     
             </div>
@@ -270,7 +270,7 @@ function Compose() {
             </div>
             <div className='rowA'>
             {board3.length === 0
-            ? <div ref={drop3}  className="flex-container"  ><ScoreBox/></div>
+            ? <div ref={drop3}  className="flex-container"  ><ScoreBox notes={board3} timeSign="4/4" violin={false}/></div>
             :
             <div onMouseEnter={()=>{setHover(true)}} onMouseLeave={()=>{setHover(false)}}   className="flex-container"  >
                 
@@ -282,7 +282,7 @@ function Compose() {
                 })} </div>
 
                 :<div  className="flex-container" >
-                    <ScoreBox/>
+                    <ScoreBox notes={board3} timeSign="4/4" violin={false}/>
                     </div>}
                     
             </div>
@@ -290,7 +290,7 @@ function Compose() {
         </div>
         <div className='rowA'>
             {board4.length === 0
-            ? <div ref={drop4}  className="flex-container"  ><ScoreBox/></div>
+            ? <div ref={drop4}  className="flex-container"  ><ScoreBox notes={board4} timeSign="4/4" violin={false}/></div>
             :
             <div onMouseEnter={()=>{setHover(true)}} onMouseLeave={()=>{setHover(false)}}   className="flex-container"  >
                 
@@ -302,7 +302,7 @@ function Compose() {
                 })} </div>
 
                 :<div  className="flex-container" >
-                    <ScoreBox/>
+                    <ScoreBox notes={board4} timeSign="4/4" violin={false} />
                     </div>}
                     
             </div>
