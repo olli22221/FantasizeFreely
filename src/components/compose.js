@@ -15,6 +15,13 @@ import Modal from 'react-modal';
 
 function Compose() {
 
+    const [isActive, setIsActive] = useState(false);
+
+    const changeColor = () => {
+        console.log("HelloWorld")
+        setIsActive(true);
+    }
+
     const customStyles = {
         content: {
           top: '50%',
@@ -48,7 +55,8 @@ function Compose() {
         
     ])
 
-    const [board5, setBoard5] = useState([
+    const [board5, setBoard5] = useState([null,null,null,null,null,null,
+        null,null,null,null,null,null,null,null,null,null
         
     ])
 
@@ -232,7 +240,7 @@ function Compose() {
                 
                 setBoard3(board3 => {
 
-                    const updatedPets = [item]
+                    const updatedPets = [...board3,item]
                                    
                     return updatedPets
                 })
@@ -259,7 +267,7 @@ function Compose() {
                 setBoard5(board5 => {
                     console.log(item)
 
-                    const updatedPets = [item]
+                    const updatedPets = [...board5,item]
                                    
                     return updatedPets
                 })
@@ -413,21 +421,30 @@ function Compose() {
             {board5.length === 0
             ? <div ref={drop5}  className="flex-container"  ><ScoreBox notes={board5} timeSign="4/4" violin={false}/></div>
             :
-            <div onMouseEnter={()=>{setHover(true);console.log("Test")}} onMouseLeave={()=>{setHover(false)}}   className="flex-container"  >
+            
+            
+            <div onMouseEnter={()=>{setHover(true)}} onMouseLeave={()=>{setHover(true)}}   className="flex-container"  >
                 
                 {dragging || hovering
-                   ? <div className="flex-container">
+                   ? <div  className="flex-container">
                      
                 {board5.map( (note ,idx) => {
-                    return <Pitches  url={note} deleteItem={deleteItem} moveItem={moveItem} index={idx} item={note} addItem={addItem} board={board5} func={setBoard5}/>
-                })} </div>
+                    return <Pitches onClick={changeColor} style={{border: isActive? '1px solid red' : ''}}  url={note} deleteItem={deleteItem} moveItem={moveItem} index={idx} item={note} addItem={addItem} board={board5} func={setBoard5}/>
+                })} 
+                
+               
 
+                
+
+                
+                </div>
                 :<div  className="flex-container" >
                     <ScoreBox notes={board5} timeSign="4/4" violin={true} />
                     </div>}
                     
             </div>
             }
+            
 
 </div>
             

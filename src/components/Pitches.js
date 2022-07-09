@@ -1,9 +1,12 @@
-import React ,{useRef} from 'react';
+import React ,{useRef,useEffect,useState} from 'react';
 import {useDrag,useDrop} from 'react-dnd'
 import Icon from "react-crud-icons";
 
 import "../../node_modules/react-crud-icons/dist/css/react-crud-icons.css";
 function Pitches({item ,url,index, deleteItem, moveItem, addItem,board,func}) {
+    
+    const [isActive, setIsActive] = useState(false);
+
     const ref = useRef(null)
     const [{isDragging}, drag] = useDrag( {
         type: "Pitches", 
@@ -22,7 +25,7 @@ function Pitches({item ,url,index, deleteItem, moveItem, addItem,board,func}) {
             if(!ref.current){
                 return;
             }
-            console.log(item.toString())
+            
             const hoverIndex = index;
             const newItem = {
                 id: item.id,
@@ -93,6 +96,22 @@ function Pitches({item ,url,index, deleteItem, moveItem, addItem,board,func}) {
         }
     })
 
+    useEffect(() => {
+        
+
+        
+        console.log(item)
+
+        
+        
+        
+    }, [item])
+
+    const changeColor = () => {
+        
+        setIsActive(true);
+    }
+
 
     drag(drop(ref));
     /*const [spec, dropRef] = useDrop({
@@ -123,31 +142,39 @@ function Pitches({item ,url,index, deleteItem, moveItem, addItem,board,func}) {
 
     return(
                 
-        <div className="flex-pitch" style={{display: 'flex', alignItems: 'center'}}>
+        <div  className="flex-pitch" style={{}}>
            <div    className="column" >
-            
+           {url !== null 
+           ? 
+           <div>
         <img 
-            
+            ref={ref}
             height="45px" 
             width="45px" 
             src={url.src} 
             style={{border: isDragging ? "5px solid darkblue": "0px"}} 
+            
+            
+        /> </div>
+        :<div ref={ref} className='notePlaceholder'   >
+            
+            <img 
+             
             ref={ref}
+            height="80px" 
+            width="28px" 
+            src={require('../media/pitches/EmptyPlace.PNG')} 
+            style={{border: isDragging ? "5px solid darkblue": "0px"}} 
+            
             
         /> 
-        
-</div>
-        <div    className="row">
-         <Icon
          
-        name = "remove"
-        theme = ""
-        size = "tiny"
-        onClick={()=>{deleteItem(index,board,func)}}
-      />
-
-</div>
         </div>
+           } 
+
+           </div></div>
+        
+
      
     )
 };

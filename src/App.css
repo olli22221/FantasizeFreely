@@ -74,8 +74,14 @@
 }
 
 .flex-pitch {
-  flex-shrink: 0.5;
+  
   margin: auto;
+}
+
+.notePlaceholder {
+  min-height:"45px";
+  min-width:"45px" ;
+  flex: 1;
 }
 
 .flex-container {
