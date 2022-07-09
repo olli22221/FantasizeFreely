@@ -95,18 +95,27 @@
   min-width: 450px;
   width: fit-content;
   border: 2px solid black;
-  margin: 10px;
+  margin: 10px;}
   
+
   
-  
-  
-}
+
 .div-top {
   margin-top: 30px;
   
 }
 
 .rowA {
+  margin: 10px;
+  
+}
+
+.rowA1 {
+  margin: 10px;
+  
+}
+
+.rowA0 {
   margin: 10px;
   
 }

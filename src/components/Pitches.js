@@ -3,7 +3,7 @@ import {useDrag,useDrop} from 'react-dnd'
 import Icon from "react-crud-icons";
 
 import "../../node_modules/react-crud-icons/dist/css/react-crud-icons.css";
-function Pitches({item ,url,index, deleteItem, moveItem, addItem,board}) {
+function Pitches({item ,url,index, deleteItem, moveItem, addItem,board,func}) {
     const ref = useRef(null)
     const [{isDragging}, drag] = useDrag( {
         type: "Pitches", 
@@ -38,12 +38,12 @@ function Pitches({item ,url,index, deleteItem, moveItem, addItem,board}) {
             const hoverActualX =  Math.abs(monitor.getClientOffset().x - hoveredRect.right)
             if (hoverActualX > hoverMiddleX)  {
                 console.log("left")
-                addItem(newItem, hoverIndex, "appendLeft",board)
+                addItem(newItem, hoverIndex, "appendLeft",board,func)
             }
             // if dragging up, continue only when hover is bigger than middle Y
             if (hoverActualX < hoverMiddleX) {
                 console.log("right")
-                addItem(newItem, hoverIndex, "appendRight",board)
+                addItem(newItem, hoverIndex, "appendRight",board,func)
             }
 
                 
@@ -143,7 +143,7 @@ function Pitches({item ,url,index, deleteItem, moveItem, addItem,board}) {
         name = "remove"
         theme = ""
         size = "tiny"
-        onClick={()=>{deleteItem(index)}}
+        onClick={()=>{deleteItem(index,board,func)}}
       />
 
 </div>
