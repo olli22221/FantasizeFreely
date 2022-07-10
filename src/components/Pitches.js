@@ -99,8 +99,9 @@ function Pitches({item ,url,index, deleteItem, moveItem, addItem,board,func}) {
     useEffect(() => {
         
 
-        
-        console.log(item)
+        if(item.status){
+            setIsActive(true)
+        }
 
         
         
@@ -144,35 +145,20 @@ function Pitches({item ,url,index, deleteItem, moveItem, addItem,board,func}) {
                 
         <div  className="flex-pitch" style={{}}>
            <div    className="column" >
-           {url !== null 
-           ? 
-           <div>
+           
+           
         <img 
-            ref={ref}
-            height="45px" 
-            width="45px" 
+            
+            height="80px" 
+            width="27px"
             src={url.src} 
-            style={{border: isDragging ? "5px solid darkblue": "0px"}} 
+            style={{border: isActive? '1px solid red' : ''}} 
             
             
         /> </div>
-        :<div ref={ref} className='notePlaceholder'   >
-            
-            <img 
-             
-            ref={ref}
-            height="80px" 
-            width="28px" 
-            src={require('../media/pitches/EmptyPlace.PNG')} 
-            style={{border: isDragging ? "5px solid darkblue": "0px"}} 
-            
-            
-        /> 
-         
-        </div>
-           } 
+        
 
-           </div></div>
+           </div>
         
 
      

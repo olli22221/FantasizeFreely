@@ -4,7 +4,7 @@ import {dragging as dragAtom} from '../redux/store'
 import { useRecoilState } from 'recoil';
 
 
-function PitchesDraggable({item ,url,index, moveItem}) {
+function PitchesDraggable({item ,url,index, moveItem, target,addPitch}) {
     const ref = useRef(null)
     const [dragging, setDragging] = useRecoilState(dragAtom);
 
@@ -26,6 +26,9 @@ function PitchesDraggable({item ,url,index, moveItem}) {
 
     }, [isDragging])
 
+    const add = (item) => {
+        addPitch(item)
+    } 
 
 
 
@@ -37,7 +40,7 @@ function PitchesDraggable({item ,url,index, moveItem}) {
             width="45px" 
             src={url.src} 
             style={{border: isDragging ? "5px solid darkblue": "0px"}} 
-            ref={ref}
+            onClick={()=>add(item)}
             
         />
     )

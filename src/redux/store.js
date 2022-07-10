@@ -1,7 +1,27 @@
 import { atom } from "recoil";
 import { recoilPersist } from "recoil-persist";
+import {defaultpitches,defaultpitchesoccupied,defaultPitchesArray} from '../data/composePanelData';
 
 const { persistAtom } = recoilPersist()
+
+
+export const board = atom({
+    key: "board",
+    default: defaultPitchesArray, 
+    effects_UNSTABLE: [persistAtom],
+})
+
+export const meter = atom({
+    key: "meter",
+    default: "4/4", 
+    effects_UNSTABLE: [persistAtom],
+})
+
+export const pointer = atom({
+    key: "pointer_",
+    default: 1, 
+    effects_UNSTABLE: [persistAtom],
+})
 
 export const hovering = atom({
     key: "hover",

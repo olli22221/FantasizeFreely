@@ -40,16 +40,18 @@ const clefAndTimeWidth = 60;
         staveMeasure.setContext(context).draw();
     }
 
-    console.log(notes.length)
-    console.log(timeSign)
-    console.log(violin)
     const measureNotes1 = []
+    const notes_ =  notes.filter(piece => piece.show == true)
 
+    if(notes_ != undefined){
     for (let index = 0; index < notes.length; index++) {
-        measureNotes1.push(new StaveNote({ keys: notes[index].type, duration: notes[index].duration }))
+        if(notes_[index] != undefined){
+        measureNotes1.push(new StaveNote({ keys: notes_[index].type, duration: notes_[index].duration }))
+        }
     }
+}
     
-    
+    //measureNotes1.push(new StaveNote({ keys:["c/4"], duration:"h"}))
     
     if(measureNotes1.length>0){
     
