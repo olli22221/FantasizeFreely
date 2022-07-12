@@ -149,7 +149,7 @@ function Pitches({item ,url,index, deleteItem, moveItem, addItem,board,func}) {
            
         <img 
             
-            height="80px" 
+            height="128px" 
             width="27px"
             src={url.src} 
             style={{border: isActive? '1px solid red' : ''}} 

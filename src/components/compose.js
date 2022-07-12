@@ -9,7 +9,7 @@ import PitchesDraggable from './PitchesDraggable';
 import {dragging as dragAtom, hovering as hoverAtom, board as boardAtom, pointer as pointerAtom,
 meter as meterAtom } from '../redux/store'
 import { useRecoilValue,useRecoilState } from 'recoil';
-import {pitches,halfpitches,wholepitches,eightpitches,defaultpitches,defaultpitchesoccupied} from '../data/composePanelData'
+import {pitches,halfpitches,wholepitches,sixteenthpitches,eightpitches,defaultpitches,defaultpitchesoccupied} from '../data/composePanelData'
 import ScoreBox from './ScoreBox';
 import Modal from 'react-modal';
 
@@ -57,12 +57,12 @@ function Compose() {
         console.log(board)
         console.log(dragging)
         console.log(hovering)
-        console.log(container[0].getBoundingClientRect())
+        
 
         
         
         
-    }, [dragging,hovering])
+    }, [board,dragging,hovering])
 
 
     /*const [{isOver}, drop] = useDrop(() => ({
@@ -145,9 +145,7 @@ function Compose() {
                     const  tmpDefaultPitches = defaultpitchesoccupied
                     const middleSlice = [item].concat(new Array(steps-1).fill(tmpDefaultPitches))
                     const endSlice = updatedBoardData.slice(index,board.length-steps)
-                    console.log(startSlice)
-                    console.log(middleSlice)
-                    console.log(endSlice)
+                    
                     
                     const updatedBoardData_ = startSlice.concat(middleSlice).concat(endSlice)
 
@@ -155,7 +153,12 @@ function Compose() {
 
                 })
                 setPointer(pointer =>{
-                    return index + steps
+                    const followUpPointer = index + steps
+                    if(followUpPointer % 17 ==1 ){
+                    return index + steps+1}
+                    else{
+                        return index + steps
+                    }
                 })
             }
             
@@ -340,7 +343,7 @@ function Compose() {
                     return <Pitches  url={note} index={idx} item={note}  board={board} />
                 })} </div>
 
-                :<div  className="flex-container" >
+                :<div className="flex-container" >
                     <ScoreBox notes={board.slice(119,136)} timeSign="4/4" violin={false} />
                     </div>}
                     
@@ -354,9 +357,9 @@ function Compose() {
             
             
 
-            <div className='Pitches' >
+            <div className='Pitches' onMouseEnter={()=>{setHover(true)}} onMouseLeave={()=>{setHover(false)} } >
             
-            {eightpitches.concat(pitches).map( (note ,idx) => {
+            {sixteenthpitches.concat(pitches).map( (note ,idx) => {
                 return <PitchesDraggable url={note}  index={idx} item={note} target={board} addPitch={addPitch} />
             })}
                 

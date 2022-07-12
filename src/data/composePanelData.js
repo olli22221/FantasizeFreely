@@ -6,7 +6,7 @@ export const defaultpitches =
         duration: "h",
         locked: true,
         occupied: false,
-        src:require('../media/pitches/EmptyPlace.PNG'),
+        src:require('../media/pitches/empty.PNG'),
 
     }
 
@@ -17,7 +17,7 @@ export const defaultpitches =
         duration: "h",
         locked: true,
         occupied: true,
-        src:require('../media/pitches/EmptyPlace.PNG'),
+        src:require('../media/pitches/empty.PNG'),
 
     }
     
@@ -51,11 +51,47 @@ export const wholepitches = [
 export const pitches = [
     {
         show: true,
+        type: ["g/3"],
+        duration: "q",
+        locked: false,
+        occupied: true,
+        src:require('../media/composeMedia/quarterNotes/g3.PNG'),
+
+    },
+    {
+        show: true,
+        type: ["a/3"],
+        duration: "q",
+        locked: false,
+        occupied: true,
+        src:require('../media/composeMedia/quarterNotes/a3.PNG'),
+
+    },
+    {
+        show: true,
+        type: ["b/3"],
+        duration: "q",
+        locked: false,
+        occupied: true,
+        src:require('../media/composeMedia/quarterNotes/b3.PNG'),
+
+    },
+    {
+        show: true,
         type: ["c/4"],
         duration: "q",
         locked: false,
         occupied: true,
-        src:require('../media/pitches/Gclef_C1_1-4.png'),
+        src:require('../media/composeMedia/quarterNotes/c4.PNG'),
+
+    },
+    {
+        show: true,
+        type: ["c/4"],
+        duration: "q",
+        locked: false,
+        occupied: true,
+        src:require('../media/composeMedia/quarterNotes/d4.PNG'),
 
     },
     {
@@ -64,16 +100,8 @@ export const pitches = [
         duration: "q",
         locked: false,
         occupied: true,
-        src:require('../media/pitches/Gclef_D1_1-4.png'),
-        
-    },
-    {
-        show: true,
-        type: ["e/4"],
-        duration: "q",
-        locked: false,
-        occupied: true,
-        src:require('../media/pitches/Gclef_E1_1-4.png'),
+        src:require('../media/composeMedia/quarterNotes/e4.PNG'),
+
     },
 ]
 
@@ -85,6 +113,182 @@ export const eightpitches = [
         locked: false,
         occupied: true,
         src:require('../media/pitches/C4_8d.PNG'),
+
+    },
+    
+]
+
+export const sixteenthpitches = [
+    
+    {
+        show: true,
+        type: ["a/3"],
+        duration: "16",
+        locked: false,
+        occupied: true,
+        src:require('../media/composeMedia/sixteenthNotes/a3.PNG'),
+
+    },
+    {
+        show: true,
+        type: ["b/3"],
+        duration: "16",
+        locked: false,
+        occupied: true,
+        src:require('../media/composeMedia/sixteenthNotes/b3.PNG'),
+
+    },
+    {
+        show: true,
+        type: ["c/4"],
+        duration: "16",
+        locked: false,
+        occupied: true,
+        src:require('../media/composeMedia/sixteenthNotes/c4.PNG'),
+
+    },
+    {
+        show: true,
+        type: ["c/4"],
+        duration: "16",
+        locked: false,
+        occupied: true,
+        src:require('../media/composeMedia/sixteenthNotes/c4.PNG'),
+
+    },
+    {
+        show: true,
+        type: ["d/4"],
+        duration: "16",
+        locked: false,
+        occupied: true,
+        src:require('../media/composeMedia/sixteenthNotes/d4.PNG'),
+
+    },
+    {
+        show: true,
+        type: ["e/4"],
+        duration: "16",
+        locked: false,
+        occupied: true,
+        src:require('../media/composeMedia/sixteenthNotes/e4.PNG'),
+
+    },
+    {
+        show: true,
+        type: ["f/4"],
+        duration: "16",
+        locked: false,
+        occupied: true,
+        src:require('../media/composeMedia/sixteenthNotes/f4.PNG'),
+
+    },
+    {
+        show: true,
+        type: ["g/4"],
+        duration: "16",
+        locked: false,
+        occupied: true,
+        src:require('../media/composeMedia/sixteenthNotes/g4.PNG'),
+
+    },
+    {
+        show: true,
+        type: ["a/4"],
+        duration: "16",
+        locked: false,
+        occupied: true,
+        src:require('../media/composeMedia/sixteenthNotes/a4.PNG'),
+
+    },
+    {
+        show: true,
+        type: ["b/4"],
+        duration: "16",
+        locked: false,
+        occupied: true,
+        src:require('../media/composeMedia/sixteenthNotes/b4.PNG'),
+
+    },
+    {
+        show: true,
+        type: ["c/5"],
+        duration: "16",
+        locked: false,
+        occupied: true,
+        src:require('../media/composeMedia/sixteenthNotes/c5.PNG'),
+
+    },
+    {
+        show: true,
+        type: ["d/5"],
+        duration: "16",
+        locked: false,
+        occupied: true,
+        src:require('../media/composeMedia/sixteenthNotes/d5.PNG'),
+
+    },
+    {
+        show: true,
+        type: ["d/5s"],
+        duration: "16",
+        locked: false,
+        occupied: true,
+        src:require('../media/composeMedia/sixteenthNotes/d55.PNG'),
+
+    },
+    {
+        show: true,
+        type: ["e/5"],
+        duration: "16",
+        locked: false,
+        occupied: true,
+        src:require('../media/composeMedia/sixteenthNotes/e5.PNG'),
+
+    },
+    {
+        show: true,
+        type: ["f/5"],
+        duration: "16",
+        locked: false,
+        occupied: true,
+        src:require('../media/composeMedia/sixteenthNotes/f5.PNG'),
+
+    },
+    {
+        show: true,
+        type: ["g/5"],
+        duration: "16",
+        locked: false,
+        occupied: true,
+        src:require('../media/composeMedia/sixteenthNotes/g5.PNG'),
+
+    },
+    {
+        show: true,
+        type: ["a/5"],
+        duration: "16",
+        locked: false,
+        occupied: true,
+        src:require('../media/composeMedia/sixteenthNotes/a5.PNG'),
+
+    },
+    {
+        show: true,
+        type: ["b/5"],
+        duration: "16",
+        locked: false,
+        occupied: true,
+        src:require('../media/composeMedia/sixteenthNotes/b5.PNG'),
+
+    },
+    {
+        show: true,
+        type: ["c/6"],
+        duration: "16",
+        locked: false,
+        occupied: true,
+        src:require('../media/composeMedia/sixteenthNotes/c6.PNG'),
 
     },
     

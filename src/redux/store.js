@@ -5,6 +5,19 @@ import {defaultpitches,defaultpitchesoccupied,defaultPitchesArray} from '../data
 const { persistAtom } = recoilPersist()
 
 
+export const context = atom ({
+    key: "context",
+    default: null, 
+    effects_UNSTABLE: [persistAtom],
+})
+
+export const group = atom ({
+    key: "group",
+    default: '', 
+    effects_UNSTABLE: [persistAtom],
+})
+
+
 export const board = atom({
     key: "board",
     default: defaultPitchesArray, 
