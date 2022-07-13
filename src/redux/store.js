@@ -5,6 +5,12 @@ import {defaultpitches,defaultpitchesoccupied,defaultPitchesArray} from '../data
 const { persistAtom } = recoilPersist()
 
 
+export const activeNote = atom ({
+    key: "activeNote",
+    default: 0, 
+    effects_UNSTABLE: [persistAtom],
+})
+
 export const context = atom ({
     key: "context",
     default: null, 

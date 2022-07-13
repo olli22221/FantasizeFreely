@@ -6,7 +6,7 @@ import './../App.css';
 import {useDrop} from 'react-dnd';
 import DropWrapper from './DropWrapper';
 import PitchesDraggable from './PitchesDraggable';
-import {dragging as dragAtom, hovering as hoverAtom, board as boardAtom, pointer as pointerAtom,
+import {dragging as dragAtom, hovering as hoverAtom,activeNote as activeNoteAtom, board as boardAtom, pointer as pointerAtom,
 meter as meterAtom } from '../redux/store'
 import { useRecoilValue,useRecoilState } from 'recoil';
 import {pitches,halfpitches,wholepitches,sixteenthpitches,eightpitches,defaultpitches,defaultpitchesoccupied} from '../data/composePanelData'
@@ -17,6 +17,7 @@ import Modal from 'react-modal';
 function Compose() {
 
     const [isActive, setIsActive] = useState(false);
+    const activeNote = useRecoilValue(activeNoteAtom);
 
     const changeColor = () => {
         console.log("HelloWorld")
@@ -111,9 +112,9 @@ function Compose() {
         }
 
         const checkMatch = (index,steps) => {
-            const measureNumber = ~~(index / 16)
-            const endOfMeasure = (measureNumber * 16)+17
-            const sliceOfBoard = board.slice(endOfMeasure-17,endOfMeasure)
+            const measureNumber = ~~(index / 17)
+            const endOfMeasure = (measureNumber * 17)+17
+            const sliceOfBoard = board.slice(endOfMeasure-16,endOfMeasure)
             const sliceLen = sliceOfBoard.filter(piece => piece.occupied == false).length
             console.log(measureNumber)
             console.log(endOfMeasure)
@@ -154,7 +155,7 @@ function Compose() {
                 })
                 setPointer(pointer =>{
                     const followUpPointer = index + steps
-                    if(followUpPointer % 17 ==1 ){
+                    if(followUpPointer % 17 == 0 ){
                     return index + steps+1}
                     else{
                         return index + steps
@@ -188,7 +189,7 @@ function Compose() {
                    ? <div className="flex-container">
                      
                 {board.slice(0,17).map( (note ,idx) => {
-                    return <Pitches  url={note}  index={idx} item={note}  board={board} />
+                    return <Pitches  url={note} activated={activeNote}  index={idx} item={note}  board={board} />
                 })} </div>
 
                 :<div  className="flex-container" >
@@ -211,7 +212,7 @@ function Compose() {
                    ? <div className="flex-container">
                      
                 {board.slice(17,34).map( (note ,idx) => {
-                    return <Pitches  url={note}  index={idx} item={note} board={board}  />
+                    return <Pitches  url={note} activated={activeNote}  index={idx+17} item={note} board={board}  />
                 })} </div>
 
                 :<div  className="flex-container" >
@@ -229,7 +230,7 @@ function Compose() {
                    ? <div className="flex-container">
                      
                 {board.slice(34,51).map( (note ,idx) => {
-                    return <Pitches  url={note}  index={idx} item={note} board={board} />
+                    return <Pitches  url={note} activated={activeNote}  index={idx+34} item={note} board={board} />
                 })} </div>
 
                 :<div  className="flex-container" >
@@ -247,7 +248,7 @@ function Compose() {
                    ? <div className="flex-container">
                      
                 {board.slice(51,68).map( (note ,idx) => {
-                    return <Pitches  url={note}  index={idx} item={note} board={board}/>
+                    return <Pitches  url={note} activated={activeNote}  index={idx} item={note} board={board}/>
                 })} </div>
 
                 :<div  className="flex-container" >
@@ -274,7 +275,7 @@ function Compose() {
                    ? <div  className="flex-container">
                      
                 {board.slice(68,85).map( (note ,idx) => {
-                    return <Pitches onClick={() =>changeColor(idx)} style={{border: isActive? '1px solid red' : ''}}  url={note}  index={idx} item={note}  board={board}/>
+                    return <Pitches activated={activeNote} style={{border: isActive? '1px solid red' : ''}}  url={note}  index={idx} item={note}  board={board}/>
                 })} 
                 
                
@@ -304,7 +305,7 @@ function Compose() {
                    ? <div className="flex-container">
                      
                 {board.slice(85,102).map( (note ,idx) => {
-                    return <Pitches  url={note} index={idx} item={note} board={board} />
+                    return <Pitches  url={note} activated={activeNote} index={idx} item={note} board={board} />
                 })} </div>
 
                 :<div  className="flex-container" >
@@ -322,7 +323,7 @@ function Compose() {
                    ? <div className="flex-container">
                      
                 {board.slice(102,119).map( (note ,idx) => {
-                    return <Pitches  url={note}  index={idx} item={note}  board={board} />
+                    return <Pitches  url={note} activated={activeNote}  index={idx} item={note}  board={board} />
                 })} </div>
 
                 :<div  className="flex-container" >
@@ -340,7 +341,7 @@ function Compose() {
                    ? <div className="flex-container">
                      
                 {board.slice(119,136).map( (note ,idx) => {
-                    return <Pitches  url={note} index={idx} item={note}  board={board} />
+                    return <Pitches  url={note} activated={activeNote} index={idx} item={note}  board={board} />
                 })} </div>
 
                 :<div className="flex-container" >
@@ -359,7 +360,7 @@ function Compose() {
 
             <div className='Pitches' onMouseEnter={()=>{setHover(true)}} onMouseLeave={()=>{setHover(false)} } >
             
-            {sixteenthpitches.concat(pitches).map( (note ,idx) => {
+            {sixteenthpitches.concat(eightpitches,pitches).map( (note ,idx) => {
                 return <PitchesDraggable url={note}  index={idx} item={note} target={board} addPitch={addPitch} />
             })}
                 

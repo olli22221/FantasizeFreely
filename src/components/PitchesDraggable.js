@@ -36,10 +36,10 @@ function PitchesDraggable({item ,url,index, moveItem, target,addPitch}) {
                    
         <img 
             className="flex-pitch"
-            height="128px" 
-            width="35px" 
+            height="70px" 
+            width="55px" 
             src={url.src} 
-            style={{border: isDragging ? "5px solid darkblue": "0px"}} 
+            style={{border:"2px solid darkgreen"}} 
             onClick={()=>add(item)}
             
         />

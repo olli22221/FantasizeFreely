@@ -1,6 +1,7 @@
 
-export const defaultpitches = 
+export let defaultpitches = 
     {
+        
         show: false,
         type: ["c/4"],
         duration: "h",
@@ -108,17 +109,190 @@ export const pitches = [
 export const eightpitches = [
     {
         show: true,
+        type: ["g/3"],
+        duration: "8d",
+        locked: false,
+        occupied: true,
+        src:require('../media/composeMedia/eightNotes/g3.PNG'),
+
+    },
+    {
+        show: true,
+        type: ["a/3"],
+        duration: "8d",
+        locked: false,
+        occupied: true,
+        src:require('../media/composeMedia/eightNotes/a3.PNG'),
+
+    },
+    {
+        show: true,
+        type: ["b/3"],
+        duration: "8d",
+        locked: false,
+        occupied: true,
+        src:require('../media/composeMedia/eightNotes/b3.PNG'),
+
+    },
+    {
+        show: true,
         type: ["c/4"],
         duration: "8d",
         locked: false,
         occupied: true,
-        src:require('../media/pitches/C4_8d.PNG'),
+        src:require('../media/composeMedia/eightNotes/c4.PNG'),
 
     },
+    {
+        show: true,
+        type: ["c/4"],
+        duration: "8d",
+        locked: false,
+        occupied: true,
+        src:require('../media/composeMedia/eightNotes/c4.PNG'),
+
+    },
+    {
+        show: true,
+        type: ["d/4"],
+        duration: "8d",
+        locked: false,
+        occupied: true,
+        src:require('../media/composeMedia/eightNotes/d4.PNG'),
+
+    },
+    {
+        show: true,
+        type: ["e/4"],
+        duration: "8d",
+        locked: false,
+        occupied: true,
+        src:require('../media/composeMedia/eightNotes/e4.PNG'),
+
+    },
+    {
+        show: true,
+        type: ["f/4"],
+        duration: "8d",
+        locked: false,
+        occupied: true,
+        src:require('../media/composeMedia/eightNotes/f4.PNG'),
+
+    },
+    {
+        show: true,
+        type: ["g/4"],
+        duration: "8d",
+        locked: false,
+        occupied: true,
+        src:require('../media/composeMedia/eightNotes/g4.PNG'),
+
+    },
+    {
+        show: true,
+        type: ["a/4"],
+        duration: "8d",
+        locked: false,
+        occupied: true,
+        src:require('../media/composeMedia/eightNotes/a4.PNG'),
+
+    },
+    {
+        show: true,
+        type: ["b/4"],
+        duration: "8d",
+        locked: false,
+        occupied: true,
+        src:require('../media/composeMedia/eightNotes/b4.PNG'),
+
+    },
+    {
+        show: true,
+        type: ["c/5"],
+        duration: "8d",
+        locked: false,
+        occupied: true,
+        src:require('../media/composeMedia/eightNotes/c5.PNG'),
+
+    },
+    {
+        show: true,
+        type: ["d/5"],
+        duration: "8d",
+        locked: false,
+        occupied: true,
+        src:require('../media/composeMedia/eightNotes/d5.PNG'),
+
+    },
+    
+    {
+        show: true,
+        type: ["e/5"],
+        duration: "8d",
+        locked: false,
+        occupied: true,
+        src:require('../media/composeMedia/eightNotes/e5.PNG'),
+
+    },
+    {
+        show: true,
+        type: ["f/5"],
+        duration: "8d",
+        locked: false,
+        occupied: true,
+        src:require('../media/composeMedia/eightNotes/f5.PNG'),
+
+    },
+    {
+        show: true,
+        type: ["g/5"],
+        duration: "8d",
+        locked: false,
+        occupied: true,
+        src:require('../media/composeMedia/eightNotes/g5.PNG'),
+
+    },
+    {
+        show: true,
+        type: ["a/5"],
+        duration: "8d",
+        locked: false,
+        occupied: true,
+        src:require('../media/composeMedia/eightNotes/a5.PNG'),
+
+    },
+    {
+        show: true,
+        type: ["b/5"],
+        duration: "8d",
+        locked: false,
+        occupied: true,
+        src:require('../media/composeMedia/eightNotes/b5.PNG'),
+
+    },
+    {
+        show: true,
+        type: ["c/6"],
+        duration: "8d",
+        locked: false,
+        occupied: true,
+        src:require('../media/composeMedia/eightNotes/c6.PNG'),
+
+    },
+    
     
 ]
 
 export const sixteenthpitches = [
+    {
+        show: true,
+        type: ["g/3"],
+        duration: "16",
+        locked: false,
+        occupied: true,
+        src:require('../media/composeMedia/sixteenthNotes/g3.PNG'),
+
+    },
     
     {
         show: true,
@@ -138,15 +312,7 @@ export const sixteenthpitches = [
         src:require('../media/composeMedia/sixteenthNotes/b3.PNG'),
 
     },
-    {
-        show: true,
-        type: ["c/4"],
-        duration: "16",
-        locked: false,
-        occupied: true,
-        src:require('../media/composeMedia/sixteenthNotes/c4.PNG'),
-
-    },
+    
     {
         show: true,
         type: ["c/4"],
@@ -228,15 +394,7 @@ export const sixteenthpitches = [
         src:require('../media/composeMedia/sixteenthNotes/d5.PNG'),
 
     },
-    {
-        show: true,
-        type: ["d/5s"],
-        duration: "16",
-        locked: false,
-        occupied: true,
-        src:require('../media/composeMedia/sixteenthNotes/d55.PNG'),
-
-    },
+    
     {
         show: true,
         type: ["e/5"],
