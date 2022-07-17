@@ -8,7 +8,8 @@ import DropWrapper from './DropWrapper';
 import PitchesDraggable from './PitchesDraggable';
 import {activeMeasure as activeMeasureAtom,measure1 as measure1Atom,measure2 as measure2Atom,
     measure3 as measure3Atom,meter as meterAtom, dragging as dragAtom, 
-    hovering as hoverAtom,activeNote as activeNoteAtom, pointer as pointerAtom, measure3} from '../redux/store'
+    hovering as hoverAtom,activeNote as activeNoteAtom, pointer as pointerAtom, 
+    replaceActivated as replaceActivatedAtom} from '../redux/store'
 import { measure1Meter as measure1MeterAtom,measure2Meter as measure2MeterAtom,measure3Meter as measure3MeterAtom  } from '../redux/store';
 import { useRecoilValue,useRecoilState } from 'recoil';
 import {pitches,halfpitches,wholepitches,sixteenthpitches,eightpitches,defaultpitches,defaultpitchesoccupied, defaultPitchesArray_} from '../data/composePanelData'
@@ -28,6 +29,7 @@ function Compose() {
     const [measure1Meter, setmeasure1Meter] = useRecoilState(measure1MeterAtom);
     const [measure2Meter, setmeasure2Meter] = useRecoilState(measure2MeterAtom);
     const [measure3Meter, setmeasure3Meter] = useRecoilState(measure3MeterAtom);
+    const [replaceActivated, setreplaceActivated] = useRecoilState(replaceActivatedAtom);
     
 
     const changeColor = () => {
@@ -95,8 +97,28 @@ function Compose() {
             
     }*/
 
+        const replaceItem = () => {
+            if (activeNote == 0) {
+                return
+                
+            }
+            if(activeMeasure == 0){
+
+            const indexToReplace = activeNote
+            const stepsToReplace = calculateSteps(measure1[indexToReplace].duration)
+            const firstPart = measure1.slice(0, indexToReplace)
+
+            }
+
+
+        }
+
 
         const deleteItem = () => {
+            if (activeNote == 0) {
+                return
+                
+            }
             if(activeMeasure == 0){
                 const indexToDelete = activeNote
                 const stepsToDelete = calculateSteps(measure1[indexToDelete].duration)
@@ -174,7 +196,7 @@ function Compose() {
         }
 
         const calculateLastNoteIndex = (currentMeasure) => {
-            console.log(currentMeasure)
+            
             for (let i = currentMeasure.length-1; i > 0; i--) {
                 if (currentMeasure[i].locked == false && currentMeasure[i].occupied == true ) {
                     return i;
@@ -201,6 +223,8 @@ function Compose() {
             
 
         }
+
+        
         const addPitch = (item) => {
 
             const index = activeNote
@@ -213,8 +237,7 @@ function Compose() {
 
 
                 if (activeNote % measure1Meter == 0) {
-                    console.log(measure1Meter)
-                    const index = pointer
+                    const index = 1
                     setMeasure1(measure1 =>{
                     
                     
@@ -284,14 +307,47 @@ function Compose() {
         else{
 
             const currentMeasure_ =  [...measure1]
-            const lastNoteofMeasure = calculateLastNoteIndex(currentMeasure_)
-            console.log("lastNoteofMeasure")
-            if (activeNote == lastNoteofMeasure) {
-                setactiveMeasure(1)
-                setactiveNote(0)
-                setPointer(1)
-                
+            const sliceLen = currentMeasure_.filter(piece => piece.occupied == false).length
+            if(sliceLen > 0){
+                return
             }
+            const lastNoteofMeasure = calculateLastNoteIndex(currentMeasure_)
+            
+            if (activeNote == lastNoteofMeasure) {
+                setPointer(1)
+                const fit = checkMatch(index,steps,measure2)
+                console.log(fit)
+                if(!fit)return
+                
+                
+                
+                    setMeasure2(measure2 =>{
+                    
+                    
+                    
+                        console.log(pointer)
+                        const updatedBoardData = measure2.slice(0,measure2Meter)
+                        const restboard = measure2.slice(measure2Meter,measure2.length)
+                        
+                        const startSlice = updatedBoardData.slice(0,1)
+                        const tmpDefaultPitches = defaultpitchesoccupied
+                        const middleSlice = [item].concat(new Array(steps-1).fill(tmpDefaultPitches))
+                        const endSlice = updatedBoardData.slice(1,updatedBoardData.length-steps)
+                        
+                        const updatedBoardData_ = startSlice.concat(middleSlice).concat(endSlice).concat(restboard)
+                        return updatedBoardData_
+                
+            })
+
+            setactiveMeasure(1)
+                setactiveNote(1)
+                
+                setPointer(pointer =>{
+                   
+                    return index + steps
+                   
+                })
+        }
 
             else{
 
@@ -310,7 +366,7 @@ function Compose() {
 
 
                 if (activeNote % measure2Meter == 0) {
-                    const index = pointer
+                    const index = 1
                     setMeasure2(measure2 =>{
                     
                     
@@ -363,7 +419,6 @@ function Compose() {
                     
                     
                     const updatedBoardData_ = startSlice.concat(middleSlice).concat(endSlice).concat(restboard)
-                    console.log(updatedBoardData_)
                     return updatedBoardData_
 
                 })
@@ -387,6 +442,10 @@ function Compose() {
         else{
 
             const currentMeasure_ =  [...measure2]
+            const sliceLen = currentMeasure_.filter(piece => piece.occupied == false).length
+            if(sliceLen > 0){
+                return
+            }
             const lastNoteofMeasure = calculateLastNoteIndex(currentMeasure_)
 
             if (activeNote == lastNoteofMeasure) {
@@ -487,6 +546,22 @@ function Compose() {
 
 
         else{
+            const currentMeasure_ =  [...measure1]
+            const sliceLen = currentMeasure_.filter(piece => piece.occupied == false).length
+            if(sliceLen > 0){
+                return
+            }
+            const lastNoteofMeasure = calculateLastNoteIndex(currentMeasure_)
+            console.log("lastNoteofMeasure")
+            if (activeNote == lastNoteofMeasure) {
+                setactiveMeasure(3)
+                setactiveNote(1)
+                setPointer(1)
+                
+            }
+            else{
+
+            }
 
 
 
@@ -535,6 +610,11 @@ function Compose() {
                 
         }
 
+        const changeStateOfReplace = () => {
+            setreplaceActivated(!replaceActivated)
+            console.log(replaceActivated)
+
+        }
 
 
 
@@ -626,7 +706,7 @@ function Compose() {
             <div className='Pitches' onMouseEnter={()=>{setHover(true)}} onMouseLeave={()=>{setHover(false)} } >
             
             {sixteenthpitches.concat(eightpitches,pitches).map( (note ,idx) => {
-                return <PitchesDraggable url={note}  index={idx} item={note} addPitch={addPitch} />
+                return <PitchesDraggable url={note}  index={idx} item={note} addPitch={addPitch} replacePitch={replaceItem} />
             })}
                 
     </div>
@@ -642,7 +722,8 @@ function Compose() {
             <div>
         
     
-            <button onClick={deleteItem}> Delete </button></div>
+            <button onClick={deleteItem}> Delete </button>
+            <button onClick={changeStateOfReplace}> Replace </button></div>
 
 
             </div>
