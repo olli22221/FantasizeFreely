@@ -1,13 +1,14 @@
 import React ,{useRef,useEffect,useState} from 'react';
 import {useDrag,useDrop} from 'react-dnd'
 import Icon from "react-crud-icons";
-import { board as boardAtom, activeNote as activeNoteAtom } from '../redux/store';
+import { activeMeasure as activeMeasureAtom,board as boardAtom, activeNote as activeNoteAtom } from '../redux/store';
 import { useRecoilValue,useRecoilState } from 'recoil';
 
 import "../../node_modules/react-crud-icons/dist/css/react-crud-icons.css";
-function Pitches({item ,url,index, deleteItem, moveItem, addItem,board,func,activated}) {
+function Pitches({measure,item ,url,index, deleteItem, moveItem, addItem,board,func,activated}) {
     
     const [activeNote, setactiveNote] = useRecoilState(activeNoteAtom);
+    const [activeMeasure, setactiveMeasure] = useRecoilState(activeMeasureAtom);
     
     const [isActive, setIsActive] = useState(false);
 
@@ -102,19 +103,29 @@ function Pitches({item ,url,index, deleteItem, moveItem, addItem,board,func,acti
 
     useEffect(() => {
         
-        console.log(item)
-        if(item.occupied){
-            setIsActive(activated == index)}
+        if(item.occupied && measure==activeMeasure){
+            
+
+                setIsActive(activated == index)
+                
+            }
+        else{
+            setIsActive(false)
+        }
         
 
 
         
         
         
-    }, [activated])
+    }, [activated,activeNote,activeMeasure])
 
     const changeColor = () => {
-        setactiveNote(index)
+        if (item.show) {
+            setactiveMeasure(measure)
+            setactiveNote(index)
+        }
+        
 
 
 

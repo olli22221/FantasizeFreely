@@ -84,6 +84,11 @@
   flex: 1;
 }
 
+.chooseMeter-container {
+  margin-left: 150px;
+  float: left;
+}
+
 .flex-container {
   display: flex;
   height: 130px;

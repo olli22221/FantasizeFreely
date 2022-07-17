@@ -22,7 +22,6 @@ function PitchesDraggable({item ,url,index, moveItem, target,addPitch}) {
     useEffect(() => {
 
         setDragging(isDragging)
-        console.log(dragging)
 
     }, [isDragging])
 

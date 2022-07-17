@@ -1,9 +1,15 @@
 import { atom } from "recoil";
 import { recoilPersist } from "recoil-persist";
-import {defaultpitches,defaultpitchesoccupied,defaultPitchesArray} from '../data/composePanelData';
+import {defaultpitches,defaultpitchesoccupied,defaultPitchesArray,defaultPitchesArray_} from '../data/composePanelData';
 
 const { persistAtom } = recoilPersist()
 
+
+export const activeMeasure = atom ({
+    key: "activeMeasure",
+    default: 0, 
+    effects_UNSTABLE: [persistAtom],
+})
 
 export const activeNote = atom ({
     key: "activeNote",
@@ -23,16 +29,44 @@ export const group = atom ({
     effects_UNSTABLE: [persistAtom],
 })
 
+export const measure1Meter = atom({
+    key: "meter",
+    default: 17, 
+    effects_UNSTABLE: [persistAtom],
+})
 
-export const board = atom({
+export const measure2Meter = atom({
+    key: "meter",
+    default: 17, 
+    effects_UNSTABLE: [persistAtom],
+})
+export const measure3Meter = atom({
+    key: "meter",
+    default: 17, 
+    effects_UNSTABLE: [persistAtom],
+})
+
+
+export const measure1 = atom({
     key: "board",
-    default: defaultPitchesArray, 
+    default: defaultPitchesArray_(17), 
+    effects_UNSTABLE: [persistAtom],
+})
+export const measure2 = atom({
+    key: "board1",
+    default: defaultPitchesArray_(17), 
+    effects_UNSTABLE: [persistAtom],
+})
+
+export const measure3 = atom({
+    key: "board2",
+    default: defaultPitchesArray_(17), 
     effects_UNSTABLE: [persistAtom],
 })
 
 export const meter = atom({
     key: "meter",
-    default: "4/4", 
+    default: 9, 
     effects_UNSTABLE: [persistAtom],
 })
 

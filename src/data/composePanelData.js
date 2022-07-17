@@ -4,7 +4,7 @@ export let defaultpitches =
         
         show: false,
         type: ["c/4"],
-        duration: "h",
+        duration: "n",
         locked: true,
         occupied: false,
         src:require('../media/pitches/empty.PNG'),
@@ -15,7 +15,18 @@ export let defaultpitches =
     {
         show: false,
         type: ["c/4"],
-        duration: "h",
+        duration: "n",
+        locked: true,
+        occupied: true,
+        src:require('../media/pitches/empty.PNG'),
+
+    }
+
+    export const defaultpitchesoccupiedfirst = 
+    {
+        show: true,
+        type: ["c/4"],
+        duration: "n",
         locked: true,
         occupied: true,
         src:require('../media/pitches/empty.PNG'),
@@ -452,17 +463,30 @@ export const sixteenthpitches = [
     
 ]
 
-     const defaultPitchesArray_= () => { 
+export let defaultpitches_notused = 
+    {
+        
+        show: false,
+        type: ["c/4"],
+        duration: "h",
+        locked: true,
+        occupied: true,
+        src:require('../media/pitches/empty.PNG'),
+
+    }
+
+
+    export const defaultPitchesArray_= (meter) => { 
         let  result= []
-        for (var  i = 1; i <= 8; i++) {
-            result = result.concat(new Array(1).fill(defaultpitchesoccupied).concat(new Array(16).fill(defaultpitches)))
-          }
-          console.log(result)
+        
+        result = result.concat(new Array(1).fill(defaultpitchesoccupiedfirst).concat(new Array(meter-1).fill(defaultpitches)).concat(new Array(17-meter).fill(defaultpitches_notused)))
+        
+          console.log(meter)
           return result
         
     }
 
-    export const defaultPitchesArray = defaultPitchesArray_()
+    
 
     
 
