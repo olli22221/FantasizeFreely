@@ -30,18 +30,18 @@ export const group = atom ({
 })
 
 export const measure1Meter = atom({
-    key: "meter",
+    key: "meter1",
     default: 17, 
     effects_UNSTABLE: [persistAtom],
 })
 
 export const measure2Meter = atom({
-    key: "meter",
+    key: "meter2",
     default: 17, 
     effects_UNSTABLE: [persistAtom],
 })
 export const measure3Meter = atom({
-    key: "meter",
+    key: "meter3",
     default: 17, 
     effects_UNSTABLE: [persistAtom],
 })

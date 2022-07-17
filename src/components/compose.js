@@ -15,7 +15,6 @@ import {pitches,halfpitches,wholepitches,sixteenthpitches,eightpitches,defaultpi
 import ScoreBox from './ScoreBox';
 import Modal from 'react-modal';
 import {fourQuarter,twoQuarter,sixEighth} from '../data/meterData'
-import 'boxicons';
 
 
 function Compose() {
@@ -120,13 +119,23 @@ function Compose() {
 
             if(activeMeasure == 1){
                 
-                    const indexToDelete = activeNote
-                    const stepsToDelete = calculateSteps(measure2[indexToDelete].duration)
-                    const firstPart = measure2.slice(0, indexToDelete)
-                    const middlePart = new Array(stepsToDelete).fill(defaultpitches)
-                    const endPart = measure2.slice(indexToDelete+stepsToDelete, measure2.length).concat(middlePart)
-                    const resultingMeasure = firstPart.concat(endPart)
-                    setMeasure2(resultingMeasure)
+                const indexToDelete = activeNote
+                const stepsToDelete = calculateSteps(measure2[indexToDelete].duration)
+                const firstPart = measure2.slice(0, indexToDelete)
+                const newActivatedIndex = calculateLastNoteIndex(firstPart)
+                const secondPart = new Array(stepsToDelete).fill(defaultpitches) 
+                const tmpPart = measure2.slice(indexToDelete+stepsToDelete, measure2.length)
+                const boundaryIndexToEmptyPlaces = calculateLastNoteIndex(tmpPart)
+                const space = calculateSteps(tmpPart[boundaryIndexToEmptyPlaces].duration)
+                const thirdPart = tmpPart.slice(0,boundaryIndexToEmptyPlaces+space)
+                const endPart = tmpPart.slice(boundaryIndexToEmptyPlaces+space, tmpPart.length)
+                const endPart_ = secondPart.concat(endPart)
+                const resultingMeasure = firstPart.concat(thirdPart).concat(endPart_)
+                setMeasure2(resultingMeasure)
+                
+                setactiveNote(newActivatedIndex)
+                const stepsFornewActivated = calculateSteps(resultingMeasure[newActivatedIndex].duration)
+                setPointer(newActivatedIndex + stepsFornewActivated)
 
                 }
             
@@ -182,7 +191,6 @@ function Compose() {
             const sliceOfBoard = measure.slice(endOfMeasure-meter+1,endOfMeasure)
             //const sliceLen = sliceOfBoard.filter(piece => piece.occupied == false).length
             const sliceLen = measure.filter(piece => piece.occupied == false).length
-            console.log(sliceLen)
             if(steps <= sliceLen){
                 return true
             }
@@ -197,7 +205,7 @@ function Compose() {
 
             const index = activeNote
             const steps = calculateSteps(item.duration)
-
+            
             if (activeMeasure == 0) {
                 
                 const fit = checkMatch(index,steps,measure1)
@@ -205,6 +213,7 @@ function Compose() {
 
 
                 if (activeNote % measure1Meter == 0) {
+                    console.log(measure1Meter)
                     const index = pointer
                     setMeasure1(measure1 =>{
                     
@@ -220,7 +229,6 @@ function Compose() {
                         const endSlice = updatedBoardData.slice(index,updatedBoardData.length-steps)
                         
                         const updatedBoardData_ = startSlice.concat(middleSlice).concat(endSlice).concat(restboard)
-                        console.log(updatedBoardData_)
                         return updatedBoardData_
     
                     })
@@ -235,18 +243,12 @@ function Compose() {
                         }
                     })
 
-                    
                 }
-
-                else{
-
-                    
+               else{
+ 
                     const activeItem = calculateSteps( measure1[index].duration)
 
                 setMeasure1(measure1 =>{
-                    
-                    
-                    
                     
                     const updatedBoardData = measure1.slice(0,measure1Meter)
                     const restboard = measure1.slice(measure1Meter,measure1.length)
@@ -283,7 +285,7 @@ function Compose() {
 
             const currentMeasure_ =  [...measure1]
             const lastNoteofMeasure = calculateLastNoteIndex(currentMeasure_)
-
+            console.log("lastNoteofMeasure")
             if (activeNote == lastNoteofMeasure) {
                 setactiveMeasure(1)
                 setactiveNote(0)
@@ -499,7 +501,7 @@ function Compose() {
 
         }
 
-        const switchLeft = (func, measureNumber) =>{
+        const switchLeft = (func, measureNumber,func2) =>{
             if (meterIndex == 0){
                 setMeterIndex(meterArray.length-1)
                 setMetersrc(meterArray[meterIndex])
@@ -507,6 +509,7 @@ function Compose() {
                 setactiveMeasure(measureNumber)
                 setactiveNote(0)
                 setPointer(1)
+                func2(meterArray[meterIndex].numberofPlaces)
                 return
             }
             
@@ -515,18 +518,21 @@ function Compose() {
             func(defaultPitchesArray_(meterArray[meterIndex].numberofPlaces))
             setactiveMeasure(measureNumber)
             setactiveNote(0)
-                setPointer(1)
+            setPointer(1)
+            func2(meterArray[meterIndex].numberofPlaces)
 
         }
 
-        const switchRight = (func,measureNumber) =>{
+        const switchRight = (func,measureNumber,func2) =>{
             setMeterIndex((meterIndex+1)%3)
             setMetersrc(meterArray[meterIndex])
             func(defaultPitchesArray_(meterArray[meterIndex].numberofPlaces))
             console.log(measure1)
             setactiveMeasure(measureNumber)
             setactiveNote(0)
-                setPointer(1)
+            setPointer(1)
+            func2(meterArray[meterIndex].numberofPlaces)
+                
         }
 
 
@@ -546,13 +552,13 @@ function Compose() {
                 <div className='rowA'>
                 
                 <div className='chooseMeter-container'>
-                <button onClick={()=>switchLeft(setMeasure1,0)}>Links</button>
+                <button onClick={()=>switchLeft(setMeasure1,0,setmeasure1Meter)}>Links</button>
                     <img
                     height="48px" 
                     width="47px"
                     src={meterscr.src}
                     />
-                    <button onClick={()=>switchRight(setMeasure1,0)}>Rechts</button>
+                    <button onClick={()=>switchRight(setMeasure1,0,setmeasure1Meter)}>Rechts</button>
                     
                 </div>
            
