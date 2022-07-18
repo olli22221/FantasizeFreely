@@ -21,8 +21,12 @@ import {fourQuarter,twoQuarter,sixEighth} from '../data/meterData'
 function Compose() {
 
     const meterArray = [fourQuarter,twoQuarter,sixEighth]
-    const [meterIndex,setMeterIndex] = useState(0) 
-    const [meterscr, setMetersrc] = useState(fourQuarter);
+    const [meterIndex1,setMeterIndex1] = useState(0)
+    const [meterIndex2,setMeterIndex2] = useState(0)
+    const [meterIndex3,setMeterIndex3] = useState(0) 
+    const [meterscr1, setMetersrc1] = useState(fourQuarter);
+    const [meterscr2, setMetersrc2] = useState(fourQuarter);
+    const [meterscr3, setMetersrc3] = useState(fourQuarter);
     const [isActive, setIsActive] = useState(false);
     const [activeNote, setactiveNote] = useRecoilState(activeNoteAtom);
     const [meter, setMeter] = useRecoilState(meterAtom);
@@ -97,18 +101,130 @@ function Compose() {
             
     }*/
 
-        const replaceItem = () => {
+        const replaceItem = (item) => {
             if (activeNote == 0) {
                 return
                 
             }
-            if(activeMeasure == 0){
+            
 
             const indexToReplace = activeNote
-            const stepsToReplace = calculateSteps(measure1[indexToReplace].duration)
-            const firstPart = measure1.slice(0, indexToReplace)
+            const itemSteps = calculateSteps(item.duration)
+            
+            
+            if(activeMeasure == 0){
+                const updatedBoardData = measure1.slice(0,measure1Meter)
+                const restboard = measure1.slice(measure1Meter,measure1.length)
+                const stepsToReplace = calculateSteps(updatedBoardData[indexToReplace].duration)
+                const sliceLen = updatedBoardData.filter(piece => piece.occupied == false).length
+                if(itemSteps > sliceLen + stepsToReplace)return
+                else if(itemSteps == stepsToReplace){
+                    const firstPart = updatedBoardData.slice(0, indexToReplace)
+                    const middlePart = [item].concat(new Array(itemSteps-1).fill(defaultpitchesoccupied))
+                    const endPart = updatedBoardData.slice(indexToReplace + stepsToReplace,measure1Meter)
+                    const result = firstPart.concat(middlePart).concat(endPart).concat(restboard)
+                    console.log(result)
+                    setMeasure1(result)
 
+                }
+                else if(itemSteps < stepsToReplace){
+                    const diffDuration = stepsToReplace - itemSteps
+                    const firstPart = updatedBoardData.slice(0, indexToReplace)
+                    const middlePart = [item].concat(new Array(itemSteps-1).fill(defaultpitchesoccupied))
+                    const endPart = updatedBoardData.slice(indexToReplace + stepsToReplace,updatedBoardData.length).concat(new Array(diffDuration).fill(defaultpitches))
+                    const result = firstPart.concat(middlePart).concat(endPart).concat(restboard)
+                    console.log(middlePart)
+                    setMeasure1(result)
+
+                }
+                else{
+                    const diffDuration = itemSteps - stepsToReplace
+                    const firstPart = updatedBoardData.slice(0, indexToReplace)
+                    const middlePart = [item].concat(new Array(itemSteps-1).fill(defaultpitchesoccupied))
+                    const endPart = updatedBoardData.slice(indexToReplace + stepsToReplace,updatedBoardData.length-diffDuration)
+                    const result = firstPart.concat(middlePart).concat(endPart).concat(restboard)
+                    console.log(result)
+                    setMeasure1(result)
+
+                }
+                
             }
+            else if(activeMeasure == 1){
+                const updatedBoardData = measure2.slice(0,measure2Meter)
+                const restboard = measure1.slice(measure2Meter,measure2.length)
+                const stepsToReplace = calculateSteps(updatedBoardData[indexToReplace].duration)
+                const sliceLen = updatedBoardData.filter(piece => piece.occupied == false).length
+                if(item.duration > sliceLen + stepsToReplace)return
+                else if(itemSteps == stepsToReplace){
+                    const firstPart = updatedBoardData.slice(0, indexToReplace)
+                    const middlePart = [item].concat(new Array(itemSteps-1).fill(defaultpitchesoccupied))
+                    const endPart = updatedBoardData.slice(indexToReplace + stepsToReplace,measure1Meter)
+                    const result = firstPart.concat(middlePart).concat(endPart).concat(restboard)
+                    console.log(result)
+                    setMeasure2(result)
+
+                }
+                else if(itemSteps < stepsToReplace){
+                    const diffDuration = stepsToReplace - itemSteps
+                    const firstPart = updatedBoardData.slice(0, indexToReplace)
+                    const middlePart = [item].concat(new Array(itemSteps-1).fill(defaultpitchesoccupied))
+                    const endPart = updatedBoardData.slice(indexToReplace + stepsToReplace,updatedBoardData.length).concat(new Array(diffDuration).fill(defaultpitches))
+                    const result = firstPart.concat(middlePart).concat(endPart).concat(restboard)
+                    console.log(middlePart)
+                    setMeasure2(result)
+
+                }
+                else{
+                    const diffDuration = itemSteps - stepsToReplace
+                    const firstPart = updatedBoardData.slice(0, indexToReplace)
+                    const middlePart = [item].concat(new Array(itemSteps-1).fill(defaultpitchesoccupied))
+                    const endPart = updatedBoardData.slice(indexToReplace + stepsToReplace,updatedBoardData.length-diffDuration)
+                    const result = firstPart.concat(middlePart).concat(endPart).concat(restboard)
+                    console.log(result)
+                    setMeasure2(result)
+
+                }
+            }
+            else if(activeMeasure == 2){
+                const updatedBoardData = measure3.slice(0,measure3Meter)
+                const restboard = measure3.slice(measure3Meter,measure3.length)
+                const stepsToReplace = calculateSteps(updatedBoardData[indexToReplace].duration)
+                const sliceLen = updatedBoardData.filter(piece => piece.occupied == false).length
+                console.log(item)
+                if(itemSteps > sliceLen + stepsToReplace)return
+                else if(itemSteps == stepsToReplace){
+                    const firstPart = updatedBoardData.slice(0, indexToReplace)
+                    const middlePart = [item].concat(new Array(itemSteps-1).fill(defaultpitchesoccupied))
+                    const endPart = updatedBoardData.slice(indexToReplace + stepsToReplace,measure1Meter)
+                    const result = firstPart.concat(middlePart).concat(endPart).concat(restboard)
+                    console.log(result)
+                    setMeasure3(result)
+
+                }
+                else if(itemSteps < stepsToReplace){
+                    const diffDuration = stepsToReplace - itemSteps
+                    const firstPart = updatedBoardData.slice(0, indexToReplace)
+                    const middlePart = [item].concat(new Array(itemSteps-1).fill(defaultpitchesoccupied))
+                    const endPart = updatedBoardData.slice(indexToReplace + stepsToReplace,updatedBoardData.length).concat(new Array(diffDuration).fill(defaultpitches))
+                    const result = firstPart.concat(middlePart).concat(endPart).concat(restboard)
+                    console.log(middlePart)
+                    setMeasure3(result)
+
+                }
+                else{
+                    const diffDuration = itemSteps - stepsToReplace
+                    const firstPart = updatedBoardData.slice(0, indexToReplace)
+                    const middlePart = [item].concat(new Array(itemSteps-1).fill(defaultpitchesoccupied))
+                    const endPart = updatedBoardData.slice(indexToReplace + stepsToReplace,updatedBoardData.length-diffDuration)
+                    const result = firstPart.concat(middlePart).concat(endPart).concat(restboard)
+                    console.log(result)
+                    setMeasure3(result)
+
+                }
+            }
+            
+
+            
 
 
         }
@@ -162,7 +278,27 @@ function Compose() {
                 }
             
 
-            if(activeMeasure == 2){}
+            if(activeMeasure == 2){
+
+                const indexToDelete = activeNote
+                const stepsToDelete = calculateSteps(measure3[indexToDelete].duration)
+                const firstPart = measure3.slice(0, indexToDelete)
+                const newActivatedIndex = calculateLastNoteIndex(firstPart)
+                const secondPart = new Array(stepsToDelete).fill(defaultpitches) 
+                const tmpPart = measure3.slice(indexToDelete+stepsToDelete, measure3.length)
+                const boundaryIndexToEmptyPlaces = calculateLastNoteIndex(tmpPart)
+                const space = calculateSteps(tmpPart[boundaryIndexToEmptyPlaces].duration)
+                const thirdPart = tmpPart.slice(0,boundaryIndexToEmptyPlaces+space)
+                const endPart = tmpPart.slice(boundaryIndexToEmptyPlaces+space, tmpPart.length)
+                const endPart_ = secondPart.concat(endPart)
+                const resultingMeasure = firstPart.concat(thirdPart).concat(endPart_)
+                setMeasure3(resultingMeasure)
+                
+                setactiveNote(newActivatedIndex)
+                const stepsFornewActivated = calculateSteps(resultingMeasure[newActivatedIndex].duration)
+                setPointer(newActivatedIndex + stepsFornewActivated)
+
+            }
         }
     
         const calculateSteps = (duration) => {
@@ -443,15 +579,45 @@ function Compose() {
 
             const currentMeasure_ =  [...measure2]
             const sliceLen = currentMeasure_.filter(piece => piece.occupied == false).length
+            
             if(sliceLen > 0){
                 return
             }
             const lastNoteofMeasure = calculateLastNoteIndex(currentMeasure_)
-
+            
+            
             if (activeNote == lastNoteofMeasure) {
-                setactiveMeasure(2)
-                setactiveNote(0)
+                
                 setPointer(1)
+                const fit = checkMatch(index,steps,measure3)
+                
+                if(!fit)return
+
+                setMeasure3(measure3 =>{
+                    
+                    
+                    
+                    console.log(pointer)
+                    const updatedBoardData = measure3.slice(0,measure3Meter)
+                    const restboard = measure3.slice(measure3Meter,measure3.length)
+                    
+                    const startSlice = updatedBoardData.slice(0,1)
+                    const tmpDefaultPitches = defaultpitchesoccupied
+                    const middleSlice = [item].concat(new Array(steps-1).fill(tmpDefaultPitches))
+                    const endSlice = updatedBoardData.slice(1,updatedBoardData.length-steps)
+                    
+                    const updatedBoardData_ = startSlice.concat(middleSlice).concat(endSlice).concat(restboard)
+                    return updatedBoardData_
+            
+        })
+                setactiveMeasure(2)
+                setactiveNote(1)
+
+                setPointer(pointer =>{
+                   
+                    return index + steps
+                   
+                })
                 
             }
 
@@ -546,7 +712,7 @@ function Compose() {
 
 
         else{
-            const currentMeasure_ =  [...measure1]
+            const currentMeasure_ =  [...measure3]
             const sliceLen = currentMeasure_.filter(piece => piece.occupied == false).length
             if(sliceLen > 0){
                 return
@@ -554,9 +720,36 @@ function Compose() {
             const lastNoteofMeasure = calculateLastNoteIndex(currentMeasure_)
             console.log("lastNoteofMeasure")
             if (activeNote == lastNoteofMeasure) {
-                setactiveMeasure(3)
-                setactiveNote(1)
+                
                 setPointer(1)
+                const fit = checkMatch(index,steps,measure3)
+                if(!fit)return
+
+
+                setMeasure3(measure3 =>{
+                    
+                    
+                    const updatedBoardData = measure3.slice(0,measure3Meter)
+                    const restboard = measure3.slice(measure3Meter,measure3.length)
+                    
+                    const startSlice = updatedBoardData.slice(0,1)
+                    const tmpDefaultPitches = defaultpitchesoccupied
+                    const middleSlice = [item].concat(new Array(steps-1).fill(tmpDefaultPitches))
+                    const endSlice = updatedBoardData.slice(1,updatedBoardData.length-steps)
+                    
+                    const updatedBoardData_ = startSlice.concat(middleSlice).concat(endSlice).concat(restboard)
+                    return updatedBoardData_
+            
+        })
+
+            setactiveMeasure(1)
+                setactiveNote(1)
+                
+                setPointer(pointer =>{
+                   
+                    return index + steps
+                   
+                })
                 
             }
             else{
@@ -576,37 +769,37 @@ function Compose() {
 
         }
 
-        const switchLeft = (func, measureNumber,func2) =>{
-            if (meterIndex == 0){
-                setMeterIndex(meterArray.length-1)
-                setMetersrc(meterArray[meterIndex])
-                func(defaultPitchesArray_(meterArray[meterIndex].numberofPlaces))
+        const switchLeft = (func, measureNumber,func2,setMeterIdx,meterIdx,setMeterSrc) =>{
+            if (meterIdx == 0){
+                setMeterIdx(meterArray.length-1)
+                setMeterSrc(meterArray[meterIdx])
+                func(defaultPitchesArray_(meterArray[meterIdx].numberofPlaces))
                 setactiveMeasure(measureNumber)
                 setactiveNote(0)
                 setPointer(1)
-                func2(meterArray[meterIndex].numberofPlaces)
+                func2(meterArray[meterIdx].numberofPlaces)
                 return
             }
             
-            setMeterIndex((meterIndex-1)%3)
-            setMetersrc(meterArray[meterIndex])
-            func(defaultPitchesArray_(meterArray[meterIndex].numberofPlaces))
+            setMeterIdx((meterIdx-1)%3)
+            setMeterSrc(meterArray[meterIdx])
+            func(defaultPitchesArray_(meterArray[meterIdx].numberofPlaces))
             setactiveMeasure(measureNumber)
             setactiveNote(0)
             setPointer(1)
-            func2(meterArray[meterIndex].numberofPlaces)
+            func2(meterArray[meterIdx].numberofPlaces)
 
         }
 
-        const switchRight = (func,measureNumber,func2) =>{
-            setMeterIndex((meterIndex+1)%3)
-            setMetersrc(meterArray[meterIndex])
-            func(defaultPitchesArray_(meterArray[meterIndex].numberofPlaces))
+        const switchRight = (func,measureNumber,func2,setMeterIdx,meterIdx,setMeterSrc) =>{
+            setMeterIdx((meterIdx+1)%3)
+            setMeterSrc(meterArray[meterIdx])
+            func(defaultPitchesArray_(meterArray[meterIdx].numberofPlaces))
             console.log(measure1)
             setactiveMeasure(measureNumber)
             setactiveNote(0)
             setPointer(1)
-            func2(meterArray[meterIndex].numberofPlaces)
+            func2(meterArray[meterIdx].numberofPlaces)
                 
         }
 
@@ -623,22 +816,24 @@ function Compose() {
     
 
     return(
-        <div className='div-top'>
+
+        <div className='div-toptop'>
+        <div className='div-top' style={{overflowY:'scroll'}}>
 
            
 
-            <div    className="row">
+            <div    className="row" >
                 
-                <div className='rowA'>
+                <div className='rowA' >
                 
                 <div className='chooseMeter-container'>
-                <button onClick={()=>switchLeft(setMeasure1,0,setmeasure1Meter)}>Links</button>
-                    <img
-                    height="48px" 
-                    width="47px"
-                    src={meterscr.src}
-                    />
-                    <button onClick={()=>switchRight(setMeasure1,0,setmeasure1Meter)}>Rechts</button>
+                    <button onClick={()=>switchLeft(setMeasure1,0,setmeasure1Meter,setMeterIndex1,meterIndex1,setMetersrc1)}>Links</button>
+                        <img
+                        height="48px" 
+                        width="47px"
+                        src={meterscr1.src}
+                        />
+                    <button onClick={()=>switchRight(setMeasure1,0,setmeasure1Meter,setMeterIndex1,meterIndex1,setMetersrc1)}>Rechts</button>
                     
                 </div>
            
@@ -664,6 +859,17 @@ function Compose() {
             
 
         <div className='rowA'>
+
+        <div className='chooseMeter-container'>
+                <button onClick={()=>switchLeft(setMeasure2,1,setmeasure2Meter,setMeterIndex2,meterIndex2,setMetersrc2)}>Links</button>
+                    <img
+                    height="48px" 
+                    width="47px"
+                    src={meterscr2.src}
+                    />
+                    <button onClick={()=>switchRight(setMeasure2,1,setmeasure2Meter,setMeterIndex2,meterIndex2,setMetersrc2)}>Rechts</button>
+                    
+                </div>
             
             <div onMouseEnter={()=>{setHover(true)}} onMouseLeave={()=>{setHover(false)}}   className="flex-container"  >
                 
@@ -681,7 +887,21 @@ function Compose() {
             </div>
             
             </div>
-            <div className='rowA0' id='measure3'>
+            </div>
+
+            <div    className="row" >
+            <div className='rowA' id='measure3'>
+
+            <div className='chooseMeter-container'>
+                <button onClick={()=>switchLeft(setMeasure3,2,setmeasure3Meter,setMeterIndex3,meterIndex3,setMetersrc3)}>Links</button>
+                    <img
+                    height="48px" 
+                    width="47px"
+                    src={meterscr3.src}
+                    />
+                    <button onClick={()=>switchRight(setMeasure3,2,setmeasure3Meter,setMeterIndex3,meterIndex3,setMetersrc3)}>Rechts</button>
+                    
+                </div>
             
             <div onMouseEnter={()=>{setHover(true)}} onMouseLeave={()=>{setHover(false)}}   className="flex-container"  >
                 
@@ -698,11 +918,107 @@ function Compose() {
                     
             </div>
             
-        </div>
-        
-            
-            
+        </div>        
 
+        <div className='rowA' id='measure3'>
+
+            <div className='chooseMeter-container'>
+                <button onClick={()=>switchLeft(setMeasure3,2,setmeasure3Meter,setMeterIndex3,meterIndex3,setMetersrc3)}>Links</button>
+                    <img
+                    height="48px" 
+                    width="47px"
+                    src={meterscr3.src}
+                    />
+                    <button onClick={()=>switchRight(setMeasure3,2,setmeasure3Meter,setMeterIndex3,meterIndex3,setMetersrc3)}>Rechts</button>
+                    
+                </div>
+            
+            <div onMouseEnter={()=>{setHover(true)}} onMouseLeave={()=>{setHover(false)}}   className="flex-container"  >
+                
+                {dragging || hovering
+                   ? <div className="flex-container">
+                     
+                {measure3.slice(0,17).map( (note ,idx) => {
+                    return <Pitches measure={2}  url={note} activated={activeNote}  index={idx} item={note} board={measure3} />
+                })} </div>
+
+                :<div  className="flex-container" >
+                    <ScoreBox notes={measure3.slice(34,51)} timeSign="4/4" violin={false}/>
+                    </div>}
+                    
+            </div>
+            
+        </div>        
+  
+            </div>
+
+            <div    className="row" >
+            <div className='rowA' id='measure3'>
+
+            <div className='chooseMeter-container'>
+                <button onClick={()=>switchLeft(setMeasure3,2,setmeasure3Meter,setMeterIndex3,meterIndex3,setMetersrc3)}>Links</button>
+                    <img
+                    height="48px" 
+                    width="47px"
+                    src={meterscr3.src}
+                    />
+                    <button onClick={()=>switchRight(setMeasure3,2,setmeasure3Meter,setMeterIndex3,meterIndex3,setMetersrc3)}>Rechts</button>
+                    
+                </div>
+            
+            <div onMouseEnter={()=>{setHover(true)}} onMouseLeave={()=>{setHover(false)}}   className="flex-container"  >
+                
+                {dragging || hovering
+                   ? <div className="flex-container">
+                     
+                {measure3.slice(0,17).map( (note ,idx) => {
+                    return <Pitches measure={2}  url={note} activated={activeNote}  index={idx} item={note} board={measure3} />
+                })} </div>
+
+                :<div  className="flex-container" >
+                    <ScoreBox notes={measure3.slice(34,51)} timeSign="4/4" violin={false}/>
+                    </div>}
+                    
+            </div>
+            
+        </div>        
+
+        <div className='rowA' id='measure3'>
+
+            <div className='chooseMeter-container'>
+                <button onClick={()=>switchLeft(setMeasure3,2,setmeasure3Meter,setMeterIndex3,meterIndex3,setMetersrc3)}>Links</button>
+                    <img
+                    height="48px" 
+                    width="47px"
+                    src={meterscr3.src}
+                    />
+                    <button onClick={()=>switchRight(setMeasure3,2,setmeasure3Meter,setMeterIndex3,meterIndex3,setMetersrc3)}>Rechts</button>
+                    
+                </div>
+            
+            <div onMouseEnter={()=>{setHover(true)}} onMouseLeave={()=>{setHover(false)}}   className="flex-container"  >
+                
+                {dragging || hovering
+                   ? <div className="flex-container">
+                     
+                {measure3.slice(0,17).map( (note ,idx) => {
+                    return <Pitches measure={2}  url={note} activated={activeNote}  index={idx} item={note} board={measure3} />
+                })} </div>
+
+                :<div  className="flex-container" >
+                    <ScoreBox notes={measure3.slice(34,51)} timeSign="4/4" violin={false}/>
+                    </div>}
+                    
+            </div>
+            
+        </div>        
+  
+            </div>
+            
+            </div>
+
+
+            
             <div className='Pitches' onMouseEnter={()=>{setHover(true)}} onMouseLeave={()=>{setHover(false)} } >
             
             {sixteenthpitches.concat(eightpitches,pitches).map( (note ,idx) => {
@@ -710,21 +1026,8 @@ function Compose() {
             })}
                 
     </div>
-
-
-
-    
-
-
-
-
-            </div>
-            <div>
-        
-    
-            <button onClick={deleteItem}> Delete </button>
-            <button onClick={changeStateOfReplace}> Replace </button></div>
-
+    <button onClick={deleteItem}> Delete </button>
+            <button onClick={changeStateOfReplace} style={{border: replaceActivated? '2px solid blue':'' }}> Replace </button>
 
             </div>
 

@@ -94,7 +94,7 @@
   height: 130px;
   min-width: 460px;
   width: fit-content;
-  border: 2px solid black;
+  
   row-gap: 20px;
   
   
@@ -112,12 +112,23 @@
   
 
 .div-top {
-  margin-top: 30px;
+  margin-top: 50px;
+  margin-left: 50px;
+  width: 1000px;
+  height: 400px;
   
+}
+
+.row {
+  height: 200px;
+
 }
 
 .rowA {
   margin: 2px;
+  
+  
+ 
   
 }
 
