@@ -5,6 +5,12 @@ import {defaultpitches,defaultpitchesoccupied,defaultPitchesArray,defaultPitches
 const { persistAtom } = recoilPersist()
 
 
+export const activePanel = atom ({
+    key: "replaceActive",
+    default: 2, 
+    effects_UNSTABLE: [persistAtom],
+})
+
 export const replaceActivated = atom ({
     key: "replaceActive",
     default: false, 

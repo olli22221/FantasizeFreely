@@ -9,10 +9,12 @@ import PitchesDraggable from './PitchesDraggable';
 import {activeMeasure as activeMeasureAtom,measure1 as measure1Atom,measure2 as measure2Atom,
     measure3 as measure3Atom,meter as meterAtom, dragging as dragAtom, 
     hovering as hoverAtom,activeNote as activeNoteAtom, pointer as pointerAtom, 
-    replaceActivated as replaceActivatedAtom} from '../redux/store'
+    replaceActivated as replaceActivatedAtom, activePanel as activePanelAtom} from '../redux/store'
 import { measure1Meter as measure1MeterAtom,measure2Meter as measure2MeterAtom,measure3Meter as measure3MeterAtom  } from '../redux/store';
 import { useRecoilValue,useRecoilState } from 'recoil';
-import {pitches,halfpitches,wholepitches,sixteenthpitches,eightpitches,defaultpitches,defaultpitchesoccupied, defaultPitchesArray_} from '../data/composePanelData'
+import {pitches,halfpitches,wholepitches,sixteenthpitches,eightpitches,
+    defaultpitches,defaultpitchesoccupied, defaultPitchesArray_,sixteenthpitchesSharp,
+eightpitchesSharp,pitchesSharp,wholepitchesSharp,halfpitchesSharp} from '../data/composePanelData'
 import ScoreBox from './ScoreBox';
 import Modal from 'react-modal';
 import {fourQuarter,twoQuarter,sixEighth} from '../data/meterData'
@@ -28,12 +30,16 @@ function Compose() {
     const [meterscr2, setMetersrc2] = useState(fourQuarter);
     const [meterscr3, setMetersrc3] = useState(fourQuarter);
     const [isActive, setIsActive] = useState(false);
+    const [panelArray, setpanelArray] = useState(pitches);
+    const [panelDuration, setPanelDuration] = useState(0);
+    const [accent, setAccent] = useState("none");
     const [activeNote, setactiveNote] = useRecoilState(activeNoteAtom);
     const [meter, setMeter] = useRecoilState(meterAtom);
     const [measure1Meter, setmeasure1Meter] = useRecoilState(measure1MeterAtom);
     const [measure2Meter, setmeasure2Meter] = useRecoilState(measure2MeterAtom);
     const [measure3Meter, setmeasure3Meter] = useRecoilState(measure3MeterAtom);
     const [replaceActivated, setreplaceActivated] = useRecoilState(replaceActivatedAtom);
+    const [activePanel, setActivePanel] = useRecoilState(activePanelAtom);
     
 
     const changeColor = () => {
@@ -69,12 +75,94 @@ function Compose() {
     const [hovering, setHover] = useRecoilState(hoverAtom);
     const dragging = useRecoilValue(dragAtom);
     useEffect(() => {
-       // setMeasure1(measure1)
-  
-        //setMeasure2(measure2)
-        //setMeasure3(measure3)
 
-    }, [activeNote])
+        switch (panelDuration) {
+            case "whole":
+                switch (accent) {
+                    case 0:
+                        setpanelArray(wholepitches)
+                        break;
+                    case 1:
+                        setpanelArray(wholepitchesSharp)
+                        break;
+                    case 2:
+                        setpanelArray(wholepitches)
+                        break;
+                
+                    default:
+                        break;
+                }
+                break;
+            case "half":
+                switch (accent) {
+                    case 0:
+                        setpanelArray(halfpitches)
+                        break;
+                    case 1:
+                        setpanelArray(halfpitchesSharp)
+                        break;
+                    case 2:
+                        setpanelArray(halfpitches)
+                        break;
+                
+                    default:
+                        break;
+                }
+                break;
+            case "quarter":
+                switch (accent) {
+                    case 0:
+                        setpanelArray(pitches)
+                        break;
+                    case 1:
+                        setpanelArray(pitchesSharp)
+                        break;
+                    case 2:
+                        setpanelArray(pitches)
+                        break;
+                
+                    default:
+                        break;
+                }
+                break;
+            case "eighth":
+                switch (accent) {
+                    case 0:
+                        setpanelArray(eightpitches)
+                        break;
+                    case 1:
+                        setpanelArray(eightpitchesSharp)
+                        break;
+                    case 2:
+                        setpanelArray(eightpitches)
+                        break;
+                
+                    default:
+                        break;
+                }
+                break;
+            case "sixteenth":
+                switch (accent) {
+                    case 0:
+                        setpanelArray(sixteenthpitches)
+                        break;
+                    case 1:
+                        setpanelArray(sixteenthpitchesSharp)
+                        break;
+                    case 2:
+                        setpanelArray(sixteenthpitches)
+                        break;
+                
+                    default:
+                        break;
+                }
+                break;
+            default:
+                break;
+        }
+       
+
+    }, [accent,panelDuration])
 
 
     /*const [{isOver}, drop] = useDrop(() => ({
@@ -597,7 +685,7 @@ function Compose() {
                     
                     
                     
-                    console.log(pointer)
+                    
                     const updatedBoardData = measure3.slice(0,measure3Meter)
                     const restboard = measure3.slice(measure3Meter,measure3.length)
                     
@@ -637,7 +725,7 @@ function Compose() {
 
 
                 if (activeNote % measure3Meter == 0) {
-                    const index = pointer
+                    const index = 1
                     setMeasure3(measure3 =>{
                     
                     
@@ -809,6 +897,22 @@ function Compose() {
 
         }
 
+        const changeDuration = (duration) => {
+
+                 setPanelDuration(duration)
+            
+        }
+
+        const changeAccent = (accent) => {
+
+            if(accent === "none")setAccent(0)
+            if(accent === "sharp")setAccent(1)
+            if(accent === "minor")setAccent(2)
+            
+
+        }
+
+
 
 
         
@@ -816,9 +920,11 @@ function Compose() {
     
 
     return(
+        <div>
 
-        <div className='div-toptop'>
-        <div className='div-top' style={{overflowY:'scroll'}}>
+            <div className='topColumnLeft' onMouseEnter={()=>{setHover(true)}} onMouseLeave={()=>{setHover(false)}}>
+        <div className='div-toptop' >
+        <div className='div-top'   style={{overflowY:'scroll'}}>
 
            
 
@@ -837,7 +943,7 @@ function Compose() {
                     
                 </div>
            
-            <div onMouseEnter={()=>{setHover(true)}} onMouseLeave={()=>{setHover(false)}}   className="flex-container"  >
+            <div    className="flex-container"  >
                 
                 {dragging || hovering
                    ? <div className="flex-container">
@@ -871,7 +977,7 @@ function Compose() {
                     
                 </div>
             
-            <div onMouseEnter={()=>{setHover(true)}} onMouseLeave={()=>{setHover(false)}}   className="flex-container"  >
+            <div    className="flex-container"  >
                 
                 {dragging || hovering
                    ? <div className="flex-container">
@@ -903,7 +1009,7 @@ function Compose() {
                     
                 </div>
             
-            <div onMouseEnter={()=>{setHover(true)}} onMouseLeave={()=>{setHover(false)}}   className="flex-container"  >
+            <div   className="flex-container"  >
                 
                 {dragging || hovering
                    ? <div className="flex-container">
@@ -933,7 +1039,7 @@ function Compose() {
                     
                 </div>
             
-            <div onMouseEnter={()=>{setHover(true)}} onMouseLeave={()=>{setHover(false)}}   className="flex-container"  >
+            <div   className="flex-container"  >
                 
                 {dragging || hovering
                    ? <div className="flex-container">
@@ -966,7 +1072,7 @@ function Compose() {
                     
                 </div>
             
-            <div onMouseEnter={()=>{setHover(true)}} onMouseLeave={()=>{setHover(false)}}   className="flex-container"  >
+            <div className="flex-container"  >
                 
                 {dragging || hovering
                    ? <div className="flex-container">
@@ -996,7 +1102,7 @@ function Compose() {
                     
                 </div>
             
-            <div onMouseEnter={()=>{setHover(true)}} onMouseLeave={()=>{setHover(false)}}   className="flex-container"  >
+            <div    className="flex-container"  >
                 
                 {dragging || hovering
                    ? <div className="flex-container">
@@ -1019,16 +1125,52 @@ function Compose() {
 
 
             
-            <div className='Pitches' onMouseEnter={()=>{setHover(true)}} onMouseLeave={()=>{setHover(false)} } >
-            
-            {sixteenthpitches.concat(eightpitches,pitches).map( (note ,idx) => {
-                return <PitchesDraggable url={note}  index={idx} item={note} addPitch={addPitch} replacePitch={replaceItem} />
-            })}
+            <div className='Pitches' >
+                <div className='column1'>
+                <div>
+                    {panelArray.slice(0,7).map( (note ,idx) => {
+                        return <PitchesDraggable url={note}  index={idx} item={note} addPitch={addPitch} replacePitch={replaceItem} />
+                    })}
+                    </div>
+                    <div>
+                    {panelArray.slice(7,14).map( (note ,idx) => {
+                        return <PitchesDraggable url={note}  index={idx} item={note} addPitch={addPitch} replacePitch={replaceItem} />
+                    })}
+                    </div>
+                    <div>
+                    {panelArray.slice(14,18).map( (note ,idx) => {
+                        return <PitchesDraggable url={note}  index={idx} item={note} addPitch={addPitch} replacePitch={replaceItem} />
+                    })}
+                    </div>
+                    </div>
+                    <div className='column3'>
+                    <button onClick={() => {changeDuration("whole")}}> Whole Notes </button>
+                    <button onClick={() => {changeDuration("half")}} > Half Notes </button>
+                    <button onClick={() => {changeDuration("quarter")}}> Quarter Notes </button>
+                    <button onClick={() => {changeDuration("eighth")}} > Eighth Notes </button>
+                    <button onClick={() => {changeDuration("sixteenth")}}> Sixteenth Notes </button>
+                    <div>
+                        <button onClick={() => {changeAccent("sharp")}}> Sharp </button>
+                        <button onClick={() => {changeAccent("minor")}}> Minor </button>
+                        <button onClick={() => {changeAccent("minor")}}> None </button>
+                    </div>
+
+                    </div>
+                    <div className='column2'>
+                    <button onClick={deleteItem}> Delete </button>
+                    <button onClick={changeStateOfReplace} style={{border: replaceActivated? '2px solid blue':'' }}> Replace </button>
+                    
+                    </div>
                 
     </div>
-    <button onClick={deleteItem}> Delete </button>
-            <button onClick={changeStateOfReplace} style={{border: replaceActivated? '2px solid blue':'' }}> Replace </button>
+    
+            </div>
+            </div>
 
+
+            <div className='topColumnRight'>
+                testhdskghlhljfjghjlfshfslkjf
+            </div>
             </div>
 
     );

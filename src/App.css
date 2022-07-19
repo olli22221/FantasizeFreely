@@ -89,6 +89,30 @@
   float: left;
 }
 
+.topColumnRight{
+  width: 830px;
+  height: 800px;
+  float: right;
+}
+.topColumnLeft{
+ 
+  float: left;
+}
+
+
+
+.column1{
+  float: left;
+}
+
+.column2{
+  float: right;
+}
+.column3{
+  float: right;
+  margin: 50px;
+}
+
 .flex-container {
   display: flex;
   height: 130px;
