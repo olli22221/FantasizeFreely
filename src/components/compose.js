@@ -21,6 +21,7 @@ import {pitches,halfpitches,wholepitches,sixteenthpitches,eightpitches,
 eightpitchesSharp,pitchesSharp,wholepitchesSharp,halfpitchesSharp} from '../data/composePanelData'
 import ScoreBox from './ScoreBox';
 import Modal from 'react-modal';
+import SubmitComposition from './submitComposition';
 import {fourQuarter,twoQuarter,sixEighth} from '../data/meterData'
 
 
@@ -62,22 +63,9 @@ function Compose() {
     
 
     const changeColor = () => {
-        console.log("HelloWorld")
         setIsActive(true);
     }
-
-    const customStyles = {
-        content: {
-          top: '50%',
-          left: '50%',
-          right: 'auto',
-          bottom: 'auto',
-          marginRight: '-50%',
-          transform: 'translate(-50%, -50%)',
-        },
-      };
-
-      
+     
 
 
     const [modalIsOpen, setIsOpen] = useState(false)
@@ -1964,7 +1952,7 @@ function Compose() {
                     <img
                     height="48px" 
                     width="47px"
-                    src={meterscr3.src}
+                    src={meterscr7.src}
                     />
                     <button onClick={()=>switchRight(setMeasure7,6,setmeasure7Meter,setMeterIndex7,meterIndex7,setMetersrc7)}>Rechts</button>
                     
@@ -2069,6 +2057,12 @@ function Compose() {
 
             <div className='topColumnRight'>
                 testhdskghlhljfjghjlfshfslkjf
+                <div>
+                    <SubmitComposition composition={[measure1,measure2,measure3,measure4,measure5,
+                        measure6,measure7,measure8]} meter={[meterArray[meterIndex1],meterArray[meterIndex2],
+                            meterArray[meterIndex3],meterArray[meterIndex4],meterArray[meterIndex5],
+                            meterArray[meterIndex6],meterArray[meterIndex7],meterArray[meterIndex8],]} />
+                </div>
             </div>
             </div>
 
