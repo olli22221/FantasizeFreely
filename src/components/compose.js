@@ -6,6 +6,7 @@ import './../App.css';
 import {useDrop} from 'react-dnd';
 import DropWrapper from './DropWrapper';
 import PitchesDraggable from './PitchesDraggable';
+import { calculateSteps } from './util';
 import {activeMeasure as activeMeasureAtom,measure1 as measure1Atom,measure2 as measure2Atom,
     measure3 as measure3Atom,measure4 as measure4Atom,measure5 as measure5Atom,measure6 as measure6Atom,
     measure7 as measure7Atom,measure8 as measure8Atom,
@@ -176,6 +177,10 @@ function Compose() {
        
 
     }, [accent,panelDuration])
+
+    useEffect(() => { 
+        console.log(measure5)
+    },[measure5])
 
 
     /*const [{isOver}, drop] = useDrop(() => ({
@@ -580,27 +585,7 @@ function Compose() {
             }
         }
     
-        const calculateSteps = (duration) => {
-
-            switch (duration) {
-                case "8d":
-                    return 2
-                case "16":
-                    return 1
-                case "q":
-                    return 4
-                case "h":
-                    return 8
-                case "w":
-                    return 16
-                case "n":
-                    return 1                    
-                    
-            
-                default:
-                    break;
-            }
-        }
+        
 
         const calculatemeasureBoundaries = (activeNote,index) => {
 
@@ -641,6 +626,7 @@ function Compose() {
 
         
         const addPitch = (item) => {
+            console.log(item)
 
             const index = activeNote
             const steps = calculateSteps(item.duration)
@@ -731,7 +717,7 @@ function Compose() {
             if (activeNote == lastNoteofMeasure) {
                 setPointer(1)
                 const fit = checkMatch(index,steps,measure2)
-                console.log(fit)
+                
                 if(!fit)return
                 
                 
@@ -959,6 +945,7 @@ function Compose() {
                     
                     
                     
+                    
                     const updatedBoardData = measure3.slice(0,measure3Meter)
                     const restboard = measure3.slice(measure3Meter,measure3.length)
                     const steps_ = calculateSteps(updatedBoardData[index].duration) 
@@ -997,31 +984,36 @@ function Compose() {
                 return
             }
             const lastNoteofMeasure = calculateLastNoteIndex(currentMeasure_)
-            console.log("lastNoteofMeasure")
+            
             if (activeNote == lastNoteofMeasure) {
                 
                 setPointer(1)
-                const fit = checkMatch(index,steps,measure3)
+                const fit = checkMatch(index,steps,measure4)
+                
                 if(!fit)return
 
 
-                setMeasure3(measure3 =>{
+                setMeasure4(measure4 =>{
                     
                     
-                    const updatedBoardData = measure3.slice(0,measure3Meter)
-                    const restboard = measure3.slice(measure3Meter,measure3.length)
-                    
+                    const updatedBoardData = measure4.slice(0,measure4Meter)
+                    const restboard = measure4.slice(measure4Meter,measure4.length)
+                    console.log(restboard)
                     const startSlice = updatedBoardData.slice(0,1)
                     const tmpDefaultPitches = defaultpitchesoccupied
                     const middleSlice = [item].concat(new Array(steps-1).fill(tmpDefaultPitches))
                     const endSlice = updatedBoardData.slice(1,updatedBoardData.length-steps)
                     
                     const updatedBoardData_ = startSlice.concat(middleSlice).concat(endSlice).concat(restboard)
+                    console.log(startSlice)
+                    console.log(middleSlice)
+                    console.log(endSlice)
+                    console.log(restboard)
                     return updatedBoardData_
             
         })
 
-            setactiveMeasure(4)
+            setactiveMeasure(3)
                 setactiveNote(1)
                 
                 setPointer(pointer =>{
@@ -1146,15 +1138,22 @@ function Compose() {
                     
                     
                     
+                    console.log(measure5)
                     const updatedBoardData = measure5.slice(0,measure5Meter)
-                    const restboard = measure5.slice(measure5Meter,measure5.length)
                     
+                    const restboard = measure5.slice(measure5Meter,measure5.length)
+                    console.log(measure5Meter)
+                    console.log(measure5)
                     const startSlice = updatedBoardData.slice(0,1)
                     const tmpDefaultPitches = defaultpitchesoccupied
                     const middleSlice = [item].concat(new Array(steps-1).fill(tmpDefaultPitches))
                     const endSlice = updatedBoardData.slice(1,updatedBoardData.length-steps)
                     
                     const updatedBoardData_ = startSlice.concat(middleSlice).concat(endSlice).concat(restboard)
+                    console.log(startSlice)
+                    console.log(middleSlice)
+                    console.log(endSlice)
+                    console.log(restboard)
                     return updatedBoardData_
             
         })
@@ -1182,13 +1181,14 @@ function Compose() {
 
             else if (activeMeasure == 4) {
                 
+                
                 const fit = checkMatch(index,steps,measure5)
             if(fit){
-
+                
 
                 if (activeNote % measure5Meter == 0) {
                     const index = 1
-                    setMeasure4(measure5 =>{
+                    setMeasure5(measure5 =>{
                     
                     
                     
@@ -1261,11 +1261,12 @@ function Compose() {
 
 
         else{
-
+            
             const currentMeasure_ =  [...measure5]
             const sliceLen = currentMeasure_.filter(piece => piece.occupied == false).length
-            
+            console.log(currentMeasure_)
             if(sliceLen > 0){
+                
                 return
             }
             const lastNoteofMeasure = calculateLastNoteIndex(currentMeasure_)
@@ -1275,7 +1276,7 @@ function Compose() {
                 
                 setPointer(1)
                 const fit = checkMatch(index,steps,measure6)
-                
+                console.log(fit)
                 if(!fit)return
 
                 setMeasure6(measure6 =>{
@@ -2056,7 +2057,7 @@ function Compose() {
 
 
             <div className='topColumnRight'>
-                testhdskghlhljfjghjlfshfslkjf
+                
                 <div>
                     <SubmitComposition composition={[measure1,measure2,measure3,measure4,measure5,
                         measure6,measure7,measure8]} meter={[meterArray[meterIndex1],meterArray[meterIndex2],
