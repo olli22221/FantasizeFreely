@@ -41,7 +41,7 @@ const clefAndTimeWidth = 60;
     context.setFont('Arial', 10, '').setBackgroundFillStyle('#eed')
     const staveMeasure = new Stave(35, 15, 400);
     if(violin == true){
-        staveMeasure.addClef("treble").addTimeSignature(timeSign).setContext(context).draw();
+        staveMeasure.setContext(context).draw();
     }
     else{
         staveMeasure.setContext(context).draw();
@@ -49,15 +49,15 @@ const clefAndTimeWidth = 60;
     
 
     const measureNotes1 = []
-    const notes_ =  notes.filter(piece => piece.show == true)
-
-   /* if(notes_ != undefined){
-    for (let index = 0; index < notes.length; index++) {
+    const notes_ =  notes.filter(piece => piece.show == true && piece.locked == false)
+    console.log(notes_)
+    if(notes_ != undefined){
+    for (let index = 0; index < notes_.length; index++) {
         if(notes_[index] != undefined){
         measureNotes1.push(new StaveNote({ keys: notes_[index].type, duration: notes_[index].duration }))
         }
     }
-}*/
+}
     
     
    /* measureNotes1.push(new StaveNote({ keys:["g/3"], duration:"w"}).addModifier(new Accidental("#")))
@@ -69,7 +69,7 @@ const clefAndTimeWidth = 60;
     measureNotes1.push(new StaveNote({ keys:["f/4"], duration:"w"}).addModifier(new Accidental("#")))
     measureNotes1.push(new StaveNote({ keys:["g/4"], duration:"w"}).addModifier(new Accidental("#")))
     measureNotes1.push(new StaveNote({ keys:["a/4"], duration:"w"}).addModifier(new Accidental("#")))
-   */ measureNotes1.push(new StaveNote({ keys:["b/4"], duration:"w"}).addModifier(new Accidental("#")))
+   measureNotes1.push(new StaveNote({ keys:["b/4"], duration:"w"}).addModifier(new Accidental("#")))
     measureNotes1.push(new StaveNote({ keys:["c/5"], duration:"w"}).addModifier(new Accidental("#")))
     measureNotes1.push(new StaveNote({ keys:["d/5"], duration:"w"}).addModifier(new Accidental("#")))
     measureNotes1.push(new StaveNote({ keys:["e/5"], duration:"w"}).addModifier(new Accidental("#")))
@@ -78,6 +78,7 @@ const clefAndTimeWidth = 60;
     measureNotes1.push(new StaveNote({ keys:["a/5"], duration:"w"}).addModifier(new Accidental("#")))
     measureNotes1.push(new StaveNote({ keys:["b/5"], duration:"w"}).addModifier(new Accidental("#")))
     measureNotes1.push(new StaveNote({ keys:["c/6"], duration:"w"}).addModifier(new Accidental("#")))
+     */
     
     
     if(measureNotes1.length>0){

@@ -7,12 +7,14 @@ import {useDrop} from 'react-dnd';
 import DropWrapper from './DropWrapper';
 import PitchesDraggable from './PitchesDraggable';
 import { calculateSteps } from './util';
+import Popup from 'reactjs-popup';
 import {activeMeasure as activeMeasureAtom,measure1 as measure1Atom,measure2 as measure2Atom,
     measure3 as measure3Atom,measure4 as measure4Atom,measure5 as measure5Atom,measure6 as measure6Atom,
     measure7 as measure7Atom,measure8 as measure8Atom,
     meter as meterAtom, dragging as dragAtom, 
     hovering as hoverAtom,activeNote as activeNoteAtom, pointer as pointerAtom, 
-    replaceActivated as replaceActivatedAtom, activePanel as activePanelAtom} from '../redux/store'
+    replaceActivated as replaceActivatedAtom, activePanel as activePanelAtom,
+    musicatResponse as musicatResponseAtom} from '../redux/store'
 import { measure1Meter as measure1MeterAtom,measure2Meter as measure2MeterAtom,measure3Meter as measure3MeterAtom,
     measure4Meter as measure4MeterAtom,measure5Meter as measure5MeterAtom,measure6Meter as measure6MeterAtom,
     measure7Meter as measure7MeterAtom,measure8Meter as measure8MeterAtom  } from '../redux/store';
@@ -24,6 +26,7 @@ import ScoreBox from './ScoreBox';
 import Modal from 'react-modal';
 import SubmitComposition from './submitComposition';
 import {fourQuarter,twoQuarter,sixEighth} from '../data/meterData'
+import 'reactjs-popup/dist/index.css';
 
 
 function Compose() {
@@ -45,6 +48,7 @@ function Compose() {
     const [meterscr6, setMetersrc6] = useState(fourQuarter);
     const [meterscr7, setMetersrc7] = useState(fourQuarter);
     const [meterscr8, setMetersrc8] = useState(fourQuarter);
+    const musicatResult = useRecoilValue(musicatResponseAtom);
     const [isActive, setIsActive] = useState(false);
     const [panelArray, setpanelArray] = useState(pitches);
     const [panelDuration, setPanelDuration] = useState("quarter");
@@ -61,6 +65,9 @@ function Compose() {
     const [measure8Meter, setmeasure8Meter] = useRecoilState(measure8MeterAtom);
     const [replaceActivated, setreplaceActivated] = useRecoilState(replaceActivatedAtom);
     const [activePanel, setActivePanel] = useRecoilState(activePanelAtom);
+
+    const [open, setOpen] = useState(false);  
+    const closeModal = () => setOpen(false);
     
 
     const changeColor = () => {
@@ -181,6 +188,11 @@ function Compose() {
     useEffect(() => { 
         console.log(measure5)
     },[measure5])
+
+    useEffect(() => { 
+        console.log(musicatResult)
+        setOpen(true)
+    },[musicatResult])
 
 
     /*const [{isOver}, drop] = useDrop(() => ({
@@ -2065,7 +2077,17 @@ function Compose() {
                             meterArray[meterIndex6],meterArray[meterIndex7],meterArray[meterIndex8],]} />
                 </div>
             </div>
-            </div>
+            <Popup open={open} closeOnDocumentClick onClose={closeModal}>  
+                  <div className="modal">   
+                         <a className="close" onClick={closeModal}>            &times;         
+                          </a> 
+                          <div>
+                          <div className="flex-container">
+                     
+                          <ScoreBox notes={measure8.slice(1,17)} timeSign="4/4" violin={false}/> </div>
+                            </div>               
+                            </div>      </Popup>
+ </div>
 
     );
 

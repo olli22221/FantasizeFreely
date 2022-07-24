@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
-import {midiFiles as midiFilesAtom, jwtToken as jwtTokenAtom, subjectId as subjectIdAtom, counter as counterAtom} from '../redux/store'
+import {midiFiles as midiFilesAtom, jwtToken as jwtTokenAtom, 
+  subjectId as subjectIdAtom, counter as counterAtom, 
+  musicatResponse as musicatResponseAtom} from '../redux/store'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import axios from "axios";
 import { calculateSteps } from './util';
@@ -12,6 +14,7 @@ const jwtToken = useRecoilValue(jwtTokenAtom)
 const midiFiles = useRecoilValue(midiFilesAtom);
 let id = useRecoilValue(subjectIdAtom);
 const [counter, setCounter] = useRecoilState(counterAtom);
+const [musicatResponse, setmusicatResponse] = useRecoilState(musicatResponseAtom);
 
 const checkComposition = (composition_,meter_) => {
   console.log(composition_)
@@ -97,6 +100,8 @@ const prepareComposition = (composition_) => {
         }
     }).then((response) => {
         console.log(response.data)
+        setmusicatResponse(response.data)
+
     }).catch((error) => {
       console.log(error)
     });
