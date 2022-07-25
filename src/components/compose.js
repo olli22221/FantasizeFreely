@@ -7,7 +7,6 @@ import {useDrop} from 'react-dnd';
 import DropWrapper from './DropWrapper';
 import PitchesDraggable from './PitchesDraggable';
 import { calculateSteps } from './util';
-import Popup from 'reactjs-popup';
 import {activeMeasure as activeMeasureAtom,measure1 as measure1Atom,measure2 as measure2Atom,
     measure3 as measure3Atom,measure4 as measure4Atom,measure5 as measure5Atom,measure6 as measure6Atom,
     measure7 as measure7Atom,measure8 as measure8Atom,
@@ -27,6 +26,7 @@ import Modal from 'react-modal';
 import SubmitComposition from './submitComposition';
 import {fourQuarter,twoQuarter,sixEighth} from '../data/meterData'
 import 'reactjs-popup/dist/index.css';
+import MusicatGroups from './MusicatGroups';
 
 
 function Compose() {
@@ -66,8 +66,7 @@ function Compose() {
     const [replaceActivated, setreplaceActivated] = useRecoilState(replaceActivatedAtom);
     const [activePanel, setActivePanel] = useRecoilState(activePanelAtom);
 
-    const [open, setOpen] = useState(false);  
-    const closeModal = () => setOpen(false);
+    
     
 
     const changeColor = () => {
@@ -189,10 +188,7 @@ function Compose() {
         console.log(measure5)
     },[measure5])
 
-    useEffect(() => { 
-        console.log(musicatResult)
-        setOpen(true)
-    },[musicatResult])
+ 
 
 
     /*const [{isOver}, drop] = useDrop(() => ({
@@ -2076,18 +2072,10 @@ function Compose() {
                             meterArray[meterIndex3],meterArray[meterIndex4],meterArray[meterIndex5],
                             meterArray[meterIndex6],meterArray[meterIndex7],meterArray[meterIndex8],]} />
                 </div>
+                <MusicatGroups/>
             </div>
-            <Popup open={open} closeOnDocumentClick onClose={closeModal}>  
-                  <div className="modal">   
-                         <a className="close" onClick={closeModal}>            &times;         
-                          </a> 
-                          <div>
-                          <div className="flex-container">
-                     
-                          <ScoreBox notes={measure8.slice(1,17)} timeSign="4/4" violin={false}/> </div>
-                            </div>               
-                            </div>      </Popup>
- </div>
+                            
+            </div>
 
     );
 

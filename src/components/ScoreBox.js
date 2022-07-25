@@ -50,7 +50,7 @@ const clefAndTimeWidth = 60;
 
     const measureNotes1 = []
     const notes_ =  notes.filter(piece => piece.show == true && piece.locked == false)
-    console.log(notes_)
+    
     if(notes_ != undefined){
     for (let index = 0; index < notes_.length; index++) {
         if(notes_[index] != undefined){

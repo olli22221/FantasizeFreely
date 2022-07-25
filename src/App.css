@@ -95,6 +95,7 @@
   float: right;
 }
 .topColumnLeft{
+  width: 800px;
  
   float: left;
 }
@@ -137,8 +138,8 @@
 
 .div-top {
   margin-top: 50px;
-  margin-left: 50px;
-  width: 1000px;
+  margin-left: 20px;
+  width: 960px;
   height: 400px;
   
 }
@@ -147,7 +148,23 @@
   height: 200px;
 
 }
+.rowM {
+  display: flex;
+  margin-top: 20px;
+  width: fit-content;
+  height: 150px;
 
+}
+
+.groups
+{
+  margin: 10px;
+  height: 130px;
+  min-width: 450px;
+  width: fit-content;
+  display: flex;
+float: right;
+}
 .rowA {
   margin: 2px;
   
