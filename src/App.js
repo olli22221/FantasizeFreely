@@ -14,6 +14,7 @@ import CreativityTask from './CreativityTask';
 import Compose from './components/compose';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd/dist/core';
+import Result from './components/result';
 
 
 function App() {
@@ -111,6 +112,7 @@ function App() {
       <Route exact path='/' element={<Main/>}/>
       <Route exact path='/CreativityTask' element={<CreativityTask/>}/>
       <Route exact path='/Compose' element={<Compose/>}/>
+      <Route exact path='/Result' element={<Result/>}/>
       </Routes>
 
       </Router>

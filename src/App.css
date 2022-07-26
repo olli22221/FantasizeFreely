@@ -73,6 +73,11 @@
 
 }
 
+.musicatGroups {
+  margin-top: 50px;
+  margin-left: 50px;
+}
+
 .flex-pitch {
   
   margin: auto;
@@ -156,6 +161,12 @@
 
 }
 
+.groupsButton
+{
+  margin-left: 170px;
+  margin-top: 25px;
+
+}
 .groups
 {
   margin: 10px;

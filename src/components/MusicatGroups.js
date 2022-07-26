@@ -25,6 +25,8 @@ const MusicatGroups = () => {
     const [musicatGroup3,setmusicatGroup3] = useState([])
     const [musicatGroup4,setmusicatGroup4] = useState([])
     const [musicatGroup5,setmusicatGroup5] = useState([])
+    const [currentGroup,setcurrentGroup] = useState(0)
+
 
     const measureDictionary = {
         "0":measure1,
@@ -35,6 +37,41 @@ const MusicatGroups = () => {
         "5":measure6,
         "6":measure7,
         "7":measure8,
+    }
+
+    const changeGroup = (direction) => {
+        const grouplen = musicatResult['groups'].length
+
+        if (direction =="left") {
+
+            if(currentGroup == 0){
+                const currentGroupvar = grouplen - 1
+                console.log(grouplen)
+                console.log(currentGroupvar)
+                setcurrentGroup(currentGroupvar)
+            }
+            else{
+            
+            const currentGroupvar = currentGroup - 1 
+            console.log(grouplen)
+            console.log(currentGroupvar)
+            setcurrentGroup(currentGroupvar)
+            }
+            
+        }
+        else{
+            console.log(grouplen)
+            if (currentGroup == grouplen-1) {
+                console.log("test")
+                setcurrentGroup(0)
+            }
+            else {
+                const currentGroupvar = currentGroup + 1
+                console.log(currentGroupvar)
+                setcurrentGroup(currentGroupvar)
+            }
+        }
+        
     }
       
     
@@ -84,9 +121,15 @@ const MusicatGroups = () => {
 
     return (
         <div >
+            <div >
+            <div className='groupsButton'>
+                <button onClick={ () => {changeGroup("right")}}>right</button>
+                <button onClick={ () => {changeGroup("left")}}>left</button>
+            </div>
+            </div>
             <div>
-            {musicatGroup1.length > 0 &&
-            <div className='groups'>
+            {musicatGroup1.length > 0 && currentGroup == 0 &&
+            <div >
                 <div  className="flex-container" >
                 <ScoreBox notes={musicatGroup1[0].slice(1,17)} timeSign="4/4" violin={false}/>
                 </div>
@@ -97,8 +140,8 @@ const MusicatGroups = () => {
             }
             </div>
             <div>
-            {musicatGroup2.length > 0 &&
-            <div className='groups'>
+            {musicatGroup2.length > 0 && currentGroup == 1 &&
+            <div >
                 <div  className="flex-container" >
                 <ScoreBox notes={musicatGroup2[0].slice(1,17)} timeSign="4/4" violin={false}/>
                 </div>
@@ -109,13 +152,26 @@ const MusicatGroups = () => {
             }
             </div>
             <div>
-            {musicatGroup3.length > 0 &&
-            <div className='groups'>
+            {musicatGroup3.length > 0 && currentGroup == 2 &&
+            <div >
                 <div  className="flex-container" >
                 <ScoreBox notes={musicatGroup3[0].slice(1,17)} timeSign="4/4" violin={false}/>
                 </div>
                 <div  className="flex-container" >
                 <ScoreBox notes={musicatGroup3[1].slice(1,17)} timeSign="4/4" violin={false}/>
+                </div>
+                </div>
+            }
+            </div>
+
+            <div>
+            {musicatGroup4.length > 0 && currentGroup == 3 &&
+            <div >
+                <div  className="flex-container" >
+                <ScoreBox notes={musicatGroup4[0].slice(1,17)} timeSign="4/4" violin={false}/>
+                </div>
+                <div  className="flex-container" >
+                <ScoreBox notes={musicatGroup4[1].slice(1,17)} timeSign="4/4" violin={false}/>
                 </div>
                 </div>
             }

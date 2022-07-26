@@ -27,9 +27,12 @@ import SubmitComposition from './submitComposition';
 import {fourQuarter,twoQuarter,sixEighth} from '../data/meterData'
 import 'reactjs-popup/dist/index.css';
 import MusicatGroups from './MusicatGroups';
+import { useNavigate } from "react-router-dom";
+
 
 
 function Compose() {
+    let nav = useNavigate();
 
     const meterArray = [fourQuarter,twoQuarter,sixEighth]
     const [meterIndex1,setMeterIndex1] = useState(0)
@@ -1740,6 +1743,12 @@ function Compose() {
             
 
         }
+        const goToResult = () => {
+
+            nav("/Result")
+            
+       
+   }
 
 
 
@@ -2057,6 +2066,13 @@ function Compose() {
                     <button onClick={changeStateOfReplace} style={{border: replaceActivated? '2px solid blue':'' }}> Replace </button>
                     
                     </div>
+                    <div>
+                    <SubmitComposition composition={[measure1,measure2,measure3,measure4,measure5,
+                        measure6,measure7,measure8]} meter={[meterArray[meterIndex1],meterArray[meterIndex2],
+                            meterArray[meterIndex3],meterArray[meterIndex4],meterArray[meterIndex5],
+                            meterArray[meterIndex6],meterArray[meterIndex7],meterArray[meterIndex8],]} />
+                </div>
+                <button onClick={goToResult}> Result </button>
                 
     </div>
     
@@ -2065,14 +2081,10 @@ function Compose() {
 
 
             <div className='topColumnRight'>
+                <div className='musicatGroups'>
                 
-                <div>
-                    <SubmitComposition composition={[measure1,measure2,measure3,measure4,measure5,
-                        measure6,measure7,measure8]} meter={[meterArray[meterIndex1],meterArray[meterIndex2],
-                            meterArray[meterIndex3],meterArray[meterIndex4],meterArray[meterIndex5],
-                            meterArray[meterIndex6],meterArray[meterIndex7],meterArray[meterIndex8],]} />
-                </div>
                 <MusicatGroups/>
+                </div>
             </div>
                             
             </div>
