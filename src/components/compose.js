@@ -28,8 +28,10 @@ import {fourQuarter,twoQuarter,sixEighth} from '../data/meterData'
 import 'reactjs-popup/dist/index.css';
 import MusicatGroups from './MusicatGroups';
 import { useNavigate } from "react-router-dom";
-
-
+import * as Tone from "tone";
+import { Synth } from 'tone';
+import ViolinMp3 from 'tonejs-instrument-violin-mp3';
+import { playSynth } from './ToneSampler';
 
 function Compose() {
     let nav = useNavigate();
@@ -190,7 +192,11 @@ function Compose() {
     useEffect(() => { 
         console.log(measure5)
     },[measure5])
+    
 
+    
+
+    
  
 
 
@@ -2073,6 +2079,7 @@ function Compose() {
                             meterArray[meterIndex6],meterArray[meterIndex7],meterArray[meterIndex8],]} />
                 </div>
                 <button onClick={goToResult}> Result </button>
+                <button onClick={()=>playSynth("A5",4)}> Test </button>
                 
     </div>
     

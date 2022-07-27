@@ -5,10 +5,11 @@ import {midiFiles as midiFilesAtom, jwtToken as jwtTokenAtom,
 import { useRecoilState, useRecoilValue } from 'recoil'
 import axios from "axios";
 import { calculateSteps } from './util';
-
+import { useNavigate } from "react-router-dom";
 
 
 function SubmitComposition({composition,meter}) {
+  let nav = useNavigate();
 
 const jwtToken = useRecoilValue(jwtTokenAtom)
 const midiFiles = useRecoilValue(midiFilesAtom);
@@ -101,6 +102,7 @@ const prepareComposition = (composition_) => {
     }).then((response) => {
         console.log(response.data)
         setmusicatResponse(response.data)
+        nav("/Result")
 
     }).catch((error) => {
       console.log(error)

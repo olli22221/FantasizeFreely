@@ -20,16 +20,101 @@ function Result() {
     const measure7 = useRecoilValue(measure7Atom);
     const measure8 = useRecoilValue(measure8Atom);
     const musicatResult = useRecoilValue(musicatResponseAtom);
-    const [measure1Color,setMeasure1Color]= useState('rgb(235, 213, 186)')
-    const [measure2Color,setMeasure2Color]= useState('rgb(235, 213, 186)')
-    const [measure3Color,setMeasure3Color]= useState('rgb(235, 213, 186)')
-    const [measure4Color,setMeasure4Color]= useState('rgb(235, 213, 186)')
-    const [measure5Color,setMeasure5Color]= useState('rgb(235, 213, 186)')
-    const [measure6Color,setMeasure6Color]= useState('rgb(235, 213, 186)')
-    const [measure7Color,setMeasure7Color]= useState('rgb(235, 213, 186)')
-    const [measure8Color,setMeasure8Color]= useState('rgb(235, 213, 186)')
-    const [groupColors,setgroupColors] = useState(['red','blue','yellow','green',
-    'violet','orange','silver, snow'])
+    const [measure1Color,setMeasure1Color]= useState(' rgb(235, 213, 186)')
+    const [measure2Color,setMeasure2Color]= useState(' rgb(235, 213, 186)')
+    const [measure3Color,setMeasure3Color]= useState(' rgb(235, 213, 186)')
+    const [measure4Color,setMeasure4Color]= useState(' rgb(235, 213, 186)')
+    const [measure5Color,setMeasure5Color]= useState(' rgb(235, 213, 186)')
+    const [measure6Color,setMeasure6Color]= useState(' rgb(235, 213, 186)')
+    const [measure7Color,setMeasure7Color]= useState(' rgb(235, 213, 186)')
+    const [measure8Color,setMeasure8Color]= useState(' rgb(235, 213, 186)')
+    const groupColors = [' red',' blue',' yellow',' green',
+    ' violet',' orange',' silver', 'snow']
+
+
+
+
+    useEffect(() => { 
+        console.log(musicatResult)
+        const groups = musicatResult['groups']
+        let groupCount = 0
+        
+        for (let index = 0; index < groups.length; index++) {
+           const element = groups[index];
+           const element_ = element.split("+")
+           const firstMeasure = element_[0]
+           const secondMeasure = element_[1]
+           switch (firstMeasure) {
+            case "0":
+                console.log(groupColors[index])
+                setMeasure1Color(groupColors[index])
+                break;
+            case "1":
+                setMeasure2Color(groupColors[index])
+                break;
+            case "2":
+                setMeasure3Color(groupColors[index])
+                break;
+            case "3":
+                setMeasure4Color(groupColors[index])
+                break;
+            case "4":
+                setMeasure5Color(groupColors[index])
+                break;
+            case "5":
+                setMeasure6Color(groupColors[index])
+                break;
+            case "6":
+                setMeasure7Color(groupColors[index])
+                break;
+            case "7":
+                setMeasure8Color(groupColors[index])
+                break;
+           
+            default:
+                break;
+           }
+
+           switch (secondMeasure) {
+            case "0":
+                setMeasure1Color(groupColors[index])
+                break;
+            case "1":
+                setMeasure2Color(groupColors[index])
+                break;
+            case "2":
+                setMeasure3Color(groupColors[index])
+                break;
+            case "3":
+                setMeasure4Color(groupColors[index])
+                break;
+            case "4":
+                setMeasure5Color(groupColors[index])
+                break;
+            case "5":
+                setMeasure6Color(groupColors[index])
+                break;
+            case "6":
+                setMeasure7Color(groupColors[index])
+                break;
+            case "7":
+                setMeasure8Color(groupColors[index])
+                break;
+           
+            default:
+                break;
+           }
+           
+           console.log(measure1Color)
+           
+
+           
+           
+
+           
+        }
+   
+},[musicatResult])
 
     
 
@@ -44,24 +129,24 @@ function Result() {
                 <div  className="flex-container"  style={{border:'2px solid' + measure2Color}} >
                 <ScoreBox notes={measure2.slice(1,17)} timeSign="4/4" violin={false}/>
                 </div>
-                <div  className="flex-container" >
+                <div  className="flex-container" style={{border:'2px solid' + measure3Color}}>
                 <ScoreBox notes={measure3.slice(1,17)} timeSign="4/4" violin={false}/>
                 </div>
-                <div  className="flex-container" >
+                <div  className="flex-container" style={{border:'2px solid' + measure4Color}}>
                 <ScoreBox notes={measure4.slice(1,17)} timeSign="4/4" violin={false}/>
                 </div>
                 </div>
                 <div className="row">
-            <div   >
+            <div  className="flex-container" style={{border:'2px solid' + measure5Color}}>
                 <ScoreBox notes={measure5.slice(1,17)} timeSign="4/4" violin={false}/>
                 </div>
-                <div  className="flex-container" >
+                <div  className="flex-container" style={{border:'2px solid' + measure6Color}}>
                 <ScoreBox notes={measure6.slice(1,17)} timeSign="4/4" violin={false}/>
                 </div>
-                <div  className="flex-container" >
+                <div  className="flex-container" style={{border:'2px solid' + measure7Color}}>
                 <ScoreBox notes={measure7.slice(1,17)} timeSign="4/4" violin={false}/>
                 </div>
-                <div  className="flex-container" >
+                <div  className="flex-container" style={{border:'2px solid' + measure8Color}}>
                 <ScoreBox notes={measure8.slice(1,17)} timeSign="4/4" violin={false}/>
                 </div>
                 </div>
