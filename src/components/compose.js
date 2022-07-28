@@ -349,7 +349,11 @@ function Compose() {
             }
             
 
-            
+            console.log(item)
+            const pitch = item['type'][0]
+            console.log(pitch)
+            playSynth(pitch.replace('/',''),4)
+           
 
 
         }
@@ -2079,7 +2083,7 @@ function Compose() {
                             meterArray[meterIndex6],meterArray[meterIndex7],meterArray[meterIndex8],]} />
                 </div>
                 <button onClick={goToResult}> Result </button>
-                <button onClick={()=>playSynth("A5",4)}> Test </button>
+                <button onClick={()=>playSynth("b4",4)}> Test </button>
                 
     </div>
     
