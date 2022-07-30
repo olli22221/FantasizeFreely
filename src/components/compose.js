@@ -31,7 +31,8 @@ import { useNavigate } from "react-router-dom";
 import * as Tone from "tone";
 import { Synth } from 'tone';
 import ViolinMp3 from 'tonejs-instrument-violin-mp3';
-import { playSynth } from './ToneSampler';
+import { playMelody, playSynth,NoteDurationDict } from './ToneSampler';
+
 
 function Compose() {
     let nav = useNavigate();
@@ -76,6 +77,28 @@ function Compose() {
 
     const changeColor = () => {
         setIsActive(true);
+    }
+
+    const playwholeComposition = () => {
+        const notesMeasure1 =  measure1.filter(piece => piece.show == true && piece.locked == false)
+        const notesMeasure2 =  measure2.filter(piece => piece.show == true && piece.locked == false)
+        const notesMeasure3 =  measure3.filter(piece => piece.show == true && piece.locked == false)
+        const notesMeasure4 =  measure4.filter(piece => piece.show == true && piece.locked == false)
+        const notesMeasure5 =  measure5.filter(piece => piece.show == true && piece.locked == false)
+        const notesMeasure6 =  measure6.filter(piece => piece.show == true && piece.locked == false)
+        const notesMeasure7 =  measure7.filter(piece => piece.show == true && piece.locked == false)
+        const notesMeasure8 =  measure8.filter(piece => piece.show == true && piece.locked == false)
+        const wholeComposition = [notesMeasure1,notesMeasure2,notesMeasure3,notesMeasure4,
+            notesMeasure5,notesMeasure6,notesMeasure7,notesMeasure8]
+       
+                playMelody(wholeComposition)
+                
+                
+                
+            
+
+            
+        
     }
      
 
@@ -241,7 +264,8 @@ function Compose() {
                 const stepsToReplace = calculateSteps(updatedBoardData[indexToReplace].duration)
                 const sliceLen = updatedBoardData.filter(piece => piece.occupied == false).length
                 if(itemSteps > sliceLen + stepsToReplace)return
-                else if(itemSteps == stepsToReplace){
+                else{
+                if(itemSteps == stepsToReplace){
                     const firstPart = updatedBoardData.slice(0, indexToReplace)
                     const middlePart = [item].concat(new Array(itemSteps-1).fill(defaultpitchesoccupied))
                     const endPart = updatedBoardData.slice(indexToReplace + stepsToReplace,measure1Meter)
@@ -270,6 +294,10 @@ function Compose() {
                     setMeasure1(result)
 
                 }
+                const pitch = item['type'][0]
+            
+                playSynth(pitch.replace('/',''),1)
+            }
                 
             }
             else if(activeMeasure == 1){
@@ -279,7 +307,8 @@ function Compose() {
                 const sliceLen = updatedBoardData.filter(piece => piece.occupied == false).length
                 console.log(item)
                 if(itemSteps > sliceLen + stepsToReplace)return
-                else if(itemSteps == stepsToReplace){
+                else{
+                if(itemSteps == stepsToReplace){
                     console.log(item)
                     const firstPart = updatedBoardData.slice(0, indexToReplace)
                     const middlePart = [item].concat(new Array(itemSteps-1).fill(defaultpitchesoccupied))
@@ -309,6 +338,9 @@ function Compose() {
                     setMeasure2(result)
 
                 }
+                const pitch = item['type'][0]
+                playSynth(pitch.replace('/',''),1)
+            }
             }
             else if(activeMeasure == 2){
                 const updatedBoardData = measure3.slice(0,measure3Meter)
@@ -317,7 +349,8 @@ function Compose() {
                 const sliceLen = updatedBoardData.filter(piece => piece.occupied == false).length
                 console.log(item)
                 if(itemSteps > sliceLen + stepsToReplace)return
-                else if(itemSteps == stepsToReplace){
+                else{
+                if(itemSteps == stepsToReplace){
                     const firstPart = updatedBoardData.slice(0, indexToReplace)
                     const middlePart = [item].concat(new Array(itemSteps-1).fill(defaultpitchesoccupied))
                     const endPart = updatedBoardData.slice(indexToReplace + stepsToReplace,measure1Meter)
@@ -346,13 +379,15 @@ function Compose() {
                     setMeasure3(result)
 
                 }
+                const pitch = item['type'][0]
+            
+                playSynth(pitch.replace('/',''),1)
+            }
             }
             
 
-            console.log(item)
-            const pitch = item['type'][0]
-            console.log(pitch)
-            playSynth(pitch.replace('/',''),4)
+            
+            
            
 
 
@@ -2083,7 +2118,7 @@ function Compose() {
                             meterArray[meterIndex6],meterArray[meterIndex7],meterArray[meterIndex8],]} />
                 </div>
                 <button onClick={goToResult}> Result </button>
-                <button onClick={()=>playSynth("b4",4)}> Test </button>
+                <button onClick={playwholeComposition}> Test </button>
                 
     </div>
     

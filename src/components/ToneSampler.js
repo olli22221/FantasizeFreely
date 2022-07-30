@@ -1,5 +1,6 @@
 import * as Tone from "tone";
 
+const recorder = new Tone.Recorder();
 
 const sampler = new Tone.Sampler({
     urls: {
@@ -35,13 +36,72 @@ const sampler = new Tone.Sampler({
         "c6": "C6.mp3",
     },
     baseUrl: "https://olli22221.github.io/",
-}).toDestination();
+}).toDestination().connect(recorder);
 
 export const playSynth = (pitch,duration) =>{
+    
         
     Tone.loaded().then(() => {
-        sampler.triggerAttackRelease(pitch, duration);
+        sampler.triggerAttackRelease(pitch, 1);
     })
 
 
+}
+
+const calculateTimeout = (wholeComposition) => {
+    let timeAddedToNow = 0
+    for (let index = 0; index < wholeComposition.length; index++) {
+        let measuretmp = wholeComposition[index];
+        for (let index = 0; index < measuretmp.length; index++) {
+            const element = measuretmp[index];
+            const duration = element.duration
+            const toneJSDuration = NoteDurationDict[duration]
+            timeAddedToNow = timeAddedToNow + toneJSDuration
+        }
+
+
+    }
+    return timeAddedToNow * 1000
+            
+}
+
+export const playMelody = (wholeComposition) =>{
+    recorder.start();
+    let timeAddedToNow = 0
+    const now = Tone.now()
+    const timeout = calculateTimeout(wholeComposition)
+    for (let index = 0; index < wholeComposition.length; index++) {
+        let measuretmp = wholeComposition[index];
+        for (let index = 0; index < measuretmp.length; index++) {
+            const element = measuretmp[index];
+            const duration = element.duration
+            const toneJSDuration = NoteDurationDict[duration]
+            const pitch = element['type'][0]
+                
+        
+    Tone.loaded().then(() => {
+        sampler.volume.value = -12
+        sampler.triggerAttackRelease(pitch.replace('/',''), toneJSDuration,now + timeAddedToNow);
+        timeAddedToNow = timeAddedToNow + toneJSDuration
+        console.log(timeAddedToNow)
+    })
+   
+        }
+    }
+
+    setTimeout(async () => {
+        // the recorded audio is returned as a blob
+        const recording = await recorder.stop();
+        // download the recording by creating an anchor element and blob url
+        console.log(recording)
+    }, timeout);
+
+}
+
+export const NoteDurationDict = {
+    "w": 4,
+    "h": 2,
+    "q": 1,
+    "8d": 0.5,
+    "16": 0.25,
 }
