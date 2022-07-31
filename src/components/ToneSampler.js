@@ -1,3 +1,4 @@
+import axios from "axios";
 import * as Tone from "tone";
 
 const recorder = new Tone.Recorder();
@@ -93,7 +94,32 @@ export const playMelody = (wholeComposition) =>{
         // the recorded audio is returned as a blob
         const recording = await recorder.stop();
         // download the recording by creating an anchor element and blob url
-        console.log(recording)
+        
+        var reader = new FileReader();
+        reader.readAsDataURL(recording); 
+        reader.onloadend = function() {
+        var base64data = reader.result;
+        console.log(base64data)
+        let splitted = base64data.split(';')
+        const blob = new FormData()
+        blob.append("wavFile",splitted[2])
+        
+        axios.post("http://192.168.178.46:5000/sendBlob",blob, {
+            headers: {
+                "Content-Type": "multipart/form-data"
+                
+            }
+        }).then((response) => {
+            console.log(response)
+        }).catch((error) => {
+            console.log(error)
+          });
+                  
+        
+}
+
+
+       
     }, timeout);
 
 }

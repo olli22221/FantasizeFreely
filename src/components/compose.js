@@ -1,7 +1,6 @@
 import React, { useState,useCallback,useEffect } from 'react';
 import { DndProvider } from 'react-dnd';
 import Pitches from './Pitches';
-import Score from './score';
 import './../App.css';
 import {useDrop} from 'react-dnd';
 import DropWrapper from './DropWrapper';
@@ -21,16 +20,12 @@ import { useRecoilValue,useRecoilState } from 'recoil';
 import {pitches,halfpitches,wholepitches,sixteenthpitches,eightpitches,
     defaultpitches,defaultpitchesoccupied, defaultPitchesArray_,sixteenthpitchesSharp,
 eightpitchesSharp,pitchesSharp,wholepitchesSharp,halfpitchesSharp} from '../data/composePanelData'
-import ScoreBox from './ScoreBox';
 import Modal from 'react-modal';
 import SubmitComposition from './submitComposition';
 import {fourQuarter,twoQuarter,sixEighth} from '../data/meterData'
 import 'reactjs-popup/dist/index.css';
-import MusicatGroups from './MusicatGroups';
 import { useNavigate } from "react-router-dom";
 import * as Tone from "tone";
-import { Synth } from 'tone';
-import ViolinMp3 from 'tonejs-instrument-violin-mp3';
 import { playMelody, playSynth,NoteDurationDict } from './ToneSampler';
 
 
@@ -1827,17 +1822,13 @@ function Compose() {
                 </div>
            
             <div    className="flex-container"  >
-                
-                {dragging || hovering
-                   ? <div className="flex-container">
+                <div className="flex-container">
                      
                 {measure1.slice(0,17).map( (note ,idx) => {
                     return <Pitches measure={0}  url={note} activated={activeNote}  index={idx} item={note}  board={measure1} />
                 })} </div>
 
-                :<div  className="flex-container" >
-                    <ScoreBox notes={measure1.slice(0,17)} timeSign="6/8" violin={true} />
-                    </div>}
+               
                     
             </div>
             
@@ -1862,16 +1853,13 @@ function Compose() {
             
             <div    className="flex-container"  >
                 
-                {dragging || hovering
-                   ? <div className="flex-container">
+                <div className="flex-container">
                      
                 {measure2.slice(0,17).map( (note ,idx) => {
                     return <Pitches measure={1}  url={note} activated={activeNote}  index={idx} item={note} board={measure2}  />
                 })} </div>
 
-                :<div  className="flex-container" >
-                    <ScoreBox notes={measure2.slice(17,34)} timeSign="4/4" violin={false}/>
-                    </div>}
+                
                     
             </div>
             
@@ -1894,16 +1882,13 @@ function Compose() {
             
             <div   className="flex-container"  >
                 
-                {dragging || hovering
-                   ? <div className="flex-container">
+                 <div className="flex-container">
                      
                 {measure3.slice(0,17).map( (note ,idx) => {
                     return <Pitches measure={2}  url={note} activated={activeNote}  index={idx} item={note} board={measure3} />
                 })} </div>
 
-                :<div  className="flex-container" >
-                    <ScoreBox notes={measure3.slice(34,51)} timeSign="4/4" violin={false}/>
-                    </div>}
+                
                     
             </div>
             
@@ -1924,16 +1909,13 @@ function Compose() {
             
             <div   className="flex-container"  >
                 
-                {dragging || hovering
-                   ? <div className="flex-container">
+                <div className="flex-container">
                      
                 {measure4.slice(0,17).map( (note ,idx) => {
                     return <Pitches measure={3}  url={note} activated={activeNote}  index={idx} item={note} board={measure4} />
                 })} </div>
 
-                :<div  className="flex-container" >
-                    <ScoreBox notes={measure4.slice(34,51)} timeSign="4/4" violin={false}/>
-                    </div>}
+                
                     
             </div>
             
@@ -1957,16 +1939,13 @@ function Compose() {
             
             <div className="flex-container"  >
                 
-                {dragging || hovering
-                   ? <div className="flex-container">
+                <div className="flex-container">
                      
                 {measure5.slice(0,17).map( (note ,idx) => {
                     return <Pitches measure={4}  url={note} activated={activeNote}  index={idx} item={note} board={measure5} />
                 })} </div>
 
-                :<div  className="flex-container" >
-                    <ScoreBox notes={measure5.slice(34,51)} timeSign="4/4" violin={false}/>
-                    </div>}
+               
                     
             </div>
             
@@ -1987,16 +1966,13 @@ function Compose() {
             
             <div    className="flex-container"  >
                 
-                {dragging || hovering
-                   ? <div className="flex-container">
+                
+                    <div className="flex-container">
                      
                 {measure6.slice(0,17).map( (note ,idx) => {
                     return <Pitches measure={5}  url={note} activated={activeNote}  index={idx} item={note} board={measure6} />
                 })} </div>
 
-                :<div  className="flex-container" >
-                    <ScoreBox notes={measure6.slice(34,51)} timeSign="4/4" violin={false}/>
-                    </div>}
                     
             </div>
             
@@ -2023,16 +1999,14 @@ function Compose() {
             
             <div className="flex-container"  >
                 
-                {dragging || hovering
+                
                    ? <div className="flex-container">
                      
                 {measure7.slice(0,17).map( (note ,idx) => {
                     return <Pitches measure={6}  url={note} activated={activeNote}  index={idx} item={note} board={measure7} />
                 })} </div>
 
-                :<div  className="flex-container" >
-                    <ScoreBox notes={measure7.slice(34,51)} timeSign="4/4" violin={false}/>
-                    </div>}
+               
                     
             </div>
             
@@ -2053,16 +2027,14 @@ function Compose() {
             
             <div    className="flex-container"  >
                 
-                {dragging || hovering
-                   ? <div className="flex-container">
+               
+                    <div className="flex-container">
                      
                 {measure8.slice(0,17).map( (note ,idx) => {
                     return <Pitches measure={7}  url={note} activated={activeNote}  index={idx} item={note} board={measure8} />
                 })} </div>
 
-                :<div  className="flex-container" >
-                    <ScoreBox notes={measure8.slice(34,51)} timeSign="4/4" violin={false}/>
-                    </div>}
+                
                     
             </div>
             
@@ -2127,10 +2099,7 @@ function Compose() {
 
 
             <div className='topColumnRight'>
-                <div className='musicatGroups'>
                 
-                <MusicatGroups/>
-                </div>
             </div>
                             
             </div>

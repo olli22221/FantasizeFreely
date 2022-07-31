@@ -1,8 +1,5 @@
 import { musicNotes as musicNotesAtom, notePointer as notePointerAtom, noteCount as noteCountAtom } from './redux/store'
-import DragDrop from './components/fileDrop';
-import SubmitFile from './components/fileSubmit';
 import { useRecoilState, useRecoilValue,useResetRecoilState } from 'recoil'
-import Score from './components/score';
 import React from 'react';
 import { useNavigate } from "react-router-dom";
 
@@ -38,8 +35,6 @@ const divStyleNotePanel = {
       <div>
         <div className="row">
         <div className="taskdscr" >
-          <DragDrop />
-          <SubmitFile />
         </div>
         <div className="taskdscr">
           <button onClick={navToComposePanel}>Compose</button>
