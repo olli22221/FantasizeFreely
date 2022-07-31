@@ -27,6 +27,8 @@ import 'reactjs-popup/dist/index.css';
 import { useNavigate } from "react-router-dom";
 import * as Tone from "tone";
 import { playMelody, playSynth,NoteDurationDict } from './ToneSampler';
+import Slider, { Range } from 'rc-slider';
+import 'rc-slider/assets/index.css';
 
 
 function Compose() {
@@ -34,21 +36,16 @@ function Compose() {
 
     const meterArray = [fourQuarter,twoQuarter,sixEighth]
     const [meterIndex1,setMeterIndex1] = useState(0)
-    const [meterIndex2,setMeterIndex2] = useState(0)
-    const [meterIndex3,setMeterIndex3] = useState(0) 
-    const [meterIndex4,setMeterIndex4] = useState(0)
-    const [meterIndex5,setMeterIndex5] = useState(0)
-    const [meterIndex6,setMeterIndex6] = useState(0) 
-    const [meterIndex7,setMeterIndex7] = useState(0)
-    const [meterIndex8,setMeterIndex8] = useState(0)
+    const [volumeMeasure1,setvolumeMeasure1] = useState(0)
+    const [volumeMeasure2,setvolumeMeasure2] = useState(10)
+    const [volumeMeasure3,setvolumeMeasure3] = useState(10)
+    const [volumeMeasure4,setvolumeMeasure4] = useState(10)
+    const [volumeMeasure5,setvolumeMeasure5] = useState(10)
+    const [volumeMeasure6,setvolumeMeasure6] = useState(10)
+    const [volumeMeasure7,setvolumeMeasure7] = useState(10)
+    const [volumeMeasure8,setvolumeMeasure8] = useState(10)
+    
     const [meterscr1, setMetersrc1] = useState(fourQuarter);
-    const [meterscr2, setMetersrc2] = useState(fourQuarter);
-    const [meterscr3, setMetersrc3] = useState(fourQuarter);
-    const [meterscr4, setMetersrc4] = useState(fourQuarter);
-    const [meterscr5, setMetersrc5] = useState(fourQuarter);
-    const [meterscr6, setMetersrc6] = useState(fourQuarter);
-    const [meterscr7, setMetersrc7] = useState(fourQuarter);
-    const [meterscr8, setMetersrc8] = useState(fourQuarter);
     const musicatResult = useRecoilValue(musicatResponseAtom);
     const [isActive, setIsActive] = useState(false);
     const [panelArray, setpanelArray] = useState(pitches);
@@ -208,8 +205,8 @@ function Compose() {
     }, [accent,panelDuration])
 
     useEffect(() => { 
-        console.log(measure5)
-    },[measure5])
+        console.log(volumeMeasure1)
+    },[volumeMeasure1])
     
 
     
@@ -1729,37 +1726,92 @@ function Compose() {
 
         }
 
-        const switchLeft = (func, measureNumber,func2,setMeterIdx,meterIdx,setMeterSrc) =>{
-            if (meterIdx == 0){
-                setMeterIdx(meterArray.length-1)
-                setMeterSrc(meterArray[meterIdx])
-                func(defaultPitchesArray_(meterArray[meterIdx].numberofPlaces))
+        const switchLeft = ( measureNumber) =>{
+            if (meterIndex1 == 0){
+                setMeterIndex1(meterArray.length-1)
+                setMetersrc1(meterArray[meterIndex1])
+                console.log(meterIndex1)
+                console.log(meterArray[meterIndex1])
+                setMeasure1(defaultPitchesArray_(meterArray[meterIndex1].numberofPlaces))
+                setMeasure2(defaultPitchesArray_(meterArray[meterIndex1].numberofPlaces))
+                setMeasure3(defaultPitchesArray_(meterArray[meterIndex1].numberofPlaces))
+                setMeasure4(defaultPitchesArray_(meterArray[meterIndex1].numberofPlaces))
+                setMeasure5(defaultPitchesArray_(meterArray[meterIndex1].numberofPlaces))
+                setMeasure6(defaultPitchesArray_(meterArray[meterIndex1].numberofPlaces))
+                setMeasure7(defaultPitchesArray_(meterArray[meterIndex1].numberofPlaces))
+                setMeasure8(defaultPitchesArray_(meterArray[meterIndex1].numberofPlaces))
+                console.log(measure1)
+                console.log(measure2)
+                
                 setactiveMeasure(measureNumber)
                 setactiveNote(0)
                 setPointer(1)
-                func2(meterArray[meterIdx].numberofPlaces)
+                setmeasure1Meter(meterArray[meterIndex1].numberofPlaces)
+                setmeasure2Meter(meterArray[meterIndex1].numberofPlaces)
+                setmeasure3Meter(meterArray[meterIndex1].numberofPlaces)
+                setmeasure4Meter(meterArray[meterIndex1].numberofPlaces)
+                setmeasure5Meter(meterArray[meterIndex1].numberofPlaces)
+                setmeasure6Meter(meterArray[meterIndex1].numberofPlaces)
+                setmeasure7Meter(meterArray[meterIndex1].numberofPlaces)
+                setmeasure8Meter(meterArray[meterIndex1].numberofPlaces)
                 return
             }
+
             
-            setMeterIdx((meterIdx-1)%3)
-            setMeterSrc(meterArray[meterIdx])
-            func(defaultPitchesArray_(meterArray[meterIdx].numberofPlaces))
+            setMeterIndex1((meterIndex1-1)%3)
+            setMetersrc1(meterArray[meterIndex1])
+            console.log(meterIndex1)
+            console.log(meterArray[meterIndex1])
+            setMeasure1(defaultPitchesArray_(meterArray[meterIndex1].numberofPlaces))
+            setMeasure2(defaultPitchesArray_(meterArray[meterIndex1].numberofPlaces))
+            setMeasure3(defaultPitchesArray_(meterArray[meterIndex1].numberofPlaces))
+            setMeasure4(defaultPitchesArray_(meterArray[meterIndex1].numberofPlaces))
+            setMeasure5(defaultPitchesArray_(meterArray[meterIndex1].numberofPlaces))
+            setMeasure6(defaultPitchesArray_(meterArray[meterIndex1].numberofPlaces))
+            setMeasure7(defaultPitchesArray_(meterArray[meterIndex1].numberofPlaces))
+            setMeasure8(defaultPitchesArray_(meterArray[meterIndex1].numberofPlaces))
+            console.log(measure1)
+            console.log(measure2)
             setactiveMeasure(measureNumber)
             setactiveNote(0)
             setPointer(1)
-            func2(meterArray[meterIdx].numberofPlaces)
+            setmeasure1Meter(meterArray[meterIndex1].numberofPlaces)
+            setmeasure2Meter(meterArray[meterIndex1].numberofPlaces)
+            setmeasure3Meter(meterArray[meterIndex1].numberofPlaces)
+            setmeasure4Meter(meterArray[meterIndex1].numberofPlaces)
+            setmeasure5Meter(meterArray[meterIndex1].numberofPlaces)
+            setmeasure6Meter(meterArray[meterIndex1].numberofPlaces)
+            setmeasure7Meter(meterArray[meterIndex1].numberofPlaces)
+            setmeasure8Meter(meterArray[meterIndex1].numberofPlaces)
 
         }
 
-        const switchRight = (func,measureNumber,func2,setMeterIdx,meterIdx,setMeterSrc) =>{
-            setMeterIdx((meterIdx+1)%3)
-            setMeterSrc(meterArray[meterIdx])
-            func(defaultPitchesArray_(meterArray[meterIdx].numberofPlaces))
+        const switchRight = (measureNumber) =>{
+            setMeterIndex1((meterIndex1+1)%3)
+            console.log(meterIndex1)
+            console.log(meterArray[meterIndex1])
+            setMetersrc1(meterArray[meterIndex1])
+            setMeasure1(defaultPitchesArray_(meterArray[meterIndex1].numberofPlaces))
+            setMeasure2(defaultPitchesArray_(meterArray[meterIndex1].numberofPlaces))
+            setMeasure3(defaultPitchesArray_(meterArray[meterIndex1].numberofPlaces))
+            setMeasure4(defaultPitchesArray_(meterArray[meterIndex1].numberofPlaces))
+            setMeasure5(defaultPitchesArray_(meterArray[meterIndex1].numberofPlaces))
+            setMeasure6(defaultPitchesArray_(meterArray[meterIndex1].numberofPlaces))
+            setMeasure7(defaultPitchesArray_(meterArray[meterIndex1].numberofPlaces))
+            setMeasure8(defaultPitchesArray_(meterArray[meterIndex1].numberofPlaces))
             console.log(measure1)
+            console.log(measure2)
             setactiveMeasure(measureNumber)
             setactiveNote(0)
             setPointer(1)
-            func2(meterArray[meterIdx].numberofPlaces)
+            setmeasure1Meter(meterArray[meterIndex1].numberofPlaces)
+            setmeasure2Meter(meterArray[meterIndex1].numberofPlaces)
+            setmeasure3Meter(meterArray[meterIndex1].numberofPlaces)
+            setmeasure4Meter(meterArray[meterIndex1].numberofPlaces)
+            setmeasure5Meter(meterArray[meterIndex1].numberofPlaces)
+            setmeasure6Meter(meterArray[meterIndex1].numberofPlaces)
+            setmeasure7Meter(meterArray[meterIndex1].numberofPlaces)
+            setmeasure8Meter(meterArray[meterIndex1].numberofPlaces)
                 
         }
 
@@ -1789,6 +1841,15 @@ function Compose() {
             
        
    }
+   const changeVolume1 = (vol) => {
+    const el = document.getElementsByClassName(vol)
+    console.log(el[0].children[3].attributes['aria-valuenow'])
+    setvolumeMeasure1(parseInt(el[0].children[3].attributes['aria-valuenow'].nodeValue))
+    
+
+}
+
+
 
 
 
@@ -1802,24 +1863,30 @@ function Compose() {
 
             <div className='topColumnLeft' onMouseEnter={()=>{setHover(true)}} onMouseLeave={()=>{setHover(false)}}>
         <div className='div-toptop' >
-        <div className='div-top'   style={{overflowY:'scroll'}}>
-
-           
-
-            <div    className="row" >
-                
-                <div className='rowA' >
-                
-                <div className='chooseMeter-container'>
-                    <button onClick={()=>switchLeft(setMeasure1,0,setmeasure1Meter,setMeterIndex1,meterIndex1,setMetersrc1)}>Links</button>
+        <div className='chooseMeter-container'>
+                    <button onClick={()=>switchLeft(0)}>Links</button>
                         <img
                         height="48px" 
                         width="47px"
                         src={meterscr1.src}
                         />
-                    <button onClick={()=>switchRight(setMeasure1,0,setmeasure1Meter,setMeterIndex1,meterIndex1,setMetersrc1)}>Rechts</button>
+                    <button onClick={()=>switchRight(0)}>Rechts</button>
                     
                 </div>
+        <div className='div-top'   style={{overflowY:'scroll'}}>
+
+           
+
+            <div    className="row" >
+           
+                
+                <div className='rowA' >
+                <div className='chooseMeter-container'>
+                    
+                
+                    
+                </div>
+                
            
             <div    className="flex-container"  >
                 <div className="flex-container">
@@ -1840,16 +1907,22 @@ function Compose() {
 
         <div className='rowA'>
 
-        <div className='chooseMeter-container'>
-                <button onClick={()=>switchLeft(setMeasure2,1,setmeasure2Meter,setMeterIndex2,meterIndex2,setMetersrc2)}>Links</button>
-                    <img
-                    height="48px" 
-                    width="47px"
-                    src={meterscr2.src}
-                    />
-                    <button onClick={()=>switchRight(setMeasure2,1,setmeasure2Meter,setMeterIndex2,meterIndex2,setMetersrc2)}>Rechts</button>
+        <div className='sliderWidth'>
+        <Slider 
+                    className='test'
+                    onChange={() => changeVolume1('test') }
+                    valueLabelDisplay="auto"
+                    getAriaValueText={`${volumeMeasure1}`}
+                    min={-12}
+                    max={20}
+                    step={1}
+                    color="secondary"
+                    aria-label="Temperature"
                     
-                </div>
+
+                    
+                     />
+                     </div>
             
             <div    className="flex-container"  >
                 
@@ -1870,14 +1943,7 @@ function Compose() {
             <div className='rowA' id='measure3'>
 
             <div className='chooseMeter-container'>
-                <button onClick={()=>switchLeft(setMeasure3,2,setmeasure3Meter,setMeterIndex3,meterIndex3,setMetersrc3)}>Links</button>
-                    <img
-                    height="48px" 
-                    width="47px"
-                    src={meterscr3.src}
-                    />
-                    <button onClick={()=>switchRight(setMeasure3,2,setmeasure3Meter,setMeterIndex3,meterIndex3,setMetersrc3)}>Rechts</button>
-                    
+               
                 </div>
             
             <div   className="flex-container"  >
@@ -1897,14 +1963,7 @@ function Compose() {
         <div className='rowA' id='measure3'>
 
             <div className='chooseMeter-container'>
-                <button onClick={()=>switchLeft(setMeasure4,3,setmeasure4Meter,setMeterIndex4,meterIndex4,setMetersrc4)}>Links</button>
-                    <img
-                    height="48px" 
-                    width="47px"
-                    src={meterscr4.src}
-                    />
-                    <button onClick={()=>switchRight(setMeasure4,3,setmeasure4Meter,setMeterIndex4,meterIndex4,setMetersrc4)}>Rechts</button>
-                    
+              
                 </div>
             
             <div   className="flex-container"  >
@@ -1927,14 +1986,7 @@ function Compose() {
             <div className='rowA' id='measure3'>
 
             <div className='chooseMeter-container'>
-                <button onClick={()=>switchLeft(setMeasure5,4,setmeasure5Meter,setMeterIndex5,meterIndex5,setMetersrc5)}>Links</button>
-                    <img
-                    height="48px" 
-                    width="47px"
-                    src={meterscr5.src}
-                    />
-                    <button onClick={()=>switchRight(setMeasure5,4,setmeasure5Meter,setMeterIndex5,meterIndex5,setMetersrc5)}>Rechts</button>
-                    
+               
                 </div>
             
             <div className="flex-container"  >
@@ -1954,14 +2006,7 @@ function Compose() {
         <div className='rowA' id='measure3'>
 
             <div className='chooseMeter-container'>
-                <button onClick={()=>switchLeft(setMeasure6,5,setmeasure6Meter,setMeterIndex6,meterIndex6,setMetersrc6)}>Links</button>
-                    <img
-                    height="48px" 
-                    width="47px"
-                    src={meterscr6.src}
-                    />
-                    <button onClick={()=>switchRight(setMeasure6,5,setmeasure6Meter,setMeterIndex6,meterIndex6,setMetersrc6)}>Rechts</button>
-                    
+               
                 </div>
             
             <div    className="flex-container"  >
@@ -1987,13 +2032,7 @@ function Compose() {
             <div className='rowA' id='measure3'>
 
             <div className='chooseMeter-container'>
-                <button onClick={()=>switchLeft(setMeasure7,6,setmeasure7Meter,setMeterIndex7,meterIndex7,setMetersrc7)}>Links</button>
-                    <img
-                    height="48px" 
-                    width="47px"
-                    src={meterscr7.src}
-                    />
-                    <button onClick={()=>switchRight(setMeasure7,6,setmeasure7Meter,setMeterIndex7,meterIndex7,setMetersrc7)}>Rechts</button>
+                
                     
                 </div>
             
@@ -2015,13 +2054,7 @@ function Compose() {
         <div className='rowA' id='measure3'>
 
             <div className='chooseMeter-container'>
-                <button onClick={()=>switchLeft(setMeasure8,7,setmeasure8Meter,setMeterIndex8,meterIndex8,setMetersrc8)}>Links</button>
-                    <img
-                    height="48px" 
-                    width="47px"
-                    src={meterscr8.src}
-                    />
-                    <button onClick={()=>switchRight(setMeasure8,7,setmeasure8Meter,setMeterIndex8,meterIndex8,setMetersrc8)}>Rechts</button>
+                
                     
                 </div>
             
@@ -2085,12 +2118,10 @@ function Compose() {
                     </div>
                     <div>
                     <SubmitComposition composition={[measure1,measure2,measure3,measure4,measure5,
-                        measure6,measure7,measure8]} meter={[meterArray[meterIndex1],meterArray[meterIndex2],
-                            meterArray[meterIndex3],meterArray[meterIndex4],meterArray[meterIndex5],
-                            meterArray[meterIndex6],meterArray[meterIndex7],meterArray[meterIndex8],]} />
+                        measure6,measure7,measure8]} meter={meterArray[meterIndex1]} />
                 </div>
                 <button onClick={goToResult}> Result </button>
-                <button onClick={playwholeComposition}> Test </button>
+                <button onClick={playwholeComposition}> Play the Melody </button>
                 
     </div>
     
@@ -2099,6 +2130,17 @@ function Compose() {
 
 
             <div className='topColumnRight'>
+            <Slider 
+                    className='test'
+                    onChange={() => changeVolume1('test') }
+                    
+                    min={-12}
+                    max={20}
+                    step={1}
+                    
+
+                    
+                     />
                 
             </div>
                             

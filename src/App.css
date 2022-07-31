@@ -37,14 +37,11 @@
 }
 
 
-.test {
-  background-color: rgb(168, 177, 85);
-  margin-top: auto;
-  margin-left: 160px;
-  width: 50px;
-  border: 5px solid black;
-  flex: 1;
-  display: flex;
+
+.sliderWidth{
+  width: 230px;
+  margin-left: 100px;
+  background-color: blue;
 }
 
 .background {

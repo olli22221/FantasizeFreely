@@ -1896,7 +1896,7 @@ export let defaultpitches_notused =
         let  result= []
         
         result = result.concat(new Array(1).fill(defaultpitchesoccupiedfirst).concat(new Array(meter-1).fill(defaultpitches)).concat(new Array(17-meter).fill(defaultpitches_notused)))
-        
+        console.log(result)
           
           return result
         
