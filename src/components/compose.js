@@ -29,6 +29,9 @@ import * as Tone from "tone";
 import { playMelody, playSynth,NoteDurationDict } from './ToneSampler';
 import Slider, { Range } from 'rc-slider';
 import 'rc-slider/assets/index.css';
+import VolumeUpIcon from '@mui/icons-material/VolumeUp';
+import VolumeDownIcon from '@mui/icons-material/VolumeDown';
+import { Stack } from '@mui/material';
 
 
 function Compose() {
@@ -1908,6 +1911,11 @@ function Compose() {
         <div className='rowA'>
 
         <div className='sliderWidth'>
+            <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
+            <VolumeDownIcon
+    fontSize="inherit"
+    style={{ fontSize: "20px" }}
+  />
         <Slider 
                     className='test'
                     onChange={() => changeVolume1('test') }
@@ -1922,7 +1930,16 @@ function Compose() {
 
                     
                      />
-                     </div>
+                     
+                     
+                      <VolumeUpIcon
+    fontSize="inherit"
+    style={{ fontSize: "20px" }}
+  />
+ 
+  </Stack>
+  </div>
+                    
             
             <div    className="flex-container"  >
                 
@@ -2130,17 +2147,7 @@ function Compose() {
 
 
             <div className='topColumnRight'>
-            <Slider 
-                    className='test'
-                    onChange={() => changeVolume1('test') }
-                    
-                    min={-12}
-                    max={20}
-                    step={1}
-                    
-
-                    
-                     />
+            
                 
             </div>
                             
