@@ -66,25 +66,29 @@ const calculateTimeout = (wholeComposition) => {
             
 }
 
-export const playMelody = (wholeComposition) =>{
+export const playMelody = (wholeComposition,measureVolumes) =>{
     recorder.start();
     let timeAddedToNow = 0
     const now = Tone.now()
     const timeout = calculateTimeout(wholeComposition)
-    for (let index = 0; index < wholeComposition.length; index++) {
-        let measuretmp = wholeComposition[index];
+    for (let idx = 0; idx < wholeComposition.length; idx++) {
+        let measuretmp = wholeComposition[idx];
+        let measureVolume = measureVolumes[idx]
+        
+        
         for (let index = 0; index < measuretmp.length; index++) {
             const element = measuretmp[index];
             const duration = element.duration
             const toneJSDuration = NoteDurationDict[duration]
             const pitch = element['type'][0]
+            
                 
         
     Tone.loaded().then(() => {
-        sampler.volume.value = -12
+        sampler.volume.setValueAtTime(measureVolume,now + timeAddedToNow) 
+        
         sampler.triggerAttackRelease(pitch.replace('/',''), toneJSDuration,now + timeAddedToNow);
         timeAddedToNow = timeAddedToNow + toneJSDuration
-        console.log(timeAddedToNow)
     })
    
         }
@@ -99,7 +103,7 @@ export const playMelody = (wholeComposition) =>{
         reader.readAsDataURL(recording); 
         reader.onloadend = function() {
         var base64data = reader.result;
-        console.log(base64data)
+
         let splitted = base64data.split(';')
         const blob = new FormData()
         blob.append("wavFile",splitted[2])

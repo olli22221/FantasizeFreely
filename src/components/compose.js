@@ -40,13 +40,13 @@ function Compose() {
     const meterArray = [fourQuarter,twoQuarter,sixEighth]
     const [meterIndex1,setMeterIndex1] = useState(0)
     const [volumeMeasure1,setvolumeMeasure1] = useState(0)
-    const [volumeMeasure2,setvolumeMeasure2] = useState(10)
-    const [volumeMeasure3,setvolumeMeasure3] = useState(10)
-    const [volumeMeasure4,setvolumeMeasure4] = useState(10)
-    const [volumeMeasure5,setvolumeMeasure5] = useState(10)
-    const [volumeMeasure6,setvolumeMeasure6] = useState(10)
-    const [volumeMeasure7,setvolumeMeasure7] = useState(10)
-    const [volumeMeasure8,setvolumeMeasure8] = useState(10)
+    const [volumeMeasure2,setvolumeMeasure2] = useState(0)
+    const [volumeMeasure3,setvolumeMeasure3] = useState(0)
+    const [volumeMeasure4,setvolumeMeasure4] = useState(0)
+    const [volumeMeasure5,setvolumeMeasure5] = useState(0)
+    const [volumeMeasure6,setvolumeMeasure6] = useState(0)
+    const [volumeMeasure7,setvolumeMeasure7] = useState(0)
+    const [volumeMeasure8,setvolumeMeasure8] = useState(0)
     
     const [meterscr1, setMetersrc1] = useState(fourQuarter);
     const musicatResult = useRecoilValue(musicatResponseAtom);
@@ -86,7 +86,9 @@ function Compose() {
         const wholeComposition = [notesMeasure1,notesMeasure2,notesMeasure3,notesMeasure4,
             notesMeasure5,notesMeasure6,notesMeasure7,notesMeasure8]
        
-                playMelody(wholeComposition)
+                playMelody(wholeComposition,[volumeMeasure1,volumeMeasure2,volumeMeasure3,
+                    volumeMeasure4,volumeMeasure5,volumeMeasure6,
+                    volumeMeasure7,volumeMeasure8 ])
                 
                 
                 
@@ -207,14 +209,7 @@ function Compose() {
 
     }, [accent,panelDuration])
 
-    useEffect(() => { 
-        console.log(volumeMeasure1)
-    },[volumeMeasure1])
-    
-
-    
-
-    
+   
  
 
 
@@ -1844,10 +1839,10 @@ function Compose() {
             
        
    }
-   const changeVolume1 = (vol) => {
+   const changeVolume1 = (func,vol) => {
     const el = document.getElementsByClassName(vol)
-    console.log(el[0].children[3].attributes['aria-valuenow'])
-    setvolumeMeasure1(parseInt(el[0].children[3].attributes['aria-valuenow'].nodeValue))
+    
+    func(parseInt(el[0].children[3].attributes['aria-valuenow'].nodeValue))
     
 
 }
@@ -1884,12 +1879,35 @@ function Compose() {
            
                 
                 <div className='rowA' >
-                <div className='chooseMeter-container'>
+                <div className='sliderWidth'>
+            <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
+            <VolumeDownIcon
+    fontSize="inherit"
+    style={{ fontSize: "20px" }}
+  />
+        <Slider 
+                    className='volume1'
+                    onChange={() => changeVolume1(setvolumeMeasure1,'volume1') }
+                    valueLabelDisplay="auto"
+                    getAriaValueText={`${volumeMeasure1}`}
+                    min={-12}
+                    max={20}
+                    step={4}
+                    color="secondary"
+                    aria-label="Temperature"
                     
-                
+
                     
-                </div>
-                
+                     />
+                     
+                     
+                      <VolumeUpIcon
+    fontSize="inherit"
+    style={{ fontSize: "20px" }}
+  />
+ 
+  </Stack>
+  </div>
            
             <div    className="flex-container"  >
                 <div className="flex-container">
@@ -1917,13 +1935,13 @@ function Compose() {
     style={{ fontSize: "20px" }}
   />
         <Slider 
-                    className='test'
-                    onChange={() => changeVolume1('test') }
+                    className='volume2'
+                    onChange={() => changeVolume1(setvolumeMeasure2,'volume2') }
                     valueLabelDisplay="auto"
-                    getAriaValueText={`${volumeMeasure1}`}
+                    getAriaValueText={`${volumeMeasure2}`}
                     min={-12}
                     max={20}
-                    step={1}
+                    step={4}
                     color="secondary"
                     aria-label="Temperature"
                     
@@ -1959,10 +1977,36 @@ function Compose() {
             <div    className="row" >
             <div className='rowA' id='measure3'>
 
-            <div className='chooseMeter-container'>
-               
+                            <div className='sliderWidth'>
+                            <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
+                            <VolumeDownIcon
+                    fontSize="inherit"
+                    style={{ fontSize: "20px" }}
+                />
+                        <Slider 
+                                    className='volume3'
+                                    onChange={() => changeVolume1(setvolumeMeasure3,'volume3') }
+                                    valueLabelDisplay="auto"
+                                    getAriaValueText={`${volumeMeasure3}`}
+                                    min={-12}
+                                    max={20}
+                                    step={4}
+                                    color="secondary"
+                                    aria-label="Temperature"
+                                    
+
+                                    
+                                    />
+                                    
+                                    
+                                    <VolumeUpIcon
+                    fontSize="inherit"
+                    style={{ fontSize: "20px" }}
+                />
+                
+                </Stack>
                 </div>
-            
+                            
             <div   className="flex-container"  >
                 
                  <div className="flex-container">
@@ -1979,9 +2023,35 @@ function Compose() {
 
         <div className='rowA' id='measure3'>
 
-            <div className='chooseMeter-container'>
-              
-                </div>
+                    <div className='sliderWidth'>
+                        <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
+                        <VolumeDownIcon
+                fontSize="inherit"
+                style={{ fontSize: "20px" }}
+            />
+                    <Slider 
+                                className='volume4'
+                                onChange={() => changeVolume1(setvolumeMeasure4,'volume4') }
+                                valueLabelDisplay="auto"
+                                getAriaValueText={`${volumeMeasure4}`}
+                                min={-12}
+                                max={20}
+                                step={4}
+                                color="secondary"
+                                aria-label="Temperature"
+                                
+
+                                
+                                />
+                                
+                                
+                                <VolumeUpIcon
+                fontSize="inherit"
+                style={{ fontSize: "20px" }}
+            />
+            
+            </Stack>
+            </div>
             
             <div   className="flex-container"  >
                 
@@ -2002,9 +2072,35 @@ function Compose() {
             <div    className="row" >
             <div className='rowA' id='measure3'>
 
-            <div className='chooseMeter-container'>
-               
-                </div>
+                        <div className='sliderWidth'>
+                        <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
+                        <VolumeDownIcon
+                fontSize="inherit"
+                style={{ fontSize: "20px" }}
+            />
+                    <Slider 
+                                className='volume5'
+                                onChange={() => changeVolume1(setvolumeMeasure5,'volume5') }
+                                valueLabelDisplay="auto"
+                                getAriaValueText={`${volumeMeasure5}`}
+                                min={-12}
+                                max={20}
+                                step={4}
+                                color="secondary"
+                                aria-label="Temperature"
+                                
+
+                                
+                                />
+                                
+                                
+                                <VolumeUpIcon
+                fontSize="inherit"
+                style={{ fontSize: "20px" }}
+            />
+            
+            </Stack>
+            </div>
             
             <div className="flex-container"  >
                 
@@ -2022,10 +2118,35 @@ function Compose() {
 
         <div className='rowA' id='measure3'>
 
-            <div className='chooseMeter-container'>
-               
-                </div>
+                    <div className='sliderWidth'>
+                        <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
+                        <VolumeDownIcon
+                fontSize="inherit"
+                style={{ fontSize: "20px" }}
+            />
+                    <Slider 
+                                className='volume6'
+                                onChange={() => changeVolume1(setvolumeMeasure6,'volume6') }
+                                valueLabelDisplay="auto"
+                                getAriaValueText={`${volumeMeasure6}`}
+                                min={-12}
+                                max={20}
+                                step={4}
+                                color="secondary"
+                                aria-label="Temperature"
+                                
+
+                                
+                                />
+                                
+                                
+                                <VolumeUpIcon
+                fontSize="inherit"
+                style={{ fontSize: "20px" }}
+            />
             
+            </Stack>
+            </div>
             <div    className="flex-container"  >
                 
                 
@@ -2048,15 +2169,40 @@ function Compose() {
             <div    className="row" >
             <div className='rowA' id='measure3'>
 
-            <div className='chooseMeter-container'>
+                            <div className='sliderWidth'>
+                            <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
+                            <VolumeDownIcon
+                    fontSize="inherit"
+                    style={{ fontSize: "20px" }}
+                />
+                        <Slider 
+                                    className='volume7'
+                                    onChange={() => changeVolume1(setvolumeMeasure7,'volume7') }
+                                    valueLabelDisplay="auto"
+                                    getAriaValueText={`${volumeMeasure7}`}
+                                    min={-12}
+                                    max={20}
+                                    step={4}
+                                    color="secondary"
+                                    aria-label="Temperature"
+                                    
+
+                                    
+                                    />
+                                    
+                                    
+                                    <VolumeUpIcon
+                    fontSize="inherit"
+                    style={{ fontSize: "20px" }}
+                />
                 
-                    
+                </Stack>
                 </div>
             
             <div className="flex-container"  >
                 
                 
-                   ? <div className="flex-container">
+                    <div className="flex-container">
                      
                 {measure7.slice(0,17).map( (note ,idx) => {
                     return <Pitches measure={6}  url={note} activated={activeNote}  index={idx} item={note} board={measure7} />
@@ -2070,10 +2216,35 @@ function Compose() {
 
         <div className='rowA' id='measure3'>
 
-            <div className='chooseMeter-container'>
-                
-                    
-                </div>
+                    <div className='sliderWidth'>
+                        <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
+                        <VolumeDownIcon
+                fontSize="inherit"
+                style={{ fontSize: "20px" }}
+            />
+                    <Slider 
+                                className='volume8'
+                                onChange={() => changeVolume1(setvolumeMeasure8,'volume8') }
+                                valueLabelDisplay="auto"
+                                getAriaValueText={`${volumeMeasure8}`}
+                                min={-12}
+                                max={20}
+                                step={4}
+                                color="secondary"
+                                aria-label="Temperature"
+                                
+
+                                
+                                />
+                                
+                                
+                                <VolumeUpIcon
+                fontSize="inherit"
+                style={{ fontSize: "20px" }}
+            />
+            
+            </Stack>
+            </div>
             
             <div    className="flex-container"  >
                 
