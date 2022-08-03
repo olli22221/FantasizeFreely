@@ -1835,7 +1835,7 @@ function Compose() {
         }
         const goToResult = () => {
 
-            nav("/Result")
+            nav("/TestScoreBox")
             
        
    }
@@ -2270,21 +2270,27 @@ function Compose() {
             
             <div className='Pitches' >
                 <div className='column1'>
-                <div>
-                    {panelArray.slice(0,7).map( (note ,idx) => {
+                
+               
+                    {panelArray.slice(0,9).map( (note ,idx) => {
+                         
+                        return (
+                        
+                 <PitchesDraggable url={note}  index={idx} item={note} addPitch={addPitch} replacePitch={replaceItem} />
+                 
+                
+                 
+                 
+                 )
+                        
+                    })}
+                   
+                    <div className='column1'>
+                    {panelArray.slice(9,18).map( (note ,idx) => {
                         return <PitchesDraggable url={note}  index={idx} item={note} addPitch={addPitch} replacePitch={replaceItem} />
                     })}
                     </div>
-                    <div>
-                    {panelArray.slice(7,14).map( (note ,idx) => {
-                        return <PitchesDraggable url={note}  index={idx} item={note} addPitch={addPitch} replacePitch={replaceItem} />
-                    })}
-                    </div>
-                    <div>
-                    {panelArray.slice(14,18).map( (note ,idx) => {
-                        return <PitchesDraggable url={note}  index={idx} item={note} addPitch={addPitch} replacePitch={replaceItem} />
-                    })}
-                    </div>
+                    
                     </div>
                     <div className='column3'>
                     <button onClick={() => {changeDuration("whole")}}> Whole Notes </button>

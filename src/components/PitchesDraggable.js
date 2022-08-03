@@ -2,6 +2,7 @@ import React ,{useEffect, useRef} from 'react';
 
 import {dragging as dragAtom, replaceActivated as replaceActivatedAtom} from '../redux/store'
 import { useRecoilState, useRecoilValue } from 'recoil';
+import { margin } from '@mui/system';
 
 
 function PitchesDraggable({item ,url,index, moveItem, target,addPitch,replacePitch}) {
@@ -21,16 +22,24 @@ function PitchesDraggable({item ,url,index, moveItem, target,addPitch,replacePit
 
 
     return(
-                   
+        
+           <div className='column6'> 
+           <div className='h5'>A </div>
+                   <div style={{marginLeft:"25px",marginTop:"5px"}}>
         <img 
             className="flex-pitch"
-            height="70px" 
-            width="55px" 
-            src={url.src} 
-            style={{border:"2px solid darkgreen"}} 
+            height="120px" 
+            width="29px" 
+            src={url.panelsrc} 
+           
             onClick={()=>{if(!replaceActivated){add(item)}else{replace(item)}}}
             
         />
+        </div>
+        </div>
+        
+                       
+       
     )
 
     }

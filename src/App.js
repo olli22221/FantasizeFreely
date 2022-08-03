@@ -8,7 +8,7 @@ import { musicNotes as musicNotesAtom, notePointer as notePointerAtom, noteCount
 import Main from './Main';
 import CreativityTask from './CreativityTask';
 import Compose from './components/compose';
-
+import TestScoreBox from './components/testScoreBox';
 import Result from './components/result';
 
 
@@ -34,6 +34,7 @@ function App() {
       <Route exact path='/CreativityTask' element={<CreativityTask/>}/>
       <Route exact path='/Compose' element={<Compose/>}/>
       <Route exact path='/Result' element={<Result/>}/>
+      <Route exact path='/TestScoreBox' element={<TestScoreBox/>}/>
       </Routes>
 
       </Router>

@@ -35,20 +35,24 @@ const clefAndTimeWidth = 60;
 
 
     const renderer = rendererRef.current;
-    renderer.resize(450, 130);
+    renderer.resize(950, 230);
     const context = renderer.getContext();
     //const staveWidth = (width - clefAndTimeWidth) / staves.length;
-    context.setFont('Arial', 10, '').setBackgroundFillStyle('#eed')
-    const staveMeasure = new Stave(35, 15, 400);
+    context.setFont('Arial', 10, '').setBackgroundFillStyle('red')
+    const staveMeasure = new Stave(35, 100, 400);
+    const staveMeasure1 = new Stave(500, 100, 400);
     if(violin == true){
         staveMeasure.setContext(context).draw();
+        staveMeasure1.setContext(context).draw();
     }
     else{
         staveMeasure.setContext(context).draw();
+        staveMeasure1.setContext(context).draw();
     }
     
 
     const measureNotes1 = []
+    const measureNotes2 = []
     const notes_ =  notes.filter(piece => piece.show == true && piece.locked == false)
     
     if(notes_ != undefined){
@@ -58,32 +62,36 @@ const clefAndTimeWidth = 60;
         }
     }
 }
+
+/*
     
     
-   /* measureNotes1.push(new StaveNote({ keys:["g/3"], duration:"w"}).addModifier(new Accidental("#")))
-    measureNotes1.push(new StaveNote({ keys:["a/3"], duration:"w"}).addModifier(new Accidental("#")))
-    measureNotes1.push(new StaveNote({ keys:["b/3"], duration:"w"}).addModifier(new Accidental("#")))
-    measureNotes1.push(new StaveNote({ keys:["c/4"], duration:"w"}).addModifier(new Accidental("#")))
-    measureNotes1.push(new StaveNote({ keys:["d/4"], duration:"w"}).addModifier(new Accidental("#")))
-    measureNotes1.push(new StaveNote({ keys:["e/4"], duration:"w"}).addModifier(new Accidental("#")))
-    measureNotes1.push(new StaveNote({ keys:["f/4"], duration:"w"}).addModifier(new Accidental("#")))
-    measureNotes1.push(new StaveNote({ keys:["g/4"], duration:"w"}).addModifier(new Accidental("#")))
-    measureNotes1.push(new StaveNote({ keys:["a/4"], duration:"w"}).addModifier(new Accidental("#")))
-   measureNotes1.push(new StaveNote({ keys:["b/4"], duration:"w"}).addModifier(new Accidental("#")))
-    measureNotes1.push(new StaveNote({ keys:["c/5"], duration:"w"}).addModifier(new Accidental("#")))
-    measureNotes1.push(new StaveNote({ keys:["d/5"], duration:"w"}).addModifier(new Accidental("#")))
-    measureNotes1.push(new StaveNote({ keys:["e/5"], duration:"w"}).addModifier(new Accidental("#")))
-    measureNotes1.push(new StaveNote({ keys:["f/5"], duration:"w"}).addModifier(new Accidental("#")))
-    measureNotes1.push(new StaveNote({ keys:["g/5"], duration:"w"}).addModifier(new Accidental("#")))
-    measureNotes1.push(new StaveNote({ keys:["a/5"], duration:"w"}).addModifier(new Accidental("#")))
-    measureNotes1.push(new StaveNote({ keys:["b/5"], duration:"w"}).addModifier(new Accidental("#")))
-    measureNotes1.push(new StaveNote({ keys:["c/6"], duration:"w"}).addModifier(new Accidental("#")))
-     */
-    
+    measureNotes1.push(new StaveNote({ keys:["g/3"], duration:"16"}))
+    measureNotes1.push(new StaveNote({ keys:["a/3"], duration:"16"}))
+    measureNotes1.push(new StaveNote({ keys:["b/3"], duration:"16"}))
+    measureNotes1.push(new StaveNote({ keys:["c/4"], duration:"16"}))
+    measureNotes1.push(new StaveNote({ keys:["d/4"], duration:"16"}))
+    measureNotes1.push(new StaveNote({ keys:["e/4"], duration:"16"}))
+    measureNotes1.push(new StaveNote({ keys:["f/4"], duration:"16"}))
+    measureNotes1.push(new StaveNote({ keys:["g/4"], duration:"16"}))
+    measureNotes1.push(new StaveNote({ keys:["a/4"], duration:"16"}))
+    measureNotes2.push(new StaveNote({ keys:["b/4"], duration:"16"}))
+    measureNotes2.push(new StaveNote({ keys:["c/5"], duration:"16"}))
+    measureNotes2.push(new StaveNote({ keys:["d/5"], duration:"16"}))
+    measureNotes2.push(new StaveNote({ keys:["e/5"], duration:"16"}))
+    measureNotes2.push(new StaveNote({ keys:["f/5"], duration:"16"}))
+    measureNotes2.push(new StaveNote({ keys:["g/5"], duration:"16"}))
+    measureNotes2.push(new StaveNote({ keys:["a/5"], duration:"16"}))
+    measureNotes2.push(new StaveNote({ keys:["b/5"], duration:"16"}))
+    measureNotes2.push(new StaveNote({ keys:["c/6"], duration:"16"}))
+     
+    */
     
     if(measureNotes1.length>0){
     
     Formatter.FormatAndDraw(context, staveMeasure, measureNotes1);
+    
+   // Formatter.FormatAndDraw(context, staveMeasure1, measureNotes2);
     }
 
     

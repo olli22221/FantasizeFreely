@@ -1171,7 +1171,8 @@ export const eightpitches = [
         accented: 0,
         locked: false,
         occupied: true,
-        src:require('../media/composeMedia/eightNotes/c4.PNG'),
+        panelsrc: require('../media/PanelMedia/eighthC4.PNG'),
+        src: require('../media/composeMedia/eightNotes/c4.PNG')
 
     },
     {
