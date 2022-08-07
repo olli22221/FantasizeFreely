@@ -1,4 +1,4 @@
-import React ,{useEffect, useRef} from 'react';
+import React ,{useEffect, useRef, useState} from 'react';
 
 import {dragging as dragAtom, replaceActivated as replaceActivatedAtom} from '../redux/store'
 import { useRecoilState, useRecoilValue } from 'recoil';
@@ -9,6 +9,9 @@ function PitchesDraggable({item ,url,index, moveItem, target,addPitch,replacePit
     const ref = useRef(null)
     const [dragging, setDragging] = useRecoilState(dragAtom);
     const replaceActivated = useRecoilValue(replaceActivatedAtom)
+    const [buttonActivated,setButtonActivated] = useState(false)
+    const [panelsrc,setPanelsrc] = useState(false)
+
 
     
     const add = (item) => {
@@ -19,22 +22,38 @@ function PitchesDraggable({item ,url,index, moveItem, target,addPitch,replacePit
         replacePitch(item)
     }
 
+    useEffect(() => {
+        console.log(panelsrc)
+        console.log(url)
+
+       
+
+    }, [panelsrc,url])
+
+
 
 
     return(
         
-           <div className='column6'> 
+           <div style={{ border: buttonActivated?
+         '4px solid darkblue': '4px solid #b0b0b0'}}  className='column6'
+            onClick={()=>{if(!replaceActivated){add(item)}else{replace(item)}}} onMouseDown={()=>{
+                setButtonActivated(true); setPanelsrc(true)
+            }} onMouseUp={()=>{setButtonActivated(false);setPanelsrc(false)}}> 
            <div className='h5'>A </div>
-                   <div style={{marginLeft:"25px",marginTop:"5px"}}>
+                   <div style={{marginLeft:"30px"}}>
+                    
         <img 
             className="flex-pitch"
-            height="120px" 
-            width="29px" 
-            src={url.panelsrc} 
+            height="135px" 
+            width="39px" 
+            src= {url.panelsrc} 
            
-            onClick={()=>{if(!replaceActivated){add(item)}else{replace(item)}}}
+            
             
         />
+
+                    
         </div>
         </div>
         
