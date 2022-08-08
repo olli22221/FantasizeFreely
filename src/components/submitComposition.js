@@ -75,6 +75,7 @@ const prepareComposition = (composition_) => {
 
 
 }
+
   const handleSubmit = () => {
 
     const check = checkComposition(composition,meter)

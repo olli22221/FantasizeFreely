@@ -32,11 +32,14 @@ import 'rc-slider/assets/index.css';
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
 import VolumeDownIcon from '@mui/icons-material/VolumeDown';
 import { Stack } from '@mui/material';
-
+import axios from "axios";
+import { prepareComposition } from './util';
+import ScoreBox from './ScoreBox';
 
 function Compose() {
     let nav = useNavigate();
-
+    
+    const [inspirations, setinspirations] = useState([]);
     const meterArray = [fourQuarter,twoQuarter,sixEighth]
     const [meterIndex1,setMeterIndex1] = useState(0)
     const [volumeMeasure1,setvolumeMeasure1] = useState(0)
@@ -1847,6 +1850,31 @@ function Compose() {
 
 }
 
+const getSuggestions = () => {
+    setinspirations([])
+    const composition= [measure1,measure2,measure3,measure4,measure5,
+        measure6,measure7,measure8]
+    const finalComposition = prepareComposition(composition)
+    let payload = {
+        data: finalComposition,
+        
+    }
+    axios.post("http://192.168.178.46:5000/runRNN", JSON.stringify(payload), {
+        headers: {
+            "Content-Type": "application/json"
+            
+        }
+    }).then((response) => {
+        console.log(response)
+        setinspirations(response.data.suggestions[5])
+        
+        
+
+    }).catch((error) => {
+      console.log(error)
+    });
+}
+
 
 
 
@@ -2324,6 +2352,13 @@ function Compose() {
 
 
             <div className='topColumnRight'>
+                    
+                    <button onClick={getSuggestions}>GetInspiration</button>
+                    <div>
+                    { inspirations.length>0 &&
+                    <ScoreBox notes={inspirations} timeSign="4/4" violin={false}/>
+                    }
+                    </div>
             
                 
             </div>

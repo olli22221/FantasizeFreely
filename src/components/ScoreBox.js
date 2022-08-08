@@ -40,32 +40,36 @@ const clefAndTimeWidth = 60;
     //const staveWidth = (width - clefAndTimeWidth) / staves.length;
     context.setFont('Arial', 10, '').setBackgroundFillStyle('red')
     const staveMeasure = new Stave(35, 100, 400);
-    const staveMeasure1 = new Stave(500, 100, 400);
+    //const staveMeasure1 = new Stave(500, 100, 400);
     if(violin == true){
         staveMeasure.setContext(context).draw();
-        staveMeasure1.setContext(context).draw();
+        //staveMeasure1.setContext(context).draw();
     }
     else{
         staveMeasure.setContext(context).draw();
-        staveMeasure1.setContext(context).draw();
+        //staveMeasure1.setContext(context).draw();
     }
     
 
     const measureNotes1 = []
     const measureNotes2 = []
     //const notes_ =  notes.filter(piece => piece.show == true && piece.locked == false)
-   /* 
-    if(notes_ != undefined){
-    for (let index = 0; index < notes_.length; index++) {
-        if(notes_[index] != undefined){
-        measureNotes1.push(new StaveNote({ keys: notes_[index].type, duration: notes_[index].duration }))
+    console.log(notes)
+    const noteType = notes[1]
+    const durations = notes[0]
+    console.log(noteType)
+    console.log(durations)
+    if(notes != undefined){
+    for (let index = 0; index < noteType.length; index++) {
+        if(noteType[index] != undefined){
+        measureNotes1.push(new StaveNote({ keys: [noteType[index]], duration: durations[index] }))
         }
     }
 }
 
-*/
+
     
-    
+    /*
     measureNotes1.push(new StaveNote({ keys:["g/3"], duration:"16"}).addModifier(new Accidental("b")))
     measureNotes1.push(new StaveNote({ keys:["a/3"], duration:"16"}).addModifier(new Accidental("b")))
     measureNotes1.push(new StaveNote({ keys:["b/3"], duration:"16"}).addModifier(new Accidental("b")))
@@ -85,13 +89,13 @@ const clefAndTimeWidth = 60;
     measureNotes2.push(new StaveNote({ keys:["b/5"], duration:"16"}).addModifier(new Accidental("b")))
     measureNotes2.push(new StaveNote({ keys:["c/6"], duration:"16"}).addModifier(new Accidental("b")))
      
-    
+    */
     
     if(measureNotes1.length>0){
     
     Formatter.FormatAndDraw(context, staveMeasure, measureNotes1);
     
-    Formatter.FormatAndDraw(context, staveMeasure1, measureNotes2);
+    // Formatter.FormatAndDraw(context, staveMeasure1, measureNotes2);
     }
 
     
