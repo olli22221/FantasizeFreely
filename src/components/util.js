@@ -49,3 +49,18 @@ export const prepareComposition = (composition_) => {
   
   
   }
+
+
+  export const imagesDictionary = {
+    "w": require('../media/durations/w.png'),
+    "wr": require('../media/durations/w.png'),
+    "h": require('../media/durations/h.png'),
+    "hr": require('../media/durations/h.png'),
+    "q": require('../media/durations/q.png'),
+    "qr": require('../media/durations/q.png'),
+    "8d": require('../media/durations/8d.jpg'),
+    "8r": require('../media/durations/8d.jpg'),
+    "16": require('../media/durations/16.png'),
+    "16r": require('../media/durations/16.png')
+
+  }

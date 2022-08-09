@@ -26,7 +26,7 @@ import {fourQuarter,twoQuarter,sixEighth} from '../data/meterData'
 import 'reactjs-popup/dist/index.css';
 import { useNavigate } from "react-router-dom";
 import * as Tone from "tone";
-import { playMelody, playSynth,NoteDurationDict } from './ToneSampler';
+import { playMelody, playSynth,NoteDurationDict, playsuggestion } from './ToneSampler';
 import Slider, { Range } from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
@@ -35,10 +35,13 @@ import { Stack } from '@mui/material';
 import axios from "axios";
 import { prepareComposition } from './util';
 import ScoreBox from './ScoreBox';
+import ShowImages from './showInspirationImages';
 
 function Compose() {
     let nav = useNavigate();
-    
+    const options = ["playSuggestion","showDurations","showPitches","showColors","showWholeMeasure","showEugeneStructures"]
+
+    const [option, setOption] = useState();
     const [inspirations, setinspirations] = useState([]);
     const meterArray = [fourQuarter,twoQuarter,sixEighth]
     const [meterIndex1,setMeterIndex1] = useState(0)
@@ -1850,7 +1853,16 @@ function Compose() {
 
 }
 
+function getRandomInt(max) {
+    return Math.floor(Math.random() * max);
+  }
+
+const playSuggestion = () => {
+    playsuggestion(inspirations)
+}
+
 const getSuggestions = () => {
+    setOption()
     setinspirations([])
     const composition= [measure1,measure2,measure3,measure4,measure5,
         measure6,measure7,measure8]
@@ -1866,7 +1878,11 @@ const getSuggestions = () => {
         }
     }).then((response) => {
         console.log(response)
-        setinspirations(response.data.suggestions[5])
+        const lenOfSuggestions = response.data.suggestions.length
+        const randomIndex = getRandomInt(lenOfSuggestions)
+
+        setinspirations(response.data.suggestions[randomIndex])
+        setOption(options[getRandomInt(options.length)])
         
         
 
@@ -2350,15 +2366,43 @@ const getSuggestions = () => {
             </div>
             </div>
 
-
             <div className='topColumnRight'>
                     
                     <button onClick={getSuggestions}>GetInspiration</button>
-                    <div>
+                    <div >
                     { inspirations.length>0 &&
                     <ScoreBox notes={inspirations} timeSign="4/4" violin={false}/>
                     }
                     </div>
+
+                    <div className='EmptyInspiration'>
+                        {(() => {
+                            switch (option) {
+                                case "playSuggestion":
+                                    
+                                    return <button onClick = {playSuggestion}>PlaySuggestion</button>
+                                case "showDurations":
+                                    
+                                    return <div>
+                                        <ShowImages images={inspirations[0]} />Durations</div>
+                                case "showPitches":
+                                    
+                                    return <div>Pitches</div>
+                                case "showColors":
+                                    
+                                    return <div>Colors</div>
+                                case "showWholeMeasure":
+                                   
+                                    return <div>showWholeMeasure</div>
+                                case "showEugeneStructures":
+                                   
+                                    return <div>showEugeneStructures</div>
+                                default:
+                                    return <div>test</div>
+                            }
+                        })()}
+                    </div>
+                    <button onClick = {playSuggestion}>PlaySuggestion</button>
             
                 
             </div>

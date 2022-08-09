@@ -109,6 +109,16 @@
   font-weight: bold;
 }
 
+.EmptyInspiration{
+  margin: 100px;
+  width: 600px;
+  height: 200px;
+}
+
+.InspirationIMG{
+  margin: 20px;
+}
+
 .column1{
   float: left;
   background-color: #cfcfcf;

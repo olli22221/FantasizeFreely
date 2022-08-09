@@ -66,6 +66,47 @@ const calculateTimeout = (wholeComposition) => {
             
 }
 
+
+export const playsuggestion = (suggestion) =>{
+
+    let timeAddedToNow = 0
+    const now = Tone.now()
+    const durations = suggestion[0]
+    const notes = suggestion[1]
+    const accented = suggestion[2]
+
+    for (let index = 0; index < durations.length; index++) {
+        
+        const duration = durations[index]
+        const toneJSDuration = NoteDurationDict[duration]
+        const pitch = notes[index]
+        const accent = accented[index]     
+            
+    
+Tone.loaded().then(() => {
+    
+    if(!duration.includes('r')){
+
+        if (accent == '1') {
+            sampler.triggerAttackRelease(pitch.replace('/','')+"#", toneJSDuration,now + timeAddedToNow);
+            
+        }
+        else if(accent == '1'){
+            console.log("b")
+        }
+        else{
+            sampler.triggerAttackRelease(pitch.replace('/',''), toneJSDuration,now + timeAddedToNow);
+        }
+    }
+    
+    timeAddedToNow = timeAddedToNow + toneJSDuration
+})
+
+    }
+
+
+}
+
 export const playMelody = (wholeComposition,measureVolumes) =>{
     recorder.start();
     let timeAddedToNow = 0
@@ -134,4 +175,9 @@ export const NoteDurationDict = {
     "q": 1,
     "8d": 0.5,
     "16": 0.25,
+    "qr": 1,
+    "wr": 4,
+    "hr": 2,
+    "16r":0.25,
+    "8r":0.5
 }
