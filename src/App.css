@@ -107,16 +107,17 @@
   height: 5px;
   color: darkblue;
   font-weight: bold;
+
 }
 
 .EmptyInspiration{
   margin: 100px;
-  width: 600px;
+  width: 700px;
   height: 200px;
 }
 
 .InspirationIMG{
-  margin: 20px;
+  margin: 10px;
 }
 
 .column1{

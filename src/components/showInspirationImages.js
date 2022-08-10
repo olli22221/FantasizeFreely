@@ -5,7 +5,7 @@ import { imagesDictionary } from './util';
 
 
 
-function ShowImages({images}) {
+const ShowImages = ({images}) => {
 
 
 

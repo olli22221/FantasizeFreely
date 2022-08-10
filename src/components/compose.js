@@ -39,8 +39,12 @@ import ShowImages from './showInspirationImages';
 
 function Compose() {
     let nav = useNavigate();
-    const options = ["playSuggestion","showDurations","showPitches","showColors","showWholeMeasure","showEugeneStructures"]
-
+    const [brightnessColors, setBrightnessColors] = useState([])
+    const noteCharDict = {"c":"C","d":"D","e":"E","f":"F","g":"G","a":"A","b":"B"}
+    const noteToPitchheightDict = {"g/3":55,"a/3":57,"b/3":59,"c/4":60,"d/4":62,"e/4":64,"f/4":65,"g/4":67,"a/4":69,"b/4":71,"c/5":72
+    ,"d/5":74,"e/5":76,"f/5":77,"g/5":79,"a/5":81,"b/5":83,"c/6":84}
+    const options = ["showColors","showDurations","showPitches", "showWholeMeasure","showEugeneStructures","showHintText","playSuggestion"]
+    const accentDict = {0:"",1:"#",2:"b"}
     const [option, setOption] = useState();
     const [inspirations, setinspirations] = useState([]);
     const meterArray = [fourQuarter,twoQuarter,sixEighth]
@@ -74,7 +78,253 @@ function Compose() {
     const [activePanel, setActivePanel] = useRecoilState(activePanelAtom);
 
     
-    
+
+    const calculatePitches = () => {
+
+        const pitches= []
+        const notes = inspirations[1]
+        const accents = inspirations[2]
+        const durations = inspirations[0]
+        for (let index = 0; index < notes.length; index++) {
+            const dur = durations[index]
+            if (!dur.includes("r")) {
+                const tmpNote = notes[index]
+                if (accents[index] == 1) {
+                    pitches.push(noteToPitchheightDict[tmpNote] + 1)
+                }
+                else if(accents[index] == 2){
+                    pitches.push(noteToPitchheightDict[tmpNote] - 1)
+                }
+                else{
+                    pitches.push(noteToPitchheightDict[tmpNote])
+            }
+            }
+            
+            
+        }
+
+
+
+        return pitches
+    }
+
+    const computeRegistralDirection = (diff1,diff2) => {
+
+        if (diff1 == 0 && diff2 == 0 ) {
+            return "Lateral"
+        }
+        const registralDir1 = Math.sign(diff1)
+        const registralDir2 = Math.sign(diff2)
+        if (registralDir1 == registralDir2) {
+            return true
+        }
+        else{return false}
+    }
+
+    const calculateNarmourEncodings = (pitches) => {
+        let index = 0
+        let NarmourEncodings = []
+        let state = "start"
+        let diff1 = 0
+        let diff2 = 0
+        while (index < pitches.length-1) {
+            const actualPitch = pitches[index]
+            const nextPitch = pitches[index+1]
+            if (state == "start") {
+                diff1 = actualPitch - nextPitch
+                state = "afterStart"
+                index++
+                continue
+            }
+            else if(state == "afterStart"){
+                diff2 = actualPitch - nextPitch
+                const intervallicDifference = Math.abs(diff1) - Math.abs(diff2)
+                const registralDirection = computeRegistralDirection(diff1,diff2)
+
+                if (registralDirection == true) {
+
+                    if (intervallicDifference <= 1 || intervallicDifference >= -1) {
+                        state = "processContinuation"
+                        
+                        continue
+                    }
+                    else{
+                        if (Math.abs(diff1) <  Math.abs(diff2)) {
+                            state = "start"
+                            NarmourEncodings.push("VP")
+                            continue
+                        }
+                        else{
+                            state = "start"
+                            NarmourEncodings.push("IR")
+                        }
+                    }
+
+                }
+
+                else if(registralDirection == false){
+
+                    if (intervallicDifference <= 1 || intervallicDifference >= -1) {
+
+                        if (intervallicDifference == 0) {
+                            NarmourEncodings.push("ID")
+                            state = "start"
+                            
+                            continue
+                        }
+                        else{
+                            NarmourEncodings.push("IP")
+                            state = "start"
+                            
+                            continue
+                        }
+                    }
+                    else{
+
+                        if (diff1 < diff2) {
+                            NarmourEncodings.push("VR")
+                            state = "start"
+                            
+                            continue
+                        }
+                        else{
+                            NarmourEncodings.push("R")
+                            state = "start"
+                            
+                            continue
+                        }
+
+                    }
+
+
+                }
+
+                else{
+                    state = "duplicationContinuation"
+                    continue
+
+                }
+            }
+
+            else if (state == "duplicationContinuation") {
+                diff1 = actualPitch - nextPitch
+                index++
+                state = "duplicationContinuation_"
+                     continue
+                    }
+            else if (state == "duplicationContinuation_") {
+                diff2 = actualPitch - nextPitch
+                const intervallicDifference = Math.abs(diff1) - Math.abs(diff2)
+                const registralDirection = computeRegistralDirection(diff1,diff2)
+                if (registralDirection == "Lateral") {
+                    state = "duplicationContinuation"
+                    continue
+                }
+
+                    
+                else{
+                    NarmourEncodings.push("D")
+                        state = "start"
+                        continue
+                }
+            }
+            else if (state == "processContinuation") {
+                diff1 = actualPitch - nextPitch
+                index++
+                state = "processContinuation_"
+                continue
+            }
+            else if (state == "processContinuation_") {
+            
+                diff2 = actualPitch - nextPitch
+                const intervallicDifference = Math.abs(diff1) - Math.abs(diff2)
+                const registralDirection = computeRegistralDirection(diff1,diff2)
+                if (registralDirection == true) {
+
+                    if (intervallicDifference <= 1 || intervallicDifference >= -1) {
+                        state = "processContinuation"
+                        
+                        continue
+                    }
+                    else{
+                        NarmourEncodings.push("P")
+                        state = "start"
+                        continue
+                        
+                    }
+
+                }
+
+                
+                else{
+                    NarmourEncodings.push("P")
+                        state = "start"
+                        continue
+                }
+
+            }
+            
+            	
+        }
+       
+    }
+
+
+
+    const calculateColorbrightness = () => {
+
+        const tmpColors= []
+        const notes = inspirations[1]
+        const accents = inspirations[2]
+        for (let index = 0; index < notes.length; index++) {
+            const tmpNote = notes[index]
+            if (accents[index] == 1) {
+                tmpColors.push(noteToPitchheightDict[tmpNote] + 1)
+            }
+            else if(accents[index] == 2){
+                tmpColors.push(noteToPitchheightDict[tmpNote] - 1)
+            }
+            else{
+                tmpColors.push(noteToPitchheightDict[tmpNote])
+            }
+            
+        }
+
+
+
+        return tmpColors
+    }
+
+    useEffect(() => {
+
+        if (option == "showColors") {
+            const colors = calculateColorbrightness()
+            const brightnessess = []
+            const minColor = Math.min(...colors)
+            const maxColor = Math.max(...colors)
+            let difference = 0
+            for (let index = 0; index < colors.length; index++) {
+                const element = colors[index];
+                difference = element - minColor
+                if (difference == 0) {
+                    brightnessess.push("50%")
+                    
+                }
+                else{
+                    const brightness = 50 + (difference * 5)
+                    brightnessess.push(brightness.toString()+"%")
+                }
+                
+            }
+
+            setBrightnessColors(brightnessess)
+            
+
+        }
+
+
+
+    }, [option])
 
     const changeColor = () => {
         setIsActive(true);
@@ -96,12 +346,7 @@ function Compose() {
                     volumeMeasure4,volumeMeasure5,volumeMeasure6,
                     volumeMeasure7,volumeMeasure8 ])
                 
-                
-                
-            
-
-            
-        
+                        
     }
      
 
@@ -1892,10 +2137,6 @@ const getSuggestions = () => {
 }
 
 
-
-
-
-
         
 
     
@@ -2369,13 +2610,9 @@ const getSuggestions = () => {
             <div className='topColumnRight'>
                     
                     <button onClick={getSuggestions}>GetInspiration</button>
-                    <div >
-                    { inspirations.length>0 &&
-                    <ScoreBox notes={inspirations} timeSign="4/4" violin={false}/>
-                    }
-                    </div>
+                    
 
-                    <div className='EmptyInspiration'>
+                    <div  className='EmptyInspiration'>
                         {(() => {
                             switch (option) {
                                 case "playSuggestion":
@@ -2387,13 +2624,25 @@ const getSuggestions = () => {
                                         <ShowImages images={inspirations[0]} />Durations</div>
                                 case "showPitches":
                                     
-                                    return <div>Pitches</div>
+                                    return <div>{inspirations[1].map( (note,idx) => {
+              
+                                        return(
+                                            <div style={{textAlign:"center",fontSize:"50px",height:"80px",width:"65px",border:"2px solid gray",margin:"10px",float:"left"}}>{noteCharDict[note.charAt(0)]+ accentDict[inspirations[2][idx]]}</div>
+                                        )})}</div>
                                 case "showColors":
                                     
-                                    return <div>Colors</div>
+                                    return <div>{brightnessColors.map( (note,idx) => {
+              
+                                        return(
+                                            <div style={{height:"80px",width:"65px",backgroundColor:"green", filter:"brightness("+note+")",margin:"10px",float:"left"}}>{note}</div>
+                                        )})}</div>
+                                    
+                                    
                                 case "showWholeMeasure":
                                    
-                                    return <div>showWholeMeasure</div>
+                                    return <div>{ inspirations.length>0 &&
+                                        <ScoreBox notes={inspirations} timeSign="4/4" violin={false}/>
+                                        }</div>
                                 case "showEugeneStructures":
                                    
                                     return <div>showEugeneStructures</div>
@@ -2402,7 +2651,7 @@ const getSuggestions = () => {
                             }
                         })()}
                     </div>
-                    <button onClick = {playSuggestion}>PlaySuggestion</button>
+                    
             
                 
             </div>
