@@ -39,11 +39,12 @@ import ShowImages from './showInspirationImages';
 
 function Compose() {
     let nav = useNavigate();
+    const [narmourEncodingsState,setNarmourEncodingsState] = useState([])
     const [brightnessColors, setBrightnessColors] = useState([])
     const noteCharDict = {"c":"C","d":"D","e":"E","f":"F","g":"G","a":"A","b":"B"}
     const noteToPitchheightDict = {"g/3":55,"a/3":57,"b/3":59,"c/4":60,"d/4":62,"e/4":64,"f/4":65,"g/4":67,"a/4":69,"b/4":71,"c/5":72
     ,"d/5":74,"e/5":76,"f/5":77,"g/5":79,"a/5":81,"b/5":83,"c/6":84}
-    const options = ["showColors","showDurations","showPitches", "showWholeMeasure","showEugeneStructures","showHintText","playSuggestion"]
+    const options = ["showEugeneStructures"]
     const accentDict = {0:"",1:"#",2:"b"}
     const [option, setOption] = useState();
     const [inspirations, setinspirations] = useState([]);
@@ -104,7 +105,34 @@ function Compose() {
         }
 
 
+        
+        return pitches
+    }
 
+
+    const calculatePitchesTest = (measure) => {
+        const pitches= []
+        console.log(measure)
+        for (let index = 0; index < measure.length; index++) {
+            const note = measure[index]
+            if (note.accented != undefined) {
+                if (note['accented'] == 1) {
+                    pitches.push(noteToPitchheightDict[note['type'][0]] + 1)
+                }
+                else if(note['accented'] == 2){
+                    pitches.push(noteToPitchheightDict[note['type'][0]] - 1)
+                }
+                else{
+                    pitches.push(noteToPitchheightDict[note.type[0]])
+            }
+                
+            }
+            
+            
+        }
+
+
+        console.log(pitches)
         return pitches
     }
 
@@ -121,6 +149,23 @@ function Compose() {
         else{return false}
     }
 
+    const testNM = () => {
+        setNarmourEncodingsState(calculateNarmourEncodings(calculatePitchesTest(measure1)))
+    }
+
+    const getNarmourEncodings = (pitches) => {
+        setNarmourEncodingsState(calculateNarmourEncodings(pitches))
+    }
+
+    const isLarge = (diff) => {
+        if (Math.abs(diff) > 3){
+            return true
+        }
+        else{
+            return false
+        }
+    }
+
     const calculateNarmourEncodings = (pitches) => {
         let index = 0
         let NarmourEncodings = []
@@ -128,6 +173,7 @@ function Compose() {
         let diff1 = 0
         let diff2 = 0
         while (index < pitches.length-1) {
+            
             const actualPitch = pitches[index]
             const nextPitch = pitches[index+1]
             if (state == "start") {
@@ -143,8 +189,9 @@ function Compose() {
 
                 if (registralDirection == true) {
 
-                    if (intervallicDifference <= 1 || intervallicDifference >= -1) {
+                    if (intervallicDifference <= 2 && intervallicDifference >= -2) {
                         state = "processContinuation"
+                        NarmourEncodings.push("P")
                         
                         continue
                     }
@@ -164,7 +211,7 @@ function Compose() {
 
                 else if(registralDirection == false){
 
-                    if (intervallicDifference <= 1 || intervallicDifference >= -1) {
+                    if (intervallicDifference <= 2 && intervallicDifference >= -2) {
 
                         if (intervallicDifference == 0) {
                             NarmourEncodings.push("ID")
@@ -180,8 +227,15 @@ function Compose() {
                         }
                     }
                     else{
-
-                        if (diff1 < diff2) {
+                        
+                        if (isLarge(diff1) && isLarge(diff2)) {
+                            NarmourEncodings.push("IP")
+                            state = "start"
+                            
+                            continue
+                            
+                        }
+                        else if (!isLarge(diff1) && isLarge(diff2)) {
                             NarmourEncodings.push("VR")
                             state = "start"
                             
@@ -201,12 +255,14 @@ function Compose() {
 
                 else{
                     state = "duplicationContinuation"
+                    NarmourEncodings.push("D")
                     continue
 
                 }
             }
 
             else if (state == "duplicationContinuation") {
+                
                 diff1 = actualPitch - nextPitch
                 index++
                 state = "duplicationContinuation_"
@@ -214,7 +270,6 @@ function Compose() {
                     }
             else if (state == "duplicationContinuation_") {
                 diff2 = actualPitch - nextPitch
-                const intervallicDifference = Math.abs(diff1) - Math.abs(diff2)
                 const registralDirection = computeRegistralDirection(diff1,diff2)
                 if (registralDirection == "Lateral") {
                     state = "duplicationContinuation"
@@ -223,7 +278,7 @@ function Compose() {
 
                     
                 else{
-                    NarmourEncodings.push("D")
+                        index--
                         state = "start"
                         continue
                 }
@@ -241,13 +296,14 @@ function Compose() {
                 const registralDirection = computeRegistralDirection(diff1,diff2)
                 if (registralDirection == true) {
 
-                    if (intervallicDifference <= 1 || intervallicDifference >= -1) {
+                    if (intervallicDifference <= 2 && intervallicDifference >= -2) {
                         state = "processContinuation"
                         
                         continue
                     }
                     else{
-                        NarmourEncodings.push("P")
+                        
+                        index--
                         state = "start"
                         continue
                         
@@ -257,7 +313,7 @@ function Compose() {
 
                 
                 else{
-                    NarmourEncodings.push("P")
+                        index--
                         state = "start"
                         continue
                 }
@@ -266,8 +322,14 @@ function Compose() {
             
             	
         }
+             
+        
+        return NarmourEncodings
        
     }
+
+
+
 
 
 
@@ -296,6 +358,13 @@ function Compose() {
     }
 
     useEffect(() => {
+        if (narmourEncodingsState.length == 0) {
+            setOption("showColors")
+        }
+
+
+    }, [narmourEncodingsState])
+    useEffect(() => {
 
         if (option == "showColors") {
             const colors = calculateColorbrightness()
@@ -320,6 +389,11 @@ function Compose() {
             setBrightnessColors(brightnessess)
             
 
+        }
+        else if (option == "showEugeneStructures") {
+            getNarmourEncodings(calculatePitches(inspirations[1]))
+            
+            
         }
 
 
@@ -2125,7 +2199,7 @@ const getSuggestions = () => {
         console.log(response)
         const lenOfSuggestions = response.data.suggestions.length
         const randomIndex = getRandomInt(lenOfSuggestions)
-
+        
         setinspirations(response.data.suggestions[randomIndex])
         setOption(options[getRandomInt(options.length)])
         
@@ -2147,13 +2221,13 @@ const getSuggestions = () => {
             <div className='topColumnLeft' onMouseEnter={()=>{setHover(true)}} onMouseLeave={()=>{setHover(false)}}>
         <div className='div-toptop' >
         <div className='chooseMeter-container'>
-                    <button onClick={()=>switchLeft(0)}>Links</button>
+                    <button style={{"marginRight":"8px","backgroundColor":"#403c3b","height":"35px","width":"65px","border":"#403c3b 2px solid","font-weight": "bold","borderRadius":"5px","color":"white"}} onClick={()=>switchLeft(0)}>Left</button>
                         <img
                         height="48px" 
                         width="47px"
                         src={meterscr1.src}
                         />
-                    <button onClick={()=>switchRight(0)}>Rechts</button>
+                    <button style={{"marginLeft":"8px","backgroundColor":"#403c3b","height":"35px","width":"65px","border":"#403c3b 2px solid","font-weight": "bold","borderRadius":"5px","color":"white"}} onClick={()=>switchRight(0)}>Right</button>
                     
                 </div>
         <div className='div-top'   style={{overflowY:'scroll'}}>
@@ -2578,29 +2652,24 @@ const getSuggestions = () => {
                     
                     </div>
                     <div className='column3'>
-                    <button onClick={() => {changeDuration("whole")}}> Whole Notes </button>
-                    <button onClick={() => {changeDuration("half")}} > Half Notes </button>
-                    <button onClick={() => {changeDuration("quarter")}}> Quarter Notes </button>
-                    <button onClick={() => {changeDuration("eighth")}} > Eighth Notes </button>
-                    <button onClick={() => {changeDuration("sixteenth")}}> Sixteenth Notes </button>
-                    <div>
-                        <button onClick={() => {changeAccent("sharp")}}> Sharp </button>
-                        <button onClick={() => {changeAccent("minor")}}> Minor </button>
-                        <button onClick={() => {changeAccent("none")}}> None </button>
-                    </div>
-
-                    </div>
-                    <div className='column2'>
-                    <button onClick={deleteItem}> Delete </button>
-                    <button onClick={changeStateOfReplace} style={{border: replaceActivated? '2px solid blue':'' }}> Replace </button>
+                    <button style={{"margin":"3px","font-weight": "bold","borderRadius":"5px","color":"white","height":"40px","width":"125px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}} onClick={() => {changeDuration("whole")}}> Whole Notes </button>
+                    <button style={{"margin":"3px","font-weight": "bold","borderRadius":"5px","color":"white","height":"40px","width":"125px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}} onClick={() => {changeDuration("half")}} > Half Notes </button>
+                    <button style={{"margin":"3px","font-weight": "bold","borderRadius":"5px","color":"white","height":"40px","width":"125px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}} onClick={() => {changeDuration("quarter")}}> Quarter Notes </button>
+                    <button style={{"margin":"3px","font-weight": "bold","borderRadius":"5px","color":"white","height":"40px","width":"125px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}} onClick={() => {changeDuration("eighth")}} > Eighth Notes </button>
+                    <button style={{"margin":"3px","font-weight": "bold","borderRadius":"5px","color":"white","height":"40px","width":"125px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}} onClick={() => {changeDuration("sixteenth")}}> Sixteenth Notes </button>
+                    <div className='columnBottom'>
+                        <button style={{"margin":"3px","font-weight": "bold","borderRadius":"5px","color":"white","height":"40px","width":"125px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}} onClick={() => {changeAccent("sharp")}}> Sharp </button>
+                        <button style={{"margin":"3px","font-weight": "bold","borderRadius":"5px","color":"white","height":"40px","width":"125px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}} onClick={() => {changeAccent("minor")}}> Minor </button>
+                        <button style={{"margin":"3px","font-weight": "bold","borderRadius":"5px","color":"white","height":"40px","width":"125px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}} onClick={() => {changeAccent("none")}}> None </button>
+                        <button style={{"margin":"3px","font-weight": "bold","borderRadius":"5px","color":"white","height":"40px","width":"125px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}} onClick={deleteItem}> Delete </button>
+                    <button style={{"margin":"3px","font-weight": "bold","borderRadius":"5px","color":"white","height":"40px","width":"125px","backgroundColor":"#403c3b",border: replaceActivated? '3px solid white':'#403c3b' }} onClick={changeStateOfReplace} > Replace </button>
                     
                     </div>
-                    <div>
-                    <SubmitComposition composition={[measure1,measure2,measure3,measure4,measure5,
-                        measure6,measure7,measure8]} meter={meterArray[meterIndex1]} />
-                </div>
-                <button onClick={goToResult}> Result </button>
-                <button onClick={playwholeComposition}> Play the Melody </button>
+                    
+
+                    </div>
+                    
+                   
                 
     </div>
     
@@ -2609,7 +2678,11 @@ const getSuggestions = () => {
 
             <div className='topColumnRight'>
                     
-                    <button onClick={getSuggestions}>GetInspiration</button>
+                    
+                    <button onClick={testNM}>TestNM</button>
+                <div style={{"margin-top":"60px", "margin-left":"300px"}}>
+                    <button style={{"font-weight": "bold","borderRadius":"5px","color":"white","height":"50px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}} onClick={getSuggestions}>GetInspiration</button>
+                    </div>
                     
 
                     <div  className='EmptyInspiration'>
@@ -2645,12 +2718,23 @@ const getSuggestions = () => {
                                         }</div>
                                 case "showEugeneStructures":
                                    
-                                    return <div>showEugeneStructures</div>
+                                    return <div >{narmourEncodingsState.map((struct,idx)=> {
+                                        return(
+                                            <div style={{textAlign:"center",float:"left", fontSize:"50px",height:"80px",width:"65px", margin:"10px"}} >{struct} </div>
+                                        )
+                                    })}</div>
                                 default:
                                     return <div>test</div>
                             }
                         })()}
                     </div>
+
+                    <div>
+                    <SubmitComposition composition={[measure1,measure2,measure3,measure4,measure5,
+                        measure6,measure7,measure8]} meter={meterArray[meterIndex1]} />
+                </div>
+                
+                <button onClick={playwholeComposition}> Play the Melody </button>
                     
             
                 
