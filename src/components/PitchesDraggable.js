@@ -44,6 +44,7 @@ function PitchesDraggable({item ,url,index, moveItem, target,addPitch,replacePit
                    <div style={{marginLeft:"30px"}}>
                     
         <img 
+            
             className="flex-pitch"
             height="135px" 
             width="39px" 

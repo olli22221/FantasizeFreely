@@ -58,7 +58,6 @@ function Compose() {
     const [volumeMeasure6,setvolumeMeasure6] = useState(0)
     const [volumeMeasure7,setvolumeMeasure7] = useState(0)
     const [volumeMeasure8,setvolumeMeasure8] = useState(0)
-    
     const [meterscr1, setMetersrc1] = useState(fourQuarter);
     const musicatResult = useRecoilValue(musicatResponseAtom);
     const [isActive, setIsActive] = useState(false);
@@ -334,10 +333,13 @@ function Compose() {
 
 
     const calculateColorbrightness = () => {
-
+        if (inspirations[1] != undefined ) {
+            
+        
         const tmpColors= []
         const notes = inspirations[1]
         const accents = inspirations[2]
+
         for (let index = 0; index < notes.length; index++) {
             const tmpNote = notes[index]
             if (accents[index] == 1) {
@@ -356,6 +358,7 @@ function Compose() {
 
         return tmpColors
     }
+    }
 
     useEffect(() => {
         if (narmourEncodingsState.length == 0) {
@@ -368,6 +371,9 @@ function Compose() {
 
         if (option == "showColors") {
             const colors = calculateColorbrightness()
+            if (colors == undefined) {
+                return
+            }
             const brightnessess = []
             const minColor = Math.min(...colors)
             const maxColor = Math.max(...colors)
@@ -2211,6 +2217,35 @@ const getSuggestions = () => {
 }
 
 
+const testScoring = () => {
+
+    const composition= [measure1,measure2,measure3,measure4,measure5,
+        measure6,measure7,measure8]
+    const momentaryComposition = prepareComposition(composition)
+    console.log(momentaryComposition)
+
+    let payload = {
+        data: momentaryComposition,
+        
+    }
+    axios.post("http://192.168.178.46:5000/calculateCreativity", JSON.stringify(payload), {
+        headers: {
+            "Content-Type": "application/json"
+            
+        }
+    }).then((response) => {
+        console.log(response)
+        
+        
+        
+
+    }).catch((error) => {
+      console.log(error)
+    });
+
+}
+
+
         
 
     
@@ -2680,8 +2715,8 @@ const getSuggestions = () => {
                     
                     
                     <button onClick={testNM}>TestNM</button>
-                <div style={{"margin-top":"60px", "margin-left":"300px"}}>
-                    <button style={{"font-weight": "bold","borderRadius":"5px","color":"white","height":"50px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}} onClick={getSuggestions}>GetInspiration</button>
+                <div style={{"marginTop":"60px", "marginLeft":"300px"}}>
+                    <button style={{"fontWeight": "bold","borderRadius":"5px","color":"white","height":"50px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}} onClick={getSuggestions}>GetInspiration</button>
                     </div>
                     
 
@@ -2735,6 +2770,7 @@ const getSuggestions = () => {
                 </div>
                 
                 <button onClick={playwholeComposition}> Play the Melody </button>
+                <button onClick={testScoring}>TestCreativityScoring </button>
                     
             
                 
