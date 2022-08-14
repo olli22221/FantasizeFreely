@@ -38,6 +38,7 @@ import ScoreBox from './ScoreBox';
 import ShowImages from './showInspirationImages';
 import { Progress } from 'react-sweet-progress';
 import "react-sweet-progress/lib/style.css";
+import { width } from '@mui/system';
 
 function Compose() {
     let nav = useNavigate();
@@ -2719,12 +2720,12 @@ const testScoring = () => {
                     
                     
                     <button onClick={testNM}>TestNM</button>
-                <div style={{"marginTop":"60px", "marginLeft":"300px"}}>
+                <div style={{"marginTop":"60px", "marginLeft":"300px" }}>
                     <button style={{"fontWeight": "bold","borderRadius":"5px","color":"white","height":"50px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}} onClick={getSuggestions}>GetInspiration</button>
                     </div>
                     
 
-                    <div  className='EmptyInspiration'>
+                    <div style={{border:"solid 4px silver",borderRadius:"20px",backgroundColor:"#debd90"}}  className='EmptyInspiration'>
                         {(() => {
                             switch (option) {
                                 case "playSuggestion":
@@ -2775,26 +2776,28 @@ const testScoring = () => {
                 
                 <button onClick={playwholeComposition}> Play the Melody </button>
                 <button onClick={testScoring}>TestCreativityScoring </button>
-                <div style={{float:"left", marginTop:"150px",marginLeft:"80px"}}>
+                <div style={{border:"solid 4px silver",borderRadius:"20px",backgroundColor:"#debd90" ,width:"700px", height:"300px", marginTop:"100px",alignItems:"center",display:"flex",justifyContent:"center"}}>
+                <div style={{float:"left"}}>
                     <div style={{textAlign: "center",height:"30px",width:"130px","fontWeight": "bold",backgroundColor:"#399ddb" ,marginBottom:"30px"}}>
                     Flexability Score
                     </div>
             <Progress  type="circle" percent={(flexability/flexMax)*100}  />
 
             </div>
-            <div style={{float:"left", marginTop:"150px",marginLeft:"80px"}}>
+            <div style={{float:"left", marginLeft:"60px"}}>
                     <div style={{textAlign: "center",height:"30px",width:"130px","fontWeight": "bold",backgroundColor:"#399ddb" ,marginBottom:"30px"}}>
                     Fluency Score
                     </div>
             <Progress  type="circle" percent={(fluency/fluencyMax)*100}  />
 
             </div>
-            <div style={{float:"left", marginTop:"125px",marginLeft:"80px"}}>
+            <div style={{float:"left",marginLeft:"60px"}}>
                     <div style={{textAlign: "center",height:"30px",width:"130px","fontWeight": "bold",backgroundColor:"#399ddb" ,marginBottom:"30px"}}>
                     Originality Score
                     </div>
             <Progress  type="circle" percent={(originality/origMax)*100}  />
 
+            </div>
             </div>
                 
                 
