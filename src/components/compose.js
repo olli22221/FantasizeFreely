@@ -36,9 +36,14 @@ import axios from "axios";
 import { prepareComposition } from './util';
 import ScoreBox from './ScoreBox';
 import ShowImages from './showInspirationImages';
+import { Progress } from 'react-sweet-progress';
+import "react-sweet-progress/lib/style.css";
 
 function Compose() {
     let nav = useNavigate();
+    const flexMax = 500
+    const origMax = 200
+    const fluencyMax = 256
     const [narmourEncodingsState,setNarmourEncodingsState] = useState([])
     const [brightnessColors, setBrightnessColors] = useState([])
     const noteCharDict = {"c":"C","d":"D","e":"E","f":"F","g":"G","a":"A","b":"B"}
@@ -50,6 +55,9 @@ function Compose() {
     const [inspirations, setinspirations] = useState([]);
     const meterArray = [fourQuarter,twoQuarter,sixEighth]
     const [meterIndex1,setMeterIndex1] = useState(0)
+    const [originality,setOriginality] = useState(0)
+    const [fluency,setFluency] = useState(0)
+    const [flexability,setFlexability] = useState(0)
     const [volumeMeasure1,setvolumeMeasure1] = useState(0)
     const [volumeMeasure2,setvolumeMeasure2] = useState(0)
     const [volumeMeasure3,setvolumeMeasure3] = useState(0)
@@ -2059,8 +2067,7 @@ function Compose() {
             if (meterIndex1 == 0){
                 setMeterIndex1(meterArray.length-1)
                 setMetersrc1(meterArray[meterIndex1])
-                console.log(meterIndex1)
-                console.log(meterArray[meterIndex1])
+                
                 setMeasure1(defaultPitchesArray_(meterArray[meterIndex1].numberofPlaces))
                 setMeasure2(defaultPitchesArray_(meterArray[meterIndex1].numberofPlaces))
                 setMeasure3(defaultPitchesArray_(meterArray[meterIndex1].numberofPlaces))
@@ -2069,8 +2076,7 @@ function Compose() {
                 setMeasure6(defaultPitchesArray_(meterArray[meterIndex1].numberofPlaces))
                 setMeasure7(defaultPitchesArray_(meterArray[meterIndex1].numberofPlaces))
                 setMeasure8(defaultPitchesArray_(meterArray[meterIndex1].numberofPlaces))
-                console.log(measure1)
-                console.log(measure2)
+               
                 
                 setactiveMeasure(measureNumber)
                 setactiveNote(0)
@@ -2089,8 +2095,7 @@ function Compose() {
             
             setMeterIndex1((meterIndex1-1)%3)
             setMetersrc1(meterArray[meterIndex1])
-            console.log(meterIndex1)
-            console.log(meterArray[meterIndex1])
+            
             setMeasure1(defaultPitchesArray_(meterArray[meterIndex1].numberofPlaces))
             setMeasure2(defaultPitchesArray_(meterArray[meterIndex1].numberofPlaces))
             setMeasure3(defaultPitchesArray_(meterArray[meterIndex1].numberofPlaces))
@@ -2099,8 +2104,7 @@ function Compose() {
             setMeasure6(defaultPitchesArray_(meterArray[meterIndex1].numberofPlaces))
             setMeasure7(defaultPitchesArray_(meterArray[meterIndex1].numberofPlaces))
             setMeasure8(defaultPitchesArray_(meterArray[meterIndex1].numberofPlaces))
-            console.log(measure1)
-            console.log(measure2)
+           
             setactiveMeasure(measureNumber)
             setactiveNote(0)
             setPointer(1)
@@ -2117,8 +2121,7 @@ function Compose() {
 
         const switchRight = (measureNumber) =>{
             setMeterIndex1((meterIndex1+1)%3)
-            console.log(meterIndex1)
-            console.log(meterArray[meterIndex1])
+           
             setMetersrc1(meterArray[meterIndex1])
             setMeasure1(defaultPitchesArray_(meterArray[meterIndex1].numberofPlaces))
             setMeasure2(defaultPitchesArray_(meterArray[meterIndex1].numberofPlaces))
@@ -2128,8 +2131,7 @@ function Compose() {
             setMeasure6(defaultPitchesArray_(meterArray[meterIndex1].numberofPlaces))
             setMeasure7(defaultPitchesArray_(meterArray[meterIndex1].numberofPlaces))
             setMeasure8(defaultPitchesArray_(meterArray[meterIndex1].numberofPlaces))
-            console.log(measure1)
-            console.log(measure2)
+            
             setactiveMeasure(measureNumber)
             setactiveNote(0)
             setPointer(1)
@@ -2194,6 +2196,7 @@ const getSuggestions = () => {
     const finalComposition = prepareComposition(composition)
     let payload = {
         data: finalComposition,
+        meter: meterIndex1
         
     }
     axios.post("http://192.168.178.46:5000/runRNN", JSON.stringify(payload), {
@@ -2235,9 +2238,10 @@ const testScoring = () => {
         }
     }).then((response) => {
         console.log(response)
-        
-        
-        
+
+        setFluency(response.data['fluency'])
+        setFlexability(response.data['flexability'])
+        setOriginality(response.data['originality'])
 
     }).catch((error) => {
       console.log(error)
@@ -2771,10 +2775,31 @@ const testScoring = () => {
                 
                 <button onClick={playwholeComposition}> Play the Melody </button>
                 <button onClick={testScoring}>TestCreativityScoring </button>
-                    
-            
+                <div style={{float:"left", marginTop:"150px",marginLeft:"80px"}}>
+                    <div style={{textAlign: "center",height:"30px",width:"130px","fontWeight": "bold",backgroundColor:"#399ddb" ,marginBottom:"30px"}}>
+                    Flexability Score
+                    </div>
+            <Progress  type="circle" percent={(flexability/flexMax)*100}  />
+
+            </div>
+            <div style={{float:"left", marginTop:"150px",marginLeft:"80px"}}>
+                    <div style={{textAlign: "center",height:"30px",width:"130px","fontWeight": "bold",backgroundColor:"#399ddb" ,marginBottom:"30px"}}>
+                    Fluency Score
+                    </div>
+            <Progress  type="circle" percent={(fluency/fluencyMax)*100}  />
+
+            </div>
+            <div style={{float:"left", marginTop:"125px",marginLeft:"80px"}}>
+                    <div style={{textAlign: "center",height:"30px",width:"130px","fontWeight": "bold",backgroundColor:"#399ddb" ,marginBottom:"30px"}}>
+                    Originality Score
+                    </div>
+            <Progress  type="circle" percent={(originality/origMax)*100}  />
+
+            </div>
+                
                 
             </div>
+            
                             
             </div>
 

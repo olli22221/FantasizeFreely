@@ -118,7 +118,7 @@ function Main() {
             <div style={{textAlign:"center",fontFamily:"Cursive",borderRadius:"30px",fontSize: "25px",height:"350px",width:"550px",marginLeft:"100px",marginTop:"240px", backgroundColor:"#403c3b","color":"white"}}>
         <Typewriter
         onInit={(typewriter) => {
-            typewriter.typeString("Welcome fellow MusicianOn this website you will learn to write a melody. An Artificial Intelligence will help you to compose your first melodies. Also watch out for the progress bar which assessess your performance").start();
+            typewriter.typeString("Welcome fellow Musician! In a few you will learn to write a melody. An Artificial Intelligence will help you to compose your first melodies. Also watch out for the progress bar which assessess your performance").start();
         } }  
         />
             </div >
