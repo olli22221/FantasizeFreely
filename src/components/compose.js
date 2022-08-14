@@ -50,7 +50,8 @@ function Compose() {
     const noteCharDict = {"c":"C","d":"D","e":"E","f":"F","g":"G","a":"A","b":"B"}
     const noteToPitchheightDict = {"g/3":55,"a/3":57,"b/3":59,"c/4":60,"d/4":62,"e/4":64,"f/4":65,"g/4":67,"a/4":69,"b/4":71,"c/5":72
     ,"d/5":74,"e/5":76,"f/5":77,"g/5":79,"a/5":81,"b/5":83,"c/6":84}
-    const options = ["showEugeneStructures"]
+    const options = ["showEugeneStructures","playSuggestion","showDurations",
+    "showPitches","showColors","showWholeMeasure",]
     const accentDict = {0:"",1:"#",2:"b"}
     const [option, setOption] = useState();
     const [inspirations, setinspirations] = useState([]);
@@ -2700,7 +2701,7 @@ const testScoring = () => {
                     <button style={{"margin":"3px","font-weight": "bold","borderRadius":"5px","color":"white","height":"40px","width":"125px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}} onClick={() => {changeDuration("sixteenth")}}> Sixteenth Notes </button>
                     <div className='columnBottom'>
                         <button style={{"margin":"3px","font-weight": "bold","borderRadius":"5px","color":"white","height":"40px","width":"125px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}} onClick={() => {changeAccent("sharp")}}> Sharp </button>
-                        <button style={{"margin":"3px","font-weight": "bold","borderRadius":"5px","color":"white","height":"40px","width":"125px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}} onClick={() => {changeAccent("minor")}}> Minor </button>
+                        <button style={{"margin":"3px","font-weight": "bold","borderRadius":"5px","color":"white","height":"40px","width":"125px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}} onClick={() => {changeAccent("minor")}}> Flat </button>
                         <button style={{"margin":"3px","font-weight": "bold","borderRadius":"5px","color":"white","height":"40px","width":"125px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}} onClick={() => {changeAccent("none")}}> None </button>
                         <button style={{"margin":"3px","font-weight": "bold","borderRadius":"5px","color":"white","height":"40px","width":"125px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}} onClick={deleteItem}> Delete </button>
                     <button style={{"margin":"3px","font-weight": "bold","borderRadius":"5px","color":"white","height":"40px","width":"125px","backgroundColor":"#403c3b",border: replaceActivated? '3px solid white':'#403c3b' }} onClick={changeStateOfReplace} > Replace </button>
