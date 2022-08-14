@@ -2270,7 +2270,7 @@ const testScoring = () => {
                     <button style={{"marginLeft":"8px","backgroundColor":"#403c3b","height":"35px","width":"65px","border":"#403c3b 2px solid","font-weight": "bold","borderRadius":"5px","color":"white"}} onClick={()=>switchRight(0)}>Right</button>
                     
                 </div>
-        <div className='div-top'   style={{overflowY:'scroll'}}>
+        <div className='div-top'   style={{border:"solid 4px silver",borderRadius:"20px",backgroundColor:"#debd90",overflowY:'scroll'}}>
 
            
 
@@ -2691,7 +2691,8 @@ const testScoring = () => {
                     </div>
                     
                     </div>
-                    <div className='column3'>
+                    <div >
+                    <div style={{border:"solid 4px silver",borderRadius:"20px",backgroundColor:"#debd90"}} className='column3'>
                     <button style={{"margin":"3px","font-weight": "bold","borderRadius":"5px","color":"white","height":"40px","width":"125px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}} onClick={() => {changeDuration("whole")}}> Whole Notes </button>
                     <button style={{"margin":"3px","font-weight": "bold","borderRadius":"5px","color":"white","height":"40px","width":"125px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}} onClick={() => {changeDuration("half")}} > Half Notes </button>
                     <button style={{"margin":"3px","font-weight": "bold","borderRadius":"5px","color":"white","height":"40px","width":"125px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}} onClick={() => {changeDuration("quarter")}}> Quarter Notes </button>
@@ -2707,6 +2708,7 @@ const testScoring = () => {
                     </div>
                     
 
+                    </div>
                     </div>
                     
                    
@@ -2778,21 +2780,21 @@ const testScoring = () => {
                 <button onClick={testScoring}>TestCreativityScoring </button>
                 <div style={{border:"solid 4px silver",borderRadius:"20px",backgroundColor:"#debd90" ,width:"700px", height:"300px", marginTop:"100px",alignItems:"center",display:"flex",justifyContent:"center"}}>
                 <div style={{float:"left"}}>
-                    <div style={{textAlign: "center",height:"30px",width:"130px","fontWeight": "bold",backgroundColor:"#399ddb" ,marginBottom:"30px"}}>
+                    <div style={{borderRadius:"8px",textAlign: "center",height:"30px",width:"130px","fontWeight": "bold",backgroundColor:"#399ddb" ,marginBottom:"30px"}}>
                     Flexability Score
                     </div>
             <Progress  type="circle" percent={(flexability/flexMax)*100}  />
 
             </div>
             <div style={{float:"left", marginLeft:"60px"}}>
-                    <div style={{textAlign: "center",height:"30px",width:"130px","fontWeight": "bold",backgroundColor:"#399ddb" ,marginBottom:"30px"}}>
+                    <div style={{borderRadius:"8px",textAlign: "center",height:"30px",width:"130px","fontWeight": "bold",backgroundColor:"#399ddb" ,marginBottom:"30px"}}>
                     Fluency Score
                     </div>
             <Progress  type="circle" percent={(fluency/fluencyMax)*100}  />
 
             </div>
             <div style={{float:"left",marginLeft:"60px"}}>
-                    <div style={{textAlign: "center",height:"30px",width:"130px","fontWeight": "bold",backgroundColor:"#399ddb" ,marginBottom:"30px"}}>
+                    <div style={{borderRadius:"8px",textAlign: "center",height:"30px",width:"130px","fontWeight": "bold",backgroundColor:"#399ddb" ,marginBottom:"30px"}}>
                     Originality Score
                     </div>
             <Progress  type="circle" percent={(originality/origMax)*100}  />

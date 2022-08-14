@@ -89,11 +89,7 @@
   flex: 1;
 }
 
-.backgroundImage{
-  background-image: url('\\media\\Frontpage\\wallpaper\\opera.jpg');
-  height: 1080px;
-  width: 1650;
-}
+
 
 .chooseMeter-container {
   margin-left: 400px;
@@ -146,6 +142,7 @@
 
 .column1{
   float: left;
+
   background-color: #cfcfcf;
 }
 .column6{
@@ -159,7 +156,7 @@
 }
 
 .columnBottom {
-  margin-top: 20px;
+  margin-top: 15px;
 }
 
 .column2{
@@ -170,9 +167,10 @@
  
 }
 .column3{
-  float: right;
-  margin: 5px;
-  width: 825px;
+  
+  margin-top: 5px;
+  margin-left: 120px;
+  width: 655px;
 }
 
 .flex-container {

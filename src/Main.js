@@ -5,8 +5,6 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { jwtToken as jwtTokenAtom } from "./redux/store";
-import useSound from 'use-sound';
-import entry from './media/Frontpage/sounds/Entry.mp3'
 import  { useState,useCallback,useEffect } from 'react';
 import Typewriter from 'typewriter-effect';
 
@@ -23,13 +21,6 @@ const Button = styled.button`
 function Main() {
     const [jwtToken, setjwtToken] = useRecoilState(jwtTokenAtom);
   
-    const player = new Audio(entry)
-    
-    const [composer,setComposer] = useState("Mozart")
-    const [composerImage,setComposerImage] = useState(require("./media/Frontpage/Composer/mozart.jpg"))
-
-
-
 
     let nav = useNavigate();
     const handleStart = () => {
@@ -50,87 +41,55 @@ function Main() {
 
     }
 
+    const navToComposePanel = () => {
+
+       /*axios.get("http://192.168.178.46:5000/start").then((response) => {
+            console.log(response.data)
+            setjwtToken(response.data)
+            nav("/Compose")
+
+        }).catch((error) => {
+            console.log(error)
+        });*/
+
+        nav("/Compose")
+
+        
+
+    }
+
    
-    useEffect(() => {
-        
-        
-        
-        player.play()
-        
-    }, [])
-
-    useEffect(() => {
-        
-        if (composer == "Mozart") {
-            const intervalId1 = setInterval(() => {
-                player.volume=0.2
-                setComposer("Haydn")
-                setComposerImage(require("./media/Frontpage/Composer/haydn.jpg"))
-              }, 17000);
-              return () => clearInterval(intervalId1);
-        }
-        else if (composer == "Haydn") {
-            const intervalId2 = setInterval(() => {
-                player.volume=0.2
-                setComposer("Beethoven")
-                setComposerImage(require("./media/Frontpage/Composer/beethoven.jpg"))
-              }, 13000);
-              return () => clearInterval(intervalId2);
-        }
-        else if (composer == "Beethoven") {
-            const intervalId3 = setInterval(() => {
-                player.volume=0.7
-                setComposer("Bach")
-                setComposerImage(require("./media/Frontpage/Composer/bach.jpg"))
-            }, 24000);
-            return () => clearInterval(intervalId3);
-        }
-        
-        
-       
-    }, [composer])
-
 
     return (
 
-    <div  className="backgroundImage">
-        <div style={{"height":1080,"width":1920}}>
-
-        <div className="row">
-
-            <div style={{marginTop:"300px"}}>
-            <img 
-            
-            className="imgComposer"
-            height="400px" 
-            width="500px" 
-            borderRadius="40%"
-            src= {composerImage} 
-           
-            
-            
-        />
-            </div>
+    <div style={{alignItems:"center",display:"flex",justifyContent:"center"}} >
+        
+        <div style={{fontSize: "50px",textAlign:"center",fontFamily:"Cursive",height:"120px",width:"550px",marginRight:"100px", backgroundColor:"#403c3b","color":"white" }}>
+            Fantasize Freely
+        </div>
+       
         <div style={{height:"900px"}}>
         
             
         
-            <div style={{textAlign:"center",fontFamily:"Cursive",borderRadius:"30px",fontSize: "25px",height:"350px",width:"550px",marginLeft:"100px",marginTop:"240px", backgroundColor:"#403c3b","color":"white"}}>
+            <div style={{textAlign:"center",fontFamily:"Cursive",borderRadius:"30px",fontSize: "25px",height:"500px",width:"800px",marginLeft:"100px",marginTop:"100px", backgroundColor:"#403c3b","color":"white"}}>
         <Typewriter
         onInit={(typewriter) => {
-            typewriter.typeString("Welcome fellow Musician! In a few you will learn to write a melody. An Artificial Intelligence will help you to compose your first melodies. Also watch out for the progress bar which assessess your performance").start();
+            typewriter.typeString("Welcome fellow Musician! On this platform you can test your creativity in melody composition. The main task is to compose 3-5 short melodies with a length of 8 to 16 measures. During composing you have the opportunity to listen to your melody but also you can play it on an acoustic instrument. An artificial intelligence can provide you with inspirations which are around one measure. But make sure all the previously composed measures are completely filled. Otherwise it will just reject your request. The provided material from the AI is presented to you in different forms (e.g. just showing the durations or a sequence of different strength of a color will be shown). On the bottom right 3 different creativity score are shown. They are updated in realtime while composing. When the time has come and you think your melody is ready for a submission just click on the submitComposition Button. I wish you a lot of fun!").start();
         } }  
         />
             </div >
             
-            <Button style={{height:"150px",padding:"0px",backgroundColor:"#403c3b",marginTop:"70px",marginLeft:"250px","borderRadius":"5px","font-weight": "bold","height":"50px","width":"255px","border":"gold 2px solid"}} onClick={handleStart}>Skip the Intro</Button>
+            <Button style={{height:"150px",padding:"0px",backgroundColor:"#403c3b",marginTop:"70px",marginLeft:"230px","borderRadius":"5px","font-weight": "bold","height":"50px","width":"255px","border":"gold 2px solid"}} onClick={handleStart}>Tutorial</Button>
+            <Button style={{height:"150px",padding:"0px",backgroundColor:"#403c3b",marginTop:"70px",marginLeft:"50px","borderRadius":"5px","font-weight": "bold","height":"50px","width":"265px","border":"gold 2px solid"}} onClick={navToComposePanel}>Start Composing</Button>
+
         </div>
     </div>
 
-        </div>
+       
     
 
-</div>
+
 
     )
 }
