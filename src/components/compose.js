@@ -2686,7 +2686,7 @@ const testScoring = () => {
                     })}
                    
                     <div className='column1'>
-                    {panelArray.slice(9,18).map( (note ,idx) => {
+                    {panelArray.slice(9,19).map( (note ,idx) => {
                         return <PitchesDraggable url={note}  index={idx} item={note} addPitch={addPitch} replacePitch={replaceItem} />
                     })}
                     </div>

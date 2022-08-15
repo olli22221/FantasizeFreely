@@ -278,6 +278,20 @@ export const halfpitches = [
 
 
     },
+    {
+        show: true,
+        type: ["b/4"],
+        duration: "h",
+        accented: 0,
+		display:"R",
+        locked: false,
+        occupied: true,
+        src:require('../media/composeMedia/restNotes/hr.PNG'),
+        panelsrc: require('../media/PanelMedia/deactivated/rests/hr.PNG'),
+        
+
+
+    },
     
 ]
 export const halfpitchesSharp = [
@@ -494,6 +508,20 @@ export const halfpitchesSharp = [
         occupied: true,
         src:require('../media/composeMedia/halfNotes#/c6.PNG'),
         panelsrc: require('../media/PanelMedia/deactivated/sharp/half/c6.PNG'),
+
+    },
+    {
+        show: true,
+        type: ["b/4"],
+        duration: "h",
+        accented: 0,
+		display:"R",
+        locked: false,
+        occupied: true,
+        src:require('../media/composeMedia/restNotes/hr.PNG'),
+        panelsrc: require('../media/PanelMedia/deactivated/rests/hr.PNG'),
+        
+
 
     },
     
@@ -738,6 +766,20 @@ export const wholepitches = [
 
 
     },
+    {
+        show: true,
+        type: ["b/4"],
+        duration: "w",
+        accented: 0,
+		display:"R",
+        locked: false,
+        occupied: true,
+        src:require('../media/composeMedia/restNotes/wr.PNG'),
+        panelsrc: require('../media/PanelMedia/deactivated/rests/wr.PNG'),
+        
+
+
+    },
     
 ]
 export const wholepitchesSharp = [
@@ -962,6 +1004,20 @@ export const wholepitchesSharp = [
         occupied: true,
         src:require('../media/composeMedia/wholeNotes#/c6.PNG'),
         panelsrc: require('../media/PanelMedia/deactivated/sharp/whole/c6.PNG'),
+
+
+    },
+    {
+        show: true,
+        type: ["b/4"],
+        duration: "w",
+        accented: 0,
+		display:"R",
+        locked: false,
+        occupied: true,
+        src:require('../media/composeMedia/restNotes/wr.PNG'),
+        panelsrc: require('../media/PanelMedia/deactivated/rests/wr.PNG'),
+        
 
 
     },
@@ -1202,6 +1258,20 @@ export const pitches = [
         
 
     },
+    {
+        show: true,
+        type: ["b/4"],
+        duration: "q",
+        accented: 0,
+		display:"R",
+        locked: false,
+        occupied: true,
+        src:require('../media/composeMedia/restNotes/qr.PNG'),
+        panelsrc: require('../media/PanelMedia/deactivated/rests/qr.PNG'),
+        
+
+
+    },
 ]
 export const pitchesSharp = [
     {
@@ -1418,6 +1488,20 @@ export const pitchesSharp = [
         occupied: true,
         src:require('../media/composeMedia/quarterNotes#/c6.PNG'),
         panelsrc: require('../media/PanelMedia/deactivated/sharp/quarter/c6.PNG'),
+
+    },
+    {
+        show: true,
+        type: ["b/4"],
+        duration: "q",
+        accented: 0,
+		display:"R",
+        locked: false,
+        occupied: true,
+        src:require('../media/composeMedia/restNotes/qr.PNG'),
+        panelsrc: require('../media/PanelMedia/deactivated/rests/qr.PNG'),
+        
+
 
     },
 ]
@@ -1659,6 +1743,20 @@ export const eightpitches = [
 
 
     },
+    {
+        show: true,
+        type: ["b/4"],
+        duration: "8d",
+        accented: 0,
+		display:"R",
+        locked: false,
+        occupied: true,
+        src:require('../media/composeMedia/restNotes/8r.PNG'),
+        panelsrc: require('../media/PanelMedia/deactivated/rests/8r.PNG'),
+        
+
+
+    },
     
     
 ]
@@ -1886,6 +1984,20 @@ export const eightpitchesSharp = [
         occupied: true,
         src:require('../media/composeMedia/eightNotes#/c6.PNG'),
         panelsrc: require('../media/PanelMedia/deactivated/sharp/eighth/c6.PNG'),
+
+    },
+    {
+        show: true,
+        type: ["b/4"],
+        duration: "8d",
+        accented: 0,
+		display:"R",
+        locked: false,
+        occupied: true,
+        src:require('../media/composeMedia/restNotes/8r.PNG'),
+        panelsrc: require('../media/PanelMedia/deactivated/rests/8r.PNG'),
+        
+
 
     },
     
@@ -2130,6 +2242,20 @@ export const sixteenthpitches = [
 
 
     },
+    {
+        show: true,
+        type: ["b/4"],
+        duration: "16",
+        accented: 0,
+		display:"R",
+        locked: false,
+        occupied: true,
+        src:require('../media/composeMedia/restNotes/16r.PNG'),
+        panelsrc: require('../media/PanelMedia/deactivated/rests/16r.PNG'),
+        
+
+
+    },
     
 ]
 
@@ -2354,6 +2480,20 @@ export const sixteenthpitchesSharp = [
         occupied: true,
         src:require('../media/composeMedia/sixteenthNotes#/c6.PNG'),
         panelsrc: require('../media/PanelMedia/deactivated/sharp/sixteenth/c6.PNG'),
+
+    },
+    {
+        show: true,
+        type: ["b/4"],
+        duration: "16",
+        accented: 0,
+		display:"R",
+        locked: false,
+        occupied: true,
+        src:require('../media/composeMedia/restNotes/16r.PNG'),
+        panelsrc: require('../media/PanelMedia/deactivated/rests/16r.PNG'),
+        
+
 
     },
     

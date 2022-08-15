@@ -122,13 +122,28 @@ export const playMelody = (wholeComposition,measureVolumes) =>{
             const duration = element.duration
             const toneJSDuration = NoteDurationDict[duration]
             const pitch = element['type'][0]
+            const accent = element.accented
+            const display = element.display
             
                 
         
     Tone.loaded().then(() => {
         sampler.volume.setValueAtTime(measureVolume,now + timeAddedToNow) 
         
-        sampler.triggerAttackRelease(pitch.replace('/',''), toneJSDuration,now + timeAddedToNow);
+        if(!display.includes('R')){
+
+            if (accent == '1') {
+                sampler.triggerAttackRelease(pitch.replace('/','')+"#", toneJSDuration,now + timeAddedToNow);
+                
+            }
+            else if(accent == '1'){
+                console.log("b")
+            }
+            else{
+                sampler.triggerAttackRelease(pitch.replace('/',''), toneJSDuration,now + timeAddedToNow);
+            }
+        }
+        
         timeAddedToNow = timeAddedToNow + toneJSDuration
     })
    
