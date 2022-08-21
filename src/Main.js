@@ -43,14 +43,14 @@ function Main() {
 
     const navToComposePanel = () => {
 
-       /*axios.get("http://192.168.178.46:5000/start").then((response) => {
+       axios.get("http://192.168.178.46:5000/start").then((response) => {
             console.log(response.data)
             setjwtToken(response.data)
             nav("/Compose")
 
         }).catch((error) => {
             console.log(error)
-        });*/
+        })
 
         nav("/Compose")
 

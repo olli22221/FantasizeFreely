@@ -6,13 +6,15 @@ import {useDrop} from 'react-dnd';
 import DropWrapper from './DropWrapper';
 import PitchesDraggable from './PitchesDraggable';
 import { calculateSteps } from './util';
+import Select from 'react-select';
 import {activeMeasure as activeMeasureAtom,measure1 as measure1Atom,measure2 as measure2Atom,
     measure3 as measure3Atom,measure4 as measure4Atom,measure5 as measure5Atom,measure6 as measure6Atom,
     measure7 as measure7Atom,measure8 as measure8Atom,
     meter as meterAtom, dragging as dragAtom, 
     hovering as hoverAtom,activeNote as activeNoteAtom, pointer as pointerAtom, 
     replaceActivated as replaceActivatedAtom, activePanel as activePanelAtom,
-    musicatResponse as musicatResponseAtom} from '../redux/store'
+    musicatResponse as musicatResponseAtom,originalityScore as originalityScoreAtom,
+    fluencyScore as fluencyScoreAtom,flexabilityScore as flexabilityScoreAtom} from '../redux/store'
 import { measure1Meter as measure1MeterAtom,measure2Meter as measure2MeterAtom,measure3Meter as measure3MeterAtom,
     measure4Meter as measure4MeterAtom,measure5Meter as measure5MeterAtom,measure6Meter as measure6MeterAtom,
     measure7Meter as measure7MeterAtom,measure8Meter as measure8MeterAtom  } from '../redux/store';
@@ -20,6 +22,7 @@ import { useRecoilValue,useRecoilState } from 'recoil';
 import {pitches,halfpitches,wholepitches,sixteenthpitches,eightpitches,
     defaultpitches,defaultpitchesoccupied, defaultPitchesArray_,sixteenthpitchesSharp,
 eightpitchesSharp,pitchesSharp,wholepitchesSharp,halfpitchesSharp} from '../data/composePanelData'
+import { jwtToken as jwtTokenAtom } from '../redux/store';
 import Modal from 'react-modal';
 import SubmitComposition from './submitComposition';
 import {fourQuarter,twoQuarter,sixEighth} from '../data/meterData'
@@ -42,24 +45,27 @@ import { width } from '@mui/system';
 
 function Compose() {
     let nav = useNavigate();
-    const flexMax = 500
-    const origMax = 200
-    const fluencyMax = 256
+    const flexMax = 800
+    const origMax = 100
+    const fluencyMax = 950
     const [narmourEncodingsState,setNarmourEncodingsState] = useState([])
     const [brightnessColors, setBrightnessColors] = useState([])
     const noteCharDict = {"c":"C","d":"D","e":"E","f":"F","g":"G","a":"A","b":"B"}
     const noteToPitchheightDict = {"g/3":55,"a/3":57,"b/3":59,"c/4":60,"d/4":62,"e/4":64,"f/4":65,"g/4":67,"a/4":69,"b/4":71,"c/5":72
     ,"d/5":74,"e/5":76,"f/5":77,"g/5":79,"a/5":81,"b/5":83,"c/6":84}
-    const options = ["showEugeneStructures","playSuggestion","showDurations",
-    "showPitches","showColors","showWholeMeasure",]
+    const options = ["showWholeMeasure","playSuggestion","showDurations",
+    "showPitches","showColors","showEugeneStructures"]
     const accentDict = {0:"",1:"#",2:"b"}
     const [option, setOption] = useState();
     const [inspirations, setinspirations] = useState([]);
     const meterArray = [fourQuarter,twoQuarter,sixEighth]
+    const meterSelect = [
+        { value: 17, label: '4/4' },
+        { value: 13, label: '6/8' },
+        { value: 9, label: '2/4' },
+    ]
     const [meterIndex1,setMeterIndex1] = useState(0)
-    const [originality,setOriginality] = useState(0)
-    const [fluency,setFluency] = useState(0)
-    const [flexability,setFlexability] = useState(0)
+   
     const [volumeMeasure1,setvolumeMeasure1] = useState(0)
     const [volumeMeasure2,setvolumeMeasure2] = useState(0)
     const [volumeMeasure3,setvolumeMeasure3] = useState(0)
@@ -76,6 +82,7 @@ function Compose() {
     const [accent, setAccent] = useState(0);
     const [activeNote, setactiveNote] = useRecoilState(activeNoteAtom);
     const [meter, setMeter] = useRecoilState(meterAtom);
+    const [jwtToken, setJwtToken] = useRecoilState(jwtTokenAtom);
     const [measure1Meter, setmeasure1Meter] = useRecoilState(measure1MeterAtom);
     const [measure2Meter, setmeasure2Meter] = useRecoilState(measure2MeterAtom);
     const [measure3Meter, setmeasure3Meter] = useRecoilState(measure3MeterAtom);
@@ -84,8 +91,13 @@ function Compose() {
     const [measure6Meter, setmeasure6Meter] = useRecoilState(measure6MeterAtom);
     const [measure7Meter, setmeasure7Meter] = useRecoilState(measure7MeterAtom);
     const [measure8Meter, setmeasure8Meter] = useRecoilState(measure8MeterAtom);
+
+    const [originalityScore, setOriginalityScore] = useRecoilState(originalityScoreAtom);
+    const [flexabilityScore, setFlexabilityScore] = useRecoilState(flexabilityScoreAtom);
+    const [fluencyScore, setFluencyScore] = useRecoilState(fluencyScoreAtom);
     const [replaceActivated, setreplaceActivated] = useRecoilState(replaceActivatedAtom);
     const [activePanel, setActivePanel] = useRecoilState(activePanelAtom);
+    const [selectedOption, setSelectedOption] = useState(  { value: 17, label: '4/4' },);
 
     
 
@@ -370,13 +382,7 @@ function Compose() {
     }
     }
 
-    useEffect(() => {
-        if (narmourEncodingsState.length == 0) {
-            setOption("showColors")
-        }
-
-
-    }, [narmourEncodingsState])
+    
     useEffect(() => {
 
         if (option == "showColors") {
@@ -580,6 +586,7 @@ function Compose() {
 
         const replaceItem = (item) => {
             if (activeNote == 0) {
+                
                 return
                 
             }
@@ -715,11 +722,221 @@ function Compose() {
                 playSynth(pitch.replace('/',''),1)
             }
             }
+
+
+            else if(activeMeasure == 3){
+                const updatedBoardData = measure4.slice(0,measure4Meter)
+                const restboard = measure4.slice(measure4Meter,measure4.length)
+                const stepsToReplace = calculateSteps(updatedBoardData[indexToReplace].duration)
+                const sliceLen = updatedBoardData.filter(piece => piece.occupied == false).length
+                
+                if(itemSteps > sliceLen + stepsToReplace)return
+                else{
+                if(itemSteps == stepsToReplace){
+                    const firstPart = updatedBoardData.slice(0, indexToReplace)
+                    const middlePart = [item].concat(new Array(itemSteps-1).fill(defaultpitchesoccupied))
+                    const endPart = updatedBoardData.slice(indexToReplace + stepsToReplace,measure1Meter)
+                    const result = firstPart.concat(middlePart).concat(endPart).concat(restboard)
+                    console.log(result)
+                    setMeasure4(result)
+
+                }
+                else if(itemSteps < stepsToReplace){
+                    const diffDuration = stepsToReplace - itemSteps
+                    const firstPart = updatedBoardData.slice(0, indexToReplace)
+                    const middlePart = [item].concat(new Array(itemSteps-1).fill(defaultpitchesoccupied))
+                    const endPart = updatedBoardData.slice(indexToReplace + stepsToReplace,updatedBoardData.length).concat(new Array(diffDuration).fill(defaultpitches))
+                    const result = firstPart.concat(middlePart).concat(endPart).concat(restboard)
+                    console.log(middlePart)
+                    setMeasure4(result)
+
+                }
+                else{
+                    const diffDuration = itemSteps - stepsToReplace
+                    const firstPart = updatedBoardData.slice(0, indexToReplace)
+                    const middlePart = [item].concat(new Array(itemSteps-1).fill(defaultpitchesoccupied))
+                    const endPart = updatedBoardData.slice(indexToReplace + stepsToReplace,updatedBoardData.length-diffDuration)
+                    const result = firstPart.concat(middlePart).concat(endPart).concat(restboard)
+                    console.log(result)
+                    setMeasure4(result)
+
+                }
+                const pitch = item['type'][0]
+            
+                playSynth(pitch.replace('/',''),1)
+            }
+            }
+
+            else if(activeMeasure == 4){
+                const updatedBoardData = measure5.slice(0,measure5Meter)
+                const restboard = measure5.slice(measure5Meter,measure5.length)
+                const stepsToReplace = calculateSteps(updatedBoardData[indexToReplace].duration)
+                const sliceLen = updatedBoardData.filter(piece => piece.occupied == false).length
+                
+                if(itemSteps > sliceLen + stepsToReplace)return
+                else{
+                if(itemSteps == stepsToReplace){
+                    const firstPart = updatedBoardData.slice(0, indexToReplace)
+                    const middlePart = [item].concat(new Array(itemSteps-1).fill(defaultpitchesoccupied))
+                    const endPart = updatedBoardData.slice(indexToReplace + stepsToReplace,measure1Meter)
+                    const result = firstPart.concat(middlePart).concat(endPart).concat(restboard)
+                    console.log(result)
+                    setMeasure4(result)
+
+                }
+                else if(itemSteps < stepsToReplace){
+                    const diffDuration = stepsToReplace - itemSteps
+                    const firstPart = updatedBoardData.slice(0, indexToReplace)
+                    const middlePart = [item].concat(new Array(itemSteps-1).fill(defaultpitchesoccupied))
+                    const endPart = updatedBoardData.slice(indexToReplace + stepsToReplace,updatedBoardData.length).concat(new Array(diffDuration).fill(defaultpitches))
+                    const result = firstPart.concat(middlePart).concat(endPart).concat(restboard)
+                    setMeasure5(result)
+
+                }
+                else{
+                    const diffDuration = itemSteps - stepsToReplace
+                    const firstPart = updatedBoardData.slice(0, indexToReplace)
+                    const middlePart = [item].concat(new Array(itemSteps-1).fill(defaultpitchesoccupied))
+                    const endPart = updatedBoardData.slice(indexToReplace + stepsToReplace,updatedBoardData.length-diffDuration)
+                    const result = firstPart.concat(middlePart).concat(endPart).concat(restboard)
+                    setMeasure5(result)
+
+                }
+                const pitch = item['type'][0]
+            
+                playSynth(pitch.replace('/',''),1)
+            }
+            }
+            
+
+            else if(activeMeasure == 5){
+                const updatedBoardData = measure6.slice(0,measure6Meter)
+                const restboard = measure6.slice(measure6Meter,measure6.length)
+                const stepsToReplace = calculateSteps(updatedBoardData[indexToReplace].duration)
+                const sliceLen = updatedBoardData.filter(piece => piece.occupied == false).length
+                
+                if(itemSteps > sliceLen + stepsToReplace)return
+                else{
+                if(itemSteps == stepsToReplace){
+                    const firstPart = updatedBoardData.slice(0, indexToReplace)
+                    const middlePart = [item].concat(new Array(itemSteps-1).fill(defaultpitchesoccupied))
+                    const endPart = updatedBoardData.slice(indexToReplace + stepsToReplace,measure1Meter)
+                    const result = firstPart.concat(middlePart).concat(endPart).concat(restboard)
+                    console.log(result)
+                    setMeasure6(result)
+
+                }
+                else if(itemSteps < stepsToReplace){
+                    const diffDuration = stepsToReplace - itemSteps
+                    const firstPart = updatedBoardData.slice(0, indexToReplace)
+                    const middlePart = [item].concat(new Array(itemSteps-1).fill(defaultpitchesoccupied))
+                    const endPart = updatedBoardData.slice(indexToReplace + stepsToReplace,updatedBoardData.length).concat(new Array(diffDuration).fill(defaultpitches))
+                    const result = firstPart.concat(middlePart).concat(endPart).concat(restboard)
+                    setMeasure6(result)
+
+                }
+                else{
+                    const diffDuration = itemSteps - stepsToReplace
+                    const firstPart = updatedBoardData.slice(0, indexToReplace)
+                    const middlePart = [item].concat(new Array(itemSteps-1).fill(defaultpitchesoccupied))
+                    const endPart = updatedBoardData.slice(indexToReplace + stepsToReplace,updatedBoardData.length-diffDuration)
+                    const result = firstPart.concat(middlePart).concat(endPart).concat(restboard)
+                    setMeasure6(result)
+
+                }
+                const pitch = item['type'][0]
+            
+                playSynth(pitch.replace('/',''),1)
+            }
+            }
+            
+
+            else if(activeMeasure == 6){
+                const updatedBoardData = measure7.slice(0,measure7Meter)
+                const restboard = measure7.slice(measure7Meter,measure7.length)
+                const stepsToReplace = calculateSteps(updatedBoardData[indexToReplace].duration)
+                const sliceLen = updatedBoardData.filter(piece => piece.occupied == false).length
+                
+                if(itemSteps > sliceLen + stepsToReplace)return
+                else{
+                if(itemSteps == stepsToReplace){
+                    const firstPart = updatedBoardData.slice(0, indexToReplace)
+                    const middlePart = [item].concat(new Array(itemSteps-1).fill(defaultpitchesoccupied))
+                    const endPart = updatedBoardData.slice(indexToReplace + stepsToReplace,measure1Meter)
+                    const result = firstPart.concat(middlePart).concat(endPart).concat(restboard)
+                    console.log(result)
+                    setMeasure7(result)
+
+                }
+                else if(itemSteps < stepsToReplace){
+                    const diffDuration = stepsToReplace - itemSteps
+                    const firstPart = updatedBoardData.slice(0, indexToReplace)
+                    const middlePart = [item].concat(new Array(itemSteps-1).fill(defaultpitchesoccupied))
+                    const endPart = updatedBoardData.slice(indexToReplace + stepsToReplace,updatedBoardData.length).concat(new Array(diffDuration).fill(defaultpitches))
+                    const result = firstPart.concat(middlePart).concat(endPart).concat(restboard)
+                    setMeasure7(result)
+
+                }
+                else{
+                    const diffDuration = itemSteps - stepsToReplace
+                    const firstPart = updatedBoardData.slice(0, indexToReplace)
+                    const middlePart = [item].concat(new Array(itemSteps-1).fill(defaultpitchesoccupied))
+                    const endPart = updatedBoardData.slice(indexToReplace + stepsToReplace,updatedBoardData.length-diffDuration)
+                    const result = firstPart.concat(middlePart).concat(endPart).concat(restboard)
+                    setMeasure7(result)
+
+                }
+                const pitch = item['type'][0]
+            
+                playSynth(pitch.replace('/',''),1)
+            }
+            }
+
+
+            else if(activeMeasure == 7){
+                const updatedBoardData = measure8.slice(0,measure8Meter)
+                const restboard = measure8.slice(measure8Meter,measure8.length)
+                const stepsToReplace = calculateSteps(updatedBoardData[indexToReplace].duration)
+                const sliceLen = updatedBoardData.filter(piece => piece.occupied == false).length
+                
+                if(itemSteps > sliceLen + stepsToReplace)return
+                else{
+                if(itemSteps == stepsToReplace){
+                    const firstPart = updatedBoardData.slice(0, indexToReplace)
+                    const middlePart = [item].concat(new Array(itemSteps-1).fill(defaultpitchesoccupied))
+                    const endPart = updatedBoardData.slice(indexToReplace + stepsToReplace,measure1Meter)
+                    const result = firstPart.concat(middlePart).concat(endPart).concat(restboard)
+                    setMeasure8(result)
+
+                }
+                else if(itemSteps < stepsToReplace){
+                    const diffDuration = stepsToReplace - itemSteps
+                    const firstPart = updatedBoardData.slice(0, indexToReplace)
+                    const middlePart = [item].concat(new Array(itemSteps-1).fill(defaultpitchesoccupied))
+                    const endPart = updatedBoardData.slice(indexToReplace + stepsToReplace,updatedBoardData.length).concat(new Array(diffDuration).fill(defaultpitches))
+                    const result = firstPart.concat(middlePart).concat(endPart).concat(restboard)
+                    setMeasure8(result)
+
+                }
+                else{
+                    const diffDuration = itemSteps - stepsToReplace
+                    const firstPart = updatedBoardData.slice(0, indexToReplace)
+                    const middlePart = [item].concat(new Array(itemSteps-1).fill(defaultpitchesoccupied))
+                    const endPart = updatedBoardData.slice(indexToReplace + stepsToReplace,updatedBoardData.length-diffDuration)
+                    const result = firstPart.concat(middlePart).concat(endPart).concat(restboard)
+                    setMeasure8(result)
+
+                }
+                const pitch = item['type'][0]
+            
+                playSynth(pitch.replace('/',''),1)
+            }
+            }
             
 
             
             
-           
+           testScoring()
 
 
         }
@@ -970,6 +1187,7 @@ function Compose() {
                 setPointer(newActivatedIndex + stepsFornewActivated)
 
             }
+            testScoring()
         }
     
         
@@ -1014,7 +1232,7 @@ function Compose() {
         
         const addPitch = (item) => {
             console.log(item)
-
+            playSynth(item['type'][0].replace('/',''),1)
             const index = activeNote
             const steps = calculateSteps(item.duration)
             
@@ -2060,10 +2278,39 @@ function Compose() {
         
                 
             }
+            testScoring()
             
             
 
         }
+
+        useEffect(() => {
+                setMeasure1(defaultPitchesArray_(selectedOption['value']))
+                setMeasure2(defaultPitchesArray_(selectedOption['value']))
+                setMeasure3(defaultPitchesArray_(selectedOption['value']))
+                setMeasure4(defaultPitchesArray_(selectedOption['value']))
+                setMeasure5(defaultPitchesArray_(selectedOption['value']))
+                setMeasure6(defaultPitchesArray_(selectedOption['value']))
+                setMeasure7(defaultPitchesArray_(selectedOption['value']))
+                setMeasure8(defaultPitchesArray_(selectedOption['value']))
+                setactiveMeasure(0)
+                setactiveNote(0)
+                setPointer(1)
+
+                setmeasure1Meter(selectedOption['value'])
+                setmeasure2Meter(selectedOption['value'])
+                setmeasure3Meter(selectedOption['value'])
+                setmeasure4Meter(selectedOption['value'])
+                setmeasure5Meter(selectedOption['value'])
+                setmeasure6Meter(selectedOption['value'])
+                setmeasure7Meter(selectedOption['value'])
+                setmeasure8Meter(selectedOption['value'])
+                console.log(selectedOption['value'])
+    
+   
+
+        },[selectedOption])
+        
 
         const switchLeft = ( measureNumber) =>{
             if (meterIndex1 == 0){
@@ -2080,7 +2327,7 @@ function Compose() {
                 setMeasure8(defaultPitchesArray_(meterArray[meterIndex1].numberofPlaces))
                
                 
-                setactiveMeasure(measureNumber)
+                setactiveMeasure(0)
                 setactiveNote(0)
                 setPointer(1)
                 setmeasure1Meter(meterArray[meterIndex1].numberofPlaces)
@@ -2196,9 +2443,11 @@ const getSuggestions = () => {
     const composition= [measure1,measure2,measure3,measure4,measure5,
         measure6,measure7,measure8]
     const finalComposition = prepareComposition(composition)
+    console.log(finalComposition)
     let payload = {
         data: finalComposition,
-        meter: meterIndex1
+        meter: meterIndex1,
+        jwtToken: jwtToken
         
     }
     axios.post("http://192.168.178.46:5000/runRNN", JSON.stringify(payload), {
@@ -2221,6 +2470,12 @@ const getSuggestions = () => {
     });
 }
 
+useEffect(() => {
+   
+
+
+}, [narmourEncodingsState])
+
 
 const testScoring = () => {
 
@@ -2241,9 +2496,9 @@ const testScoring = () => {
     }).then((response) => {
         console.log(response)
 
-        setFluency(response.data['fluency'])
-        setFlexability(response.data['flexability'])
-        setOriginality(response.data['originality'])
+        setFluencyScore(response.data['fluency'])
+        setFlexabilityScore(response.data['flexability'])
+        setOriginalityScore(response.data['originality'])
 
     }).catch((error) => {
       console.log(error)
@@ -2262,14 +2517,12 @@ const testScoring = () => {
             <div className='topColumnLeft' onMouseEnter={()=>{setHover(true)}} onMouseLeave={()=>{setHover(false)}}>
         <div className='div-toptop' >
         <div className='chooseMeter-container'>
-                    <button style={{"marginRight":"8px","backgroundColor":"#403c3b","height":"35px","width":"65px","border":"#403c3b 2px solid","font-weight": "bold","borderRadius":"5px","color":"white"}} onClick={()=>switchLeft(0)}>Left</button>
-                        <img
-                        height="48px" 
-                        width="47px"
-                        src={meterscr1.src}
-                        />
-                    <button style={{"marginLeft":"8px","backgroundColor":"#403c3b","height":"35px","width":"65px","border":"#403c3b 2px solid","font-weight": "bold","borderRadius":"5px","color":"white"}} onClick={()=>switchRight(0)}>Right</button>
-                    
+        <Select
+        defaultValue={selectedOption}
+        onChange={setSelectedOption}
+        options={meterSelect}
+      />
+                   
                 </div>
         <div className='div-top'   style={{border:"solid 4px silver",borderRadius:"20px",backgroundColor:"#debd90",overflowY:'scroll'}}>
 
@@ -2722,7 +2975,7 @@ const testScoring = () => {
             <div className='topColumnRight'>
                     
                     
-                    <button onClick={testNM}>TestNM</button>
+                   
                 <div style={{"marginTop":"60px", "marginLeft":"300px" }}>
                     <button style={{"fontWeight": "bold","borderRadius":"5px","color":"white","height":"50px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}} onClick={getSuggestions}>GetInspiration</button>
                     </div>
@@ -2767,38 +3020,39 @@ const testScoring = () => {
                                         )
                                     })}</div>
                                 default:
-                                    return <div>test</div>
+                                    return <div></div>
                             }
                         })()}
                     </div>
-
-                    <div>
+                        <div style={{marginLeft:"100px",marginTop:"55px",marginBottom:"25px"}}>
+                    <div style={{float:"left"}}>
                     <SubmitComposition composition={[measure1,measure2,measure3,measure4,measure5,
                         measure6,measure7,measure8]} meter={meterArray[meterIndex1]} />
                 </div>
                 
-                <button onClick={playwholeComposition}> Play the Melody </button>
-                <button onClick={testScoring}>TestCreativityScoring </button>
+                <button style={{"marginLeft":"55px","fontWeight": "bold","borderRadius":"5px","color":"white","height":"50px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}} onClick={playwholeComposition}> Play the Melody </button>
+                
+                </div>
                 <div style={{border:"solid 4px silver",borderRadius:"20px",backgroundColor:"#debd90" ,width:"700px", height:"300px", marginTop:"100px",alignItems:"center",display:"flex",justifyContent:"center"}}>
                 <div style={{float:"left"}}>
                     <div style={{borderRadius:"8px",textAlign: "center",height:"30px",width:"130px","fontWeight": "bold",backgroundColor:"#399ddb" ,marginBottom:"30px"}}>
                     Flexability Score
                     </div>
-            <Progress  type="circle" percent={(flexability/flexMax)*100}  />
+            <Progress  type="circle" percent={Math.floor((flexabilityScore/flexMax)*100)}  />
 
             </div>
             <div style={{float:"left", marginLeft:"60px"}}>
                     <div style={{borderRadius:"8px",textAlign: "center",height:"30px",width:"130px","fontWeight": "bold",backgroundColor:"#399ddb" ,marginBottom:"30px"}}>
                     Fluency Score
                     </div>
-            <Progress  type="circle" percent={(fluency/fluencyMax)*100}  />
+            <Progress  type="circle" percent={Math.floor((fluencyScore/fluencyMax)*100)}  />
 
             </div>
             <div style={{float:"left",marginLeft:"60px"}}>
                     <div style={{borderRadius:"8px",textAlign: "center",height:"30px",width:"130px","fontWeight": "bold",backgroundColor:"#399ddb" ,marginBottom:"30px"}}>
                     Originality Score
                     </div>
-            <Progress  type="circle" percent={(originality/origMax)*100}  />
+            <Progress  type="circle" percent={Math.floor((originalityScore/origMax)*100)}  />
 
             </div>
             </div>

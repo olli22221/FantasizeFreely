@@ -17,8 +17,8 @@ const ShowImages = ({images}) => {
             return(
      <img 
          className='InspirationIMG'
-         height="100px" 
-         width="100px" 
+         height="75px" 
+         width="75px" 
          src= {imagesDictionary[note]} 
         
          

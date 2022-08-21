@@ -5,6 +5,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { margin } from '@mui/system';
 
 
+
 function PitchesDraggable({item ,url,index, moveItem, target,addPitch,replacePitch}) {
     const ref = useRef(null)
     const [dragging, setDragging] = useRecoilState(dragAtom);
@@ -22,14 +23,7 @@ function PitchesDraggable({item ,url,index, moveItem, target,addPitch,replacePit
         replacePitch(item)
     }
 
-    useEffect(() => {
-        console.log(panelsrc)
-        console.log(url)
-
-       
-
-    }, [panelsrc,url])
-
+    
 
 
 

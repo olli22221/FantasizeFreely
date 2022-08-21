@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import {midiFiles as midiFilesAtom, jwtToken as jwtTokenAtom, 
   subjectId as subjectIdAtom, counter as counterAtom, 
-  musicatResponse as musicatResponseAtom} from '../redux/store'
+  musicatResponse as musicatResponseAtom, originalityScore as originalityScoreAtom,
+  fluencyScore as fluencyScoreAtom,flexabilityScore as flexabilityScoreAtom,} from '../redux/store'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import axios from "axios";
 import { calculateSteps } from './util';
 import { useNavigate } from "react-router-dom";
+
 
 
 function SubmitComposition({composition,meter}) {
@@ -16,6 +18,9 @@ const midiFiles = useRecoilValue(midiFilesAtom);
 let id = useRecoilValue(subjectIdAtom);
 const [counter, setCounter] = useRecoilState(counterAtom);
 const [musicatResponse, setmusicatResponse] = useRecoilState(musicatResponseAtom);
+const [originalityScore, setOriginalityScore] = useRecoilState(originalityScoreAtom);
+const [flexabilityScore, setFlexabilityScore] = useRecoilState(flexabilityScoreAtom);
+const [fluencyScore, setFluencyScore] = useRecoilState(fluencyScoreAtom);
 
 const checkComposition = (composition_,meter_) => {
   console.log(composition_)
@@ -23,7 +28,7 @@ const checkComposition = (composition_,meter_) => {
 
   for (let index = 0; index < composition_.length; index++) {
     const measure = composition_[index].filter(element => element.locked == false && element.occupied==true)
-    let meterInformation = meter_[index].numberofPlaces - 1
+    let meterInformation = meter_['numberofPlaces'] - 1
     for (let idx = 0; idx < measure.length; idx++) {
         const dur = calculateSteps(measure[idx].duration)
         meterInformation = meterInformation - dur
@@ -43,7 +48,7 @@ const checkComposition = (composition_,meter_) => {
 const prepareMeter = (meter_) => {
   let result = []
   for (let index = 0; index < meter_.length; index++) {
-      result.push(meter_[index].numberofPlaces)
+      result.push(meter_.numberofPlaces)
   }
   console.log(result)
   return result
@@ -86,23 +91,27 @@ const prepareComposition = (composition_) => {
     let cnt = counter
     
     const finalComposition = prepareComposition(composition)
-    const finalMeter = prepareMeter(meter)
 
     let payload = {
         data: finalComposition,
-        meter: finalMeter
+        jwtToken: jwtToken
     }
     
     
 
-    axios.post("http://192.168.178.46:5000/runMusicat", JSON.stringify(payload), {
+    axios.post("http://192.168.178.46:5000/submitComposition", JSON.stringify(payload), {
         headers: {
             "Content-Type": "application/json"
             
         }
     }).then((response) => {
-        console.log(response.data)
-        setmusicatResponse(response.data)
+        console.log(response)
+        setFlexabilityScore(response.data['flexability'])
+        setFluencyScore(response.data['fluency'])
+        setOriginalityScore(response.data['originality'])
+        setmusicatResponse(response.data['musicatPNG'])
+        
+        
         nav("/Result")
 
     }).catch((error) => {
@@ -139,8 +148,8 @@ const prepareComposition = (composition_) => {
 },[])
 
   return (
-    <div className='file-upload-submit'>
-        <button onClick={handleSubmit} > Submit Composition</button>
+    <div >
+        <button style={{"fontWeight": "bold","borderRadius":"5px","color":"white","height":"50px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}} onClick={handleSubmit} > Submit Composition</button>
       </div>
   );
 }

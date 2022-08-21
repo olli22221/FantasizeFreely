@@ -7,9 +7,29 @@ const { persistAtom } = recoilPersist()
 
 export const musicatResponse = atom ({
     key: "musicatResponse_",
-    default: {}, 
+    default: "", 
     effects_UNSTABLE: [persistAtom],
 })
+
+
+export const flexabilityScore = atom ({
+    key: "flexabilityScore",
+    default: 0, 
+    effects_UNSTABLE: [persistAtom],
+})
+
+export const fluencyScore = atom ({
+    key: "fluencyScore",
+    default: 0, 
+    effects_UNSTABLE: [persistAtom],
+})
+
+export const originalityScore = atom ({
+    key: "originalityScore",
+    default: 0, 
+    effects_UNSTABLE: [persistAtom],
+})
+
 
 export const activePanel = atom ({
     key: "replaceActive",

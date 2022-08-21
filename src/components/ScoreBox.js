@@ -39,7 +39,7 @@ const clefAndTimeWidth = 60;
     const context = renderer.getContext();
     //const staveWidth = (width - clefAndTimeWidth) / staves.length;
     context.setFont('Arial', 10, '').setBackgroundFillStyle('red')
-    const staveMeasure = new Stave(35, 100, 400);
+    const staveMeasure = new Stave(260, 50, 400);
     //const staveMeasure1 = new Stave(500, 100, 400);
     if(violin == true){
         staveMeasure.setContext(context).draw();
@@ -54,7 +54,7 @@ const clefAndTimeWidth = 60;
     const measureNotes1 = []
     const measureNotes2 = []
     //const notes_ =  notes.filter(piece => piece.show == true && piece.locked == false)
-   /* console.log(notes)
+   // console.log(notes)
     const noteType = notes[1]
     const durations = notes[0]
     console.log(noteType)
@@ -66,18 +66,17 @@ const clefAndTimeWidth = 60;
         }
     }
 }
-*/
 
     
     
-    measureNotes1.push(new StaveNote({ keys:["g/3"], duration:"q"}))
+   /* measureNotes1.push(new StaveNote({ keys:["g/3"], duration:"q"}))
     measureNotes1.push(new StaveNote({ keys:["b/4"], duration:"8r"}))
     measureNotes1.push(new StaveNote({ keys:["b/4"], duration:"wr"}))
     measureNotes1.push(new StaveNote({ keys:["b/4"], duration:"hr"}))
     measureNotes1.push(new StaveNote({ keys:["b/4"], duration:"qr"}))
     measureNotes1.push(new StaveNote({ keys:["b/4"], duration:"16r"}))
     
-    
+    */
     
     if(measureNotes1.length>0){
     
