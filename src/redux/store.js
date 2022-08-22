@@ -5,6 +5,13 @@ import {defaultpitches,defaultpitchesoccupied,defaultPitchesArray,defaultPitches
 const { persistAtom } = recoilPersist()
 
 
+
+export const submissions = atom ({
+    key: "submissions",
+    default: 0, 
+    effects_UNSTABLE: [persistAtom],
+})
+
 export const musicatResponse = atom ({
     key: "musicatResponse_",
     default: "", 

@@ -3027,7 +3027,7 @@ const testScoring = () => {
                         <div style={{marginLeft:"100px",marginTop:"55px",marginBottom:"25px"}}>
                     <div style={{float:"left"}}>
                     <SubmitComposition composition={[measure1,measure2,measure3,measure4,measure5,
-                        measure6,measure7,measure8]} meter={meterArray[meterIndex1]} />
+                        measure6,measure7,measure8]} meter={selectedOption['value']} />
                 </div>
                 
                 <button style={{"marginLeft":"55px","fontWeight": "bold","borderRadius":"5px","color":"white","height":"50px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}} onClick={playwholeComposition}> Play the Melody </button>

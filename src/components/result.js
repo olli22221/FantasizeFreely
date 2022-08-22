@@ -5,13 +5,18 @@ import ScoreBox from './ScoreBox';
 import { measure1 as measure1Atom,measure2 as measure2Atom,
     measure3 as measure3Atom,measure4 as measure4Atom,measure5 as measure5Atom,measure6 as measure6Atom,
     measure7 as measure7Atom,measure8 as measure8Atom, musicatResponse as musicatResponseAtom,originalityScore as originalityScoreAtom,
-    fluencyScore as fluencyScoreAtom,flexabilityScore as flexabilityScoreAtom} from '../redux/store'
+    fluencyScore as fluencyScoreAtom,flexabilityScore as flexabilityScoreAtom,
+    submissions as submissionsAtom} from '../redux/store'
+    
 import { Progress } from 'react-sweet-progress';
+import { Button } from '@mui/material';
+
 
 
 
 function Result() {
 
+    let nav = useNavigate();
 
     const flexMax = 800
     const origMax = 100
@@ -21,9 +26,22 @@ function Result() {
     const [flexabilityScore, setFlexabilityScore] = useRecoilState(flexabilityScoreAtom);
     const [fluencyScore, setFluencyScore] = useRecoilState(fluencyScoreAtom);
     const [image, setImage] = useState("");
+    const [submissions, setSubmissions] = useRecoilState(submissionsAtom);
+  
 
 
+    const nextComposition = () => {
+        setFlexabilityScore(0)
+        setFluencyScore(0)
+        setOriginalityScore(0)
+        nav("/compose")
+    }
 
+    const endTask = () => {
+
+        nav("/")
+        
+    }
 
     useEffect(() => {
 
@@ -74,6 +92,10 @@ function Result() {
             </div>
             </div>
             </div>
+            {submissions < 5 && <Button onClick={nextComposition} style={{"fontWeight": "bold","borderRadius":"5px","color":"white","height":"50px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}}>Another Composition</Button>}
+            {submissions > 3 && <Button onClick={endTask} style={{"fontWeight": "bold","borderRadius":"5px","color":"white","height":"50px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}}>End Task</Button>}
+
+
             </div>
 
         </div>

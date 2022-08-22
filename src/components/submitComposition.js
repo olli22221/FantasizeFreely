@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import {midiFiles as midiFilesAtom, jwtToken as jwtTokenAtom, 
   subjectId as subjectIdAtom, counter as counterAtom, 
   musicatResponse as musicatResponseAtom, originalityScore as originalityScoreAtom,
-  fluencyScore as fluencyScoreAtom,flexabilityScore as flexabilityScoreAtom,} from '../redux/store'
+  fluencyScore as fluencyScoreAtom,flexabilityScore as flexabilityScoreAtom,
+submissions as submissionsAtom} from '../redux/store'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import axios from "axios";
 import { calculateSteps } from './util';
@@ -17,6 +18,7 @@ const jwtToken = useRecoilValue(jwtTokenAtom)
 const midiFiles = useRecoilValue(midiFilesAtom);
 let id = useRecoilValue(subjectIdAtom);
 const [counter, setCounter] = useRecoilState(counterAtom);
+const [submissions, setSubmissions] = useRecoilState(submissionsAtom);
 const [musicatResponse, setmusicatResponse] = useRecoilState(musicatResponseAtom);
 const [originalityScore, setOriginalityScore] = useRecoilState(originalityScoreAtom);
 const [flexabilityScore, setFlexabilityScore] = useRecoilState(flexabilityScoreAtom);
@@ -28,7 +30,7 @@ const checkComposition = (composition_,meter_) => {
 
   for (let index = 0; index < composition_.length; index++) {
     const measure = composition_[index].filter(element => element.locked == false && element.occupied==true)
-    let meterInformation = meter_['numberofPlaces'] - 1
+    let meterInformation = meter_ - 1
     for (let idx = 0; idx < measure.length; idx++) {
         const dur = calculateSteps(measure[idx].duration)
         meterInformation = meterInformation - dur
@@ -110,6 +112,8 @@ const prepareComposition = (composition_) => {
         setFluencyScore(response.data['fluency'])
         setOriginalityScore(response.data['originality'])
         setmusicatResponse(response.data['musicatPNG'])
+        const submissionCount = submissions + 1
+        setSubmissions(submissionCount)
         
         
         nav("/Result")
