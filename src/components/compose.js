@@ -1,12 +1,18 @@
 import React, { useState,useCallback,useEffect } from 'react';
-import { DndProvider } from 'react-dnd';
 import Pitches from './Pitches';
 import './../App.css';
-import {useDrop} from 'react-dnd';
-import DropWrapper from './DropWrapper';
 import PitchesDraggable from './PitchesDraggable';
 import { calculateSteps } from './util';
 import Select from 'react-select';
+import ReactLoading from 'react-loading';
+import DeleteIcon from '@mui/icons-material/Delete';
+import MusicNoteIcon from '@mui/icons-material/MusicNote';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
+import LightbulbCircleSharpIcon from '@mui/icons-material/LightbulbCircleSharp';
 import {activeMeasure as activeMeasureAtom,measure1 as measure1Atom,measure2 as measure2Atom,
     measure3 as measure3Atom,measure4 as measure4Atom,measure5 as measure5Atom,measure6 as measure6Atom,
     measure7 as measure7Atom,measure8 as measure8Atom,
@@ -17,7 +23,7 @@ import {activeMeasure as activeMeasureAtom,measure1 as measure1Atom,measure2 as 
     fluencyScore as fluencyScoreAtom,flexabilityScore as flexabilityScoreAtom} from '../redux/store'
 import { measure1Meter as measure1MeterAtom,measure2Meter as measure2MeterAtom,measure3Meter as measure3MeterAtom,
     measure4Meter as measure4MeterAtom,measure5Meter as measure5MeterAtom,measure6Meter as measure6MeterAtom,
-    measure7Meter as measure7MeterAtom,measure8Meter as measure8MeterAtom  } from '../redux/store';
+    measure7Meter as measure7MeterAtom,measure8Meter as measure8MeterAtom , inspirationFlag as inspirationFlagAtom } from '../redux/store';
 import { useRecoilValue,useRecoilState } from 'recoil';
 import {pitches,halfpitches,wholepitches,sixteenthpitches,eightpitches,
     defaultpitches,defaultpitchesoccupied, defaultPitchesArray_,sixteenthpitchesSharp,
@@ -34,23 +40,39 @@ import Slider, { Range } from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
 import VolumeDownIcon from '@mui/icons-material/VolumeDown';
-import { Stack } from '@mui/material';
+import { Button, Stack } from '@mui/material';
 import axios from "axios";
 import { prepareComposition } from './util';
 import ScoreBox from './ScoreBox';
 import ShowImages from './showInspirationImages';
 import { Progress } from 'react-sweet-progress';
 import "react-sweet-progress/lib/style.css";
-import { width } from '@mui/system';
+
+const customStyles = {
+    content: {
+      top: '50%',
+      left: '50%',
+      right: 'auto',
+      bottom: 'auto',
+      marginRight: '-50%',
+      transform: 'translate(-50%, -50%)',
+    },
+  };
+
 
 function Compose() {
+    const [value, setValue] = useState('showWholeMeasure');
+    const handleChange = (event) => {
+        setValue(event.target.value);
+        
+      };
     let nav = useNavigate();
-    const flexMax = 800
+    const flexMax = 400
     const origMax = 100
-    const fluencyMax = 950
+    const fluencyMax = 500
     const [narmourEncodingsState,setNarmourEncodingsState] = useState([])
     const [brightnessColors, setBrightnessColors] = useState([])
-    const noteCharDict = {"c":"C","d":"D","e":"E","f":"F","g":"G","a":"A","b":"B"}
+    const noteCharDict = {"c":"C","d":"D","e":"E","f":"F","g":"G","a":"A","b":"B","r":"R"}
     const noteToPitchheightDict = {"g/3":55,"a/3":57,"b/3":59,"c/4":60,"d/4":62,"e/4":64,"f/4":65,"g/4":67,"a/4":69,"b/4":71,"c/5":72
     ,"d/5":74,"e/5":76,"f/5":77,"g/5":79,"a/5":81,"b/5":83,"c/6":84}
     const options = ["showWholeMeasure","playSuggestion","showDurations",
@@ -65,7 +87,7 @@ function Compose() {
         { value: 9, label: '2/4' },
     ]
     const [meterIndex1,setMeterIndex1] = useState(0)
-   
+    const [open, setOpen] = useState(false);
     const [volumeMeasure1,setvolumeMeasure1] = useState(0)
     const [volumeMeasure2,setvolumeMeasure2] = useState(0)
     const [volumeMeasure3,setvolumeMeasure3] = useState(0)
@@ -98,9 +120,32 @@ function Compose() {
     const [replaceActivated, setreplaceActivated] = useRecoilState(replaceActivatedAtom);
     const [activePanel, setActivePanel] = useRecoilState(activePanelAtom);
     const [selectedOption, setSelectedOption] = useState(  { value: 17, label: '4/4' },);
+    const [inspirationFlag, setInspirationFlag] = useRecoilState(inspirationFlagAtom);
 
     
+    
+      function closeModal() {
+        setOpen(false);
+      }
 
+
+      useEffect(() => {
+
+        if (inspirationFlag == true) {
+            setOpen(true)
+        }
+
+        if (inspirationFlag == false) {
+            setOpen(false)
+        }
+              
+
+
+
+    }, [inspirationFlag])
+
+
+      
     const calculatePitches = () => {
 
         const pitches= []
@@ -175,7 +220,7 @@ function Compose() {
     }
 
     const getNarmourEncodings = (pitches) => {
-        setNarmourEncodingsState(calculateNarmourEncodings(pitches))
+        setNarmourEncodingsState(calculateNarmourEncodings(pitches.filter(x => x !='r')))
     }
 
     const isLarge = (diff) => {
@@ -364,6 +409,10 @@ function Compose() {
 
         for (let index = 0; index < notes.length; index++) {
             const tmpNote = notes[index]
+            if (tmpNote == 'r') {
+                tmpColors.push("R")
+                continue
+            }
             if (accents[index] == 1) {
                 tmpColors.push(noteToPitchheightDict[tmpNote] + 1)
             }
@@ -391,11 +440,15 @@ function Compose() {
                 return
             }
             const brightnessess = []
-            const minColor = Math.min(...colors)
-            const maxColor = Math.max(...colors)
+            const minColor = Math.min(...colors.filter(note => note!="R"))
+            const maxColor = Math.max(...colors.filter(note => note!="R"))
             let difference = 0
             for (let index = 0; index < colors.length; index++) {
                 const element = colors[index];
+                if (element == "R") {
+                    brightnessess.push("R")
+                    continue
+                }
                 difference = element - minColor
                 if (difference == 0) {
                     brightnessess.push("50%")
@@ -2440,6 +2493,7 @@ const playSuggestion = () => {
 const getSuggestions = () => {
     setOption()
     setinspirations([])
+    setInspirationFlag(true)
     const composition= [measure1,measure2,measure3,measure4,measure5,
         measure6,measure7,measure8]
     const finalComposition = prepareComposition(composition)
@@ -2450,22 +2504,31 @@ const getSuggestions = () => {
         jwtToken: jwtToken
         
     }
-    axios.post("http://192.168.178.46:5000/runRNN", JSON.stringify(payload), {
+    axios.post("http://35.157.211.200:5000/runRNN", JSON.stringify(payload), {
         headers: {
             "Content-Type": "application/json"
             
         }
     }).then((response) => {
+        
         console.log(response)
+        
         const lenOfSuggestions = response.data.suggestions.length
         const randomIndex = getRandomInt(lenOfSuggestions)
         
-        setinspirations(response.data.suggestions[randomIndex])
-        setOption(options[getRandomInt(options.length)])
         
+        
+        setinspirations(response.data.suggestions[randomIndex])
+
+        setOption(value)
+        
+        console.log(option)
+        
+        setInspirationFlag(false)
         
 
     }).catch((error) => {
+        setInspirationFlag(false)
       console.log(error)
     });
 }
@@ -2488,7 +2551,7 @@ const testScoring = () => {
         data: momentaryComposition,
         
     }
-    axios.post("http://192.168.178.46:5000/calculateCreativity", JSON.stringify(payload), {
+    axios.post("http://35.157.211.200:5000/calculateCreativity", JSON.stringify(payload), {
         headers: {
             "Content-Type": "application/json"
             
@@ -2522,7 +2585,8 @@ const testScoring = () => {
         onChange={setSelectedOption}
         options={meterSelect}
       />
-                   
+        <Button style={{"marginLeft":"55px","fontWeight": "bold","borderRadius":"5px","color":"white","height":"50px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}} variant="contained" endIcon={<MusicNoteIcon />}  size="large"  disabled={inspirationFlag} onClick={playwholeComposition}> Play the Melody </Button>
+
                 </div>
         <div className='div-top'   style={{border:"solid 4px silver",borderRadius:"20px",backgroundColor:"#debd90",overflowY:'scroll'}}>
 
@@ -2945,19 +3009,19 @@ const testScoring = () => {
                     </div>
                     
                     </div>
-                    <div >
+                    <div  >
                     <div style={{border:"solid 4px silver",borderRadius:"20px",backgroundColor:"#debd90"}} className='column3'>
-                    <button style={{"margin":"3px","font-weight": "bold","borderRadius":"5px","color":"white","height":"40px","width":"125px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}} onClick={() => {changeDuration("whole")}}> Whole Notes </button>
-                    <button style={{"margin":"3px","font-weight": "bold","borderRadius":"5px","color":"white","height":"40px","width":"125px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}} onClick={() => {changeDuration("half")}} > Half Notes </button>
-                    <button style={{"margin":"3px","font-weight": "bold","borderRadius":"5px","color":"white","height":"40px","width":"125px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}} onClick={() => {changeDuration("quarter")}}> Quarter Notes </button>
-                    <button style={{"margin":"3px","font-weight": "bold","borderRadius":"5px","color":"white","height":"40px","width":"125px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}} onClick={() => {changeDuration("eighth")}} > Eighth Notes </button>
-                    <button style={{"margin":"3px","font-weight": "bold","borderRadius":"5px","color":"white","height":"40px","width":"125px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}} onClick={() => {changeDuration("sixteenth")}}> Sixteenth Notes </button>
+                    <Button disabled= {inspirationFlag}  style={{"margin":"3px","font-weight": "bold","borderRadius":"5px","color":"white","height":"40px","width":"125px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}} onClick={() => {changeDuration("whole")}}> Whole Notes </Button>
+                    <Button disabled= {inspirationFlag} style={{"margin":"3px","font-weight": "bold","borderRadius":"5px","color":"white","height":"40px","width":"125px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}} onClick={() => {changeDuration("half")}} > Half Notes </Button>
+                    <Button disabled= {inspirationFlag} style={{"margin":"3px","font-weight": "bold","borderRadius":"5px","color":"white","height":"40px","width":"125px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}} onClick={() => {changeDuration("quarter")}}> Quarter Notes </Button>
+                    <Button disabled= {inspirationFlag} style={{"margin":"3px","font-weight": "bold","borderRadius":"5px","color":"white","height":"40px","width":"125px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}} onClick={() => {changeDuration("eighth")}} > Eighth Notes </Button>
+                    <Button disabled= {inspirationFlag} style={{"margin":"3px","font-weight": "bold","borderRadius":"5px","color":"white","height":"40px","width":"125px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}} onClick={() => {changeDuration("sixteenth")}}> Sixteenth Notes </Button>
                     <div className='columnBottom'>
-                        <button style={{"margin":"3px","font-weight": "bold","borderRadius":"5px","color":"white","height":"40px","width":"125px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}} onClick={() => {changeAccent("sharp")}}> Sharp </button>
-                        <button style={{"margin":"3px","font-weight": "bold","borderRadius":"5px","color":"white","height":"40px","width":"125px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}} onClick={() => {changeAccent("minor")}}> Flat </button>
-                        <button style={{"margin":"3px","font-weight": "bold","borderRadius":"5px","color":"white","height":"40px","width":"125px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}} onClick={() => {changeAccent("none")}}> None </button>
-                        <button style={{"margin":"3px","font-weight": "bold","borderRadius":"5px","color":"white","height":"40px","width":"125px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}} onClick={deleteItem}> Delete </button>
-                    <button style={{"margin":"3px","font-weight": "bold","borderRadius":"5px","color":"white","height":"40px","width":"125px","backgroundColor":"#403c3b",border: replaceActivated? '3px solid white':'#403c3b' }} onClick={changeStateOfReplace} > Replace </button>
+                        <Button disabled= {inspirationFlag} style={{"margin":"3px","font-weight": "bold","borderRadius":"5px","color":"white","height":"40px","width":"125px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}} onClick={() => {changeAccent("sharp")}}> Sharp </Button>
+                        <Button disabled= {inspirationFlag} style={{"margin":"3px","font-weight": "bold","borderRadius":"5px","color":"white","height":"40px","width":"125px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}} onClick={() => {changeAccent("minor")}}> Flat </Button>
+                        <Button disabled= {inspirationFlag} style={{"margin":"3px","font-weight": "bold","borderRadius":"5px","color":"white","height":"40px","width":"125px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}} onClick={() => {changeAccent("none")}}> None </Button>
+                        <Button disabled= {inspirationFlag} style={{"margin":"3px","font-weight": "bold","borderRadius":"5px","color":"white","height":"40px","width":"125px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}} onClick={deleteItem} variant="outlined" startIcon={<DeleteIcon />}> Delete </Button>
+                    <Button disabled= {inspirationFlag} style={{"margin":"3px","font-weight": "bold","borderRadius":"5px","color":"white","height":"40px","width":"125px","backgroundColor":"#403c3b",border: replaceActivated? '3px solid white':'#403c3b' }} onClick={changeStateOfReplace} > Replace </Button>
                     
                     </div>
                     
@@ -2976,21 +3040,42 @@ const testScoring = () => {
                     
                     
                    
-                <div style={{"marginTop":"60px", "marginLeft":"300px" }}>
-                    <button style={{"fontWeight": "bold","borderRadius":"5px","color":"white","height":"50px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}} onClick={getSuggestions}>GetInspiration</button>
-                    </div>
+                <div style={{"marginTop":"60px", "marginLeft":"270px" }}>
+                    <Button disabled={inspirationFlag} style={{"fontWeight": "bold","borderRadius":"5px","color":"white","height":"50px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}} variant="contained" endIcon={<LightbulbCircleSharpIcon />}  size="large"  onClick={getSuggestions}>Get Inspiration</Button>
                     
+                    </div>
+                    <FormControl>
+      <FormLabel id="demo-controlled-radio-buttons-group">Choose an Inspiration Type</FormLabel>
+      <RadioGroup
+      row
+        aria-labelledby="demo-controlled-radio-buttons-group"
+        name="controlled-radio-buttons-group"
+        value={value}
+        onChange={handleChange}
+      >
+        <FormControlLabel value="playSuggestion" control={<Radio />} label="playSuggestion" />
+        <FormControlLabel value="showDurations" control={<Radio />} label="Durations" />
+        <FormControlLabel value="showPitches" control={<Radio />} label="Pitches" />
+        <FormControlLabel value="showColors" control={<Radio />} label="Colors" />
+        <FormControlLabel value="showWholeMeasure" control={<Radio />} label="WholeMeasure" />
+        <FormControlLabel value="showEugeneStructures" control={<Radio />} label="EugeneStructures" />
+      </RadioGroup>
+    </FormControl>
+                    <div>
+                    { inspirationFlag
+                    ?<div style={{marginTop:"80px", marginRight:"150px" }}> <div style={{fontWeight: "bold",fontSize:"22px",marginBottom:"30px", textAlign:"center", backgroundColor:"#399ddb"}}>Waiting for the AI to compute the next Notes</div> 
+                    <div style={{marginLeft:"280px"}}><ReactLoading type={"spin"} color={"ffffff"} height={'25%'} width={'25%'} /></div></div>
 
-                    <div style={{border:"solid 4px silver",borderRadius:"20px",backgroundColor:"#debd90"}}  className='EmptyInspiration'>
+                   : <div style={{border:"solid 4px silver",borderRadius:"20px",backgroundColor:"#debd90"}}  className='EmptyInspiration'>
                         {(() => {
                             switch (option) {
                                 case "playSuggestion":
                                     
-                                    return <button onClick = {playSuggestion}>PlaySuggestion</button>
+                                    return <Button style={{"marginLeft":"55px","fontWeight": "bold","borderRadius":"5px","color":"white","height":"50px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}} variant="contained" endIcon={<MusicNoteIcon />}  size="large"  onClick = {playSuggestion}>PlaySuggestion</Button>
                                 case "showDurations":
                                     
                                     return <div>
-                                        <ShowImages images={inspirations[0]} />Durations</div>
+                                        <ShowImages images={inspirations[0]} /></div>
                                 case "showPitches":
                                     
                                     return <div>{inspirations[1].map( (note,idx) => {
@@ -3003,7 +3088,12 @@ const testScoring = () => {
                                     return <div>{brightnessColors.map( (note,idx) => {
               
                                         return(
-                                            <div style={{height:"80px",width:"65px",backgroundColor:"green", filter:"brightness("+note+")",margin:"10px",float:"left"}}>{note}</div>
+                                            <div style={{float:"left"}}>
+                                              {  note=='R' 
+                                              ?<div style={{textAlign:"center",fontSize:"50px",height:"80px",width:"50px",border:"1px solid gray",margin:"10px",float:"left"}}>R</div>
+                                            :<div style={{height:"80px",width:"50px",backgroundColor:"green", filter:"brightness("+note+")",margin:"10px",float:"left"}}>{note}</div>
+                                              }
+                                            </div>
                                         )})}</div>
                                     
                                     
@@ -3023,17 +3113,19 @@ const testScoring = () => {
                                     return <div></div>
                             }
                         })()}
+                    
                     </div>
-                        <div style={{marginLeft:"100px",marginTop:"55px",marginBottom:"25px"}}>
+}
+                    </div>
+                        <div style={{marginLeft:"180px",marginTop:"55px",marginBottom:"55px"}}>
                     <div style={{float:"left"}}>
                     <SubmitComposition composition={[measure1,measure2,measure3,measure4,measure5,
                         measure6,measure7,measure8]} meter={selectedOption['value']} />
                 </div>
                 
-                <button style={{"marginLeft":"55px","fontWeight": "bold","borderRadius":"5px","color":"white","height":"50px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}} onClick={playwholeComposition}> Play the Melody </button>
                 
                 </div>
-                <div style={{border:"solid 4px silver",borderRadius:"20px",backgroundColor:"#debd90" ,width:"700px", height:"300px", marginTop:"100px",alignItems:"center",display:"flex",justifyContent:"center"}}>
+                <div style={{border:"solid 4px silver",borderRadius:"20px",backgroundColor:"#debd90" ,width:"700px", height:"300px", marginTop:"200px",alignItems:"center",display:"flex",justifyContent:"center"}}>
                 <div style={{float:"left"}}>
                     <div style={{borderRadius:"8px",textAlign: "center",height:"30px",width:"130px","fontWeight": "bold",backgroundColor:"#399ddb" ,marginBottom:"30px"}}>
                     Flexability Score
@@ -3059,8 +3151,9 @@ const testScoring = () => {
                 
                 
             </div>
+
             
-                            
+      
             </div>
 
     );

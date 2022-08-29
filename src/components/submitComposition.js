@@ -3,19 +3,20 @@ import {midiFiles as midiFilesAtom, jwtToken as jwtTokenAtom,
   subjectId as subjectIdAtom, counter as counterAtom, 
   musicatResponse as musicatResponseAtom, originalityScore as originalityScoreAtom,
   fluencyScore as fluencyScoreAtom,flexabilityScore as flexabilityScoreAtom,
-submissions as submissionsAtom} from '../redux/store'
+submissions as submissionsAtom, inspirationFlag as inspirationFlagAtom } from '../redux/store'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import axios from "axios";
 import { calculateSteps } from './util';
 import { useNavigate } from "react-router-dom";
-
-
+import SendIcon from '@mui/icons-material/Send';
+import Button from '@mui/material/Button';
 
 function SubmitComposition({composition,meter}) {
   let nav = useNavigate();
 
 const jwtToken = useRecoilValue(jwtTokenAtom)
 const midiFiles = useRecoilValue(midiFilesAtom);
+const inspirationFlag = useRecoilValue(inspirationFlagAtom);
 let id = useRecoilValue(subjectIdAtom);
 const [counter, setCounter] = useRecoilState(counterAtom);
 const [submissions, setSubmissions] = useRecoilState(submissionsAtom);
@@ -101,7 +102,7 @@ const prepareComposition = (composition_) => {
     
     
 
-    axios.post("http://192.168.178.46:5000/submitComposition", JSON.stringify(payload), {
+    axios.post("http://35.157.211.200:5000/submitComposition", JSON.stringify(payload), {
         headers: {
             "Content-Type": "application/json"
             
@@ -153,7 +154,9 @@ const prepareComposition = (composition_) => {
 
   return (
     <div >
-        <button style={{"fontWeight": "bold","borderRadius":"5px","color":"white","height":"50px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}} onClick={handleSubmit} > Submit Composition</button>
+       <Button onClick={handleSubmit} style={{"fontWeight": "bold","borderRadius":"5px","color":"white","height":"50px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}} variant="contained" endIcon={<SendIcon />}>
+        Submit Composition
+      </Button>
       </div>
   );
 }

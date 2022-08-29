@@ -56,6 +56,13 @@ const clefAndTimeWidth = 60;
     //const notes_ =  notes.filter(piece => piece.show == true && piece.locked == false)
    // console.log(notes)
     const noteType = notes[1]
+    for (let index = 0; index < noteType.length; index++) {
+        const element = noteType[index];
+        if (element == 'r') {
+            noteType[index] = 'b/4'
+        }
+        
+    }
     const durations = notes[0]
     console.log(noteType)
     console.log(durations)

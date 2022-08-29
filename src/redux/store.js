@@ -6,6 +6,12 @@ const { persistAtom } = recoilPersist()
 
 
 
+export const inspirationFlag = atom ({
+    key: "inspirationFlag",
+    default: false, 
+    effects_UNSTABLE: [persistAtom],
+})
+
 export const submissions = atom ({
     key: "submissions",
     default: 0, 

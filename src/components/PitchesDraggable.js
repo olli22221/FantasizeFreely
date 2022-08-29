@@ -1,6 +1,6 @@
 import React ,{useEffect, useRef, useState} from 'react';
 
-import {dragging as dragAtom, replaceActivated as replaceActivatedAtom} from '../redux/store'
+import {dragging as dragAtom, replaceActivated as replaceActivatedAtom, inspirationFlag as inspirationFlagAtom} from '../redux/store'
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { margin } from '@mui/system';
 
@@ -12,15 +12,23 @@ function PitchesDraggable({item ,url,index, moveItem, target,addPitch,replacePit
     const replaceActivated = useRecoilValue(replaceActivatedAtom)
     const [buttonActivated,setButtonActivated] = useState(false)
     const [panelsrc,setPanelsrc] = useState(false)
+    const [inspirationFlag, setInspirationFlag] = useRecoilState(inspirationFlagAtom);
+
 
 
     
     const add = (item) => {
-        addPitch(item)
+        if (!inspirationFlag) {
+            addPitch(item)
+        }
+
+        
     } 
 
     const replace = (item) => {
+        if (!inspirationFlag) {
         replacePitch(item)
+        }
     }
 
     

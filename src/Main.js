@@ -8,7 +8,6 @@ import { jwtToken as jwtTokenAtom } from "./redux/store";
 import  { useState,useCallback,useEffect } from 'react';
 import Typewriter from 'typewriter-effect';
 
-
 const Button = styled.button`
     background-color: blue;
     font-size: 30px;
@@ -43,16 +42,21 @@ function Main() {
 
     const navToComposePanel = () => {
 
-       axios.get("http://192.168.178.46:5000/start").then((response) => {
+       axios.get('http://35.157.211.200:5000/'+"start").then((response) => {
             console.log(response.data)
             setjwtToken(response.data)
             nav("/Compose")
+            caches.keys().then((names) => {
+                names.forEach((name) => {
+                  caches.delete(name);
+                });
+              });
 
         }).catch((error) => {
             console.log(error)
         })
 
-        nav("/Compose")
+        //nav("/Compose")
 
         
 
