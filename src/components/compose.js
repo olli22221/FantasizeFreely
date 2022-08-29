@@ -2504,7 +2504,7 @@ const getSuggestions = () => {
         jwtToken: jwtToken
         
     }
-    axios.post("http://35.157.211.200:5000/runRNN", JSON.stringify(payload), {
+    axios.post("http://35.157.211.200:80/runRNN", JSON.stringify(payload), {
         headers: {
             "Content-Type": "application/json"
             
@@ -2551,7 +2551,7 @@ const testScoring = () => {
         data: momentaryComposition,
         
     }
-    axios.post("http://35.157.211.200:5000/calculateCreativity", JSON.stringify(payload), {
+    axios.post("http://35.157.211.200:80/calculateCreativity", JSON.stringify(payload), {
         headers: {
             "Content-Type": "application/json"
             
