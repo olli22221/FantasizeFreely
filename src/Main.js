@@ -42,7 +42,7 @@ function Main() {
 
     const navToComposePanel = () => {
 
-       axios.get('http://fantasifreely.de/'+"start").then((response) => {
+       axios.get('https://fantasifreely.de/'+"start").then((response) => {
             console.log(response.data)
             setjwtToken(response.data)
             nav("/Compose")
