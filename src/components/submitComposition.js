@@ -102,7 +102,7 @@ const prepareComposition = (composition_) => {
     
     
 
-    axios.post("http://35.157.211.200:80/submitComposition", JSON.stringify(payload), {
+    axios.post("https://fantasifreely.de/submitComposition", JSON.stringify(payload), {
         headers: {
             "Content-Type": "application/json"
             
