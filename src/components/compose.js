@@ -12,6 +12,7 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
+import ReactTooltip from 'react-tooltip';
 import LightbulbCircleSharpIcon from '@mui/icons-material/LightbulbCircleSharp';
 import {activeMeasure as activeMeasureAtom,measure1 as measure1Atom,measure2 as measure2Atom,
     measure3 as measure3Atom,measure4 as measure4Atom,measure5 as measure5Atom,measure6 as measure6Atom,
@@ -47,6 +48,7 @@ import ScoreBox from './ScoreBox';
 import ShowImages from './showInspirationImages';
 import { Progress } from 'react-sweet-progress';
 import "react-sweet-progress/lib/style.css";
+import { useAlert } from 'react-alert'
 
 const customStyles = {
     content: {
@@ -61,8 +63,16 @@ const customStyles = {
 
 
 function Compose() {
-    const [value, setValue] = useState('showWholeMeasure');
+
+    const [value, setValue] = useState('');
+    const alert = useAlert()
+    const handleTemperatureChange = (event) => {
+        console.log(event)
+        setTemperatureValue(event.target.value);
+    }
     const handleChange = (event) => {
+        
+        
         setValue(event.target.value);
         
       };
@@ -70,16 +80,23 @@ function Compose() {
     const flexMax = 400
     const origMax = 100
     const fluencyMax = 500
+    const [temperatureValue, setTemperatureValue] = useState(1)
     const [narmourEncodingsState,setNarmourEncodingsState] = useState([])
-    const [brightnessColors, setBrightnessColors] = useState([])
     const noteCharDict = {"c":"C","d":"D","e":"E","f":"F","g":"G","a":"A","b":"B","r":"R"}
     const noteToPitchheightDict = {"g/3":55,"a/3":57,"b/3":59,"c/4":60,"d/4":62,"e/4":64,"f/4":65,"g/4":67,"a/4":69,"b/4":71,"c/5":72
     ,"d/5":74,"e/5":76,"f/5":77,"g/5":79,"a/5":81,"b/5":83,"c/6":84}
     const options = ["showWholeMeasure","playSuggestion","showDurations",
     "showPitches","showColors","showEugeneStructures"]
     const accentDict = {0:"",1:"#",2:"b"}
+    const [showWholeMeasure, setShowWholeMeasure] = useState([]);
+    const [playSuggestionStateVar, setPlaySuggestionStateVar] = useState([]);
+    const [showDurations, setShowDurations] = useState([]);
+    const [showPitches, setShowPitches] = useState([]);
+    const [showColors, setShowColors] = useState([]);
+    const [showEugeneStructures, setShowEugeneStructures] = useState([]);
+    
     const [option, setOption] = useState();
-    const [inspirations, setinspirations] = useState([]);
+    //const [inspirations, setinspirations] = useState([]);
     const meterArray = [fourQuarter,twoQuarter,sixEighth]
     const meterSelect = [
         { value: 17, label: '4/4' },
@@ -113,7 +130,7 @@ function Compose() {
     const [measure6Meter, setmeasure6Meter] = useRecoilState(measure6MeterAtom);
     const [measure7Meter, setmeasure7Meter] = useRecoilState(measure7MeterAtom);
     const [measure8Meter, setmeasure8Meter] = useRecoilState(measure8MeterAtom);
-
+    const [showPitchesAccents, setShowPitchesAccents] = useState([])
     const [originalityScore, setOriginalityScore] = useRecoilState(originalityScoreAtom);
     const [flexabilityScore, setFlexabilityScore] = useRecoilState(flexabilityScoreAtom);
     const [fluencyScore, setFluencyScore] = useRecoilState(fluencyScoreAtom);
@@ -121,8 +138,11 @@ function Compose() {
     const [activePanel, setActivePanel] = useRecoilState(activePanelAtom);
     const [selectedOption, setSelectedOption] = useState(  { value: 17, label: '4/4' },);
     const [inspirationFlag, setInspirationFlag] = useRecoilState(inspirationFlagAtom);
+    const [narmourFlag, setNarmourFlag] = useState(false);
 
-    
+    function valuetext(value) {
+        return `${value}`;
+      }
     
       function closeModal() {
         setOpen(false);
@@ -144,9 +164,20 @@ function Compose() {
 
     }, [inspirationFlag])
 
+    useEffect(() => {
+
+       if (jwtToken.length==0 ) {
+        nav("/")
+       }
+              
+
+
+
+    }, [jwtToken])
+
 
       
-    const calculatePitches = () => {
+    const calculatePitches = (inspirations) => {
 
         const pitches= []
         const notes = inspirations[1]
@@ -220,7 +251,7 @@ function Compose() {
     }
 
     const getNarmourEncodings = (pitches) => {
-        setNarmourEncodingsState(calculateNarmourEncodings(pitches.filter(x => x !='r')))
+        return calculateNarmourEncodings(pitches.filter(x => x !='r'))
     }
 
     const isLarge = (diff) => {
@@ -399,7 +430,7 @@ function Compose() {
 
 
 
-    const calculateColorbrightness = () => {
+    const calculateColorbrightness = (inspirations) => {
         if (inspirations[1] != undefined ) {
             
         
@@ -432,7 +463,7 @@ function Compose() {
     }
 
     
-    useEffect(() => {
+    /*useEffect(() => {
 
         if (option == "showColors") {
             const colors = calculateColorbrightness()
@@ -473,7 +504,7 @@ function Compose() {
 
 
 
-    }, [option])
+    }, [option])*/
 
     const changeColor = () => {
         setIsActive(true);
@@ -654,7 +685,7 @@ function Compose() {
                 const restboard = measure1.slice(measure1Meter,measure1.length)
                 const stepsToReplace = calculateSteps(updatedBoardData[indexToReplace].duration)
                 const sliceLen = updatedBoardData.filter(piece => piece.occupied == false).length
-                if(itemSteps > sliceLen + stepsToReplace)return
+                if(itemSteps > sliceLen + stepsToReplace){alert.show('This Note doesnt fit into the actual measure!');  return}
                 else{
                 if(itemSteps == stepsToReplace){
                     const firstPart = updatedBoardData.slice(0, indexToReplace)
@@ -697,7 +728,7 @@ function Compose() {
                 const stepsToReplace = calculateSteps(updatedBoardData[indexToReplace].duration)
                 const sliceLen = updatedBoardData.filter(piece => piece.occupied == false).length
                 console.log(item)
-                if(itemSteps > sliceLen + stepsToReplace)return
+                if(itemSteps > sliceLen + stepsToReplace){alert.show('This Note doesnt fit into the actual measure!');  return}
                 else{
                 if(itemSteps == stepsToReplace){
                     console.log(item)
@@ -739,7 +770,7 @@ function Compose() {
                 const stepsToReplace = calculateSteps(updatedBoardData[indexToReplace].duration)
                 const sliceLen = updatedBoardData.filter(piece => piece.occupied == false).length
                 console.log(item)
-                if(itemSteps > sliceLen + stepsToReplace)return
+                if(itemSteps > sliceLen + stepsToReplace){alert.show('This Note doesnt fit into the actual measure!');  return}
                 else{
                 if(itemSteps == stepsToReplace){
                     const firstPart = updatedBoardData.slice(0, indexToReplace)
@@ -783,7 +814,7 @@ function Compose() {
                 const stepsToReplace = calculateSteps(updatedBoardData[indexToReplace].duration)
                 const sliceLen = updatedBoardData.filter(piece => piece.occupied == false).length
                 
-                if(itemSteps > sliceLen + stepsToReplace)return
+                if(itemSteps > sliceLen + stepsToReplace){alert.show('This Note doesnt fit into the actual measure!');  return}
                 else{
                 if(itemSteps == stepsToReplace){
                     const firstPart = updatedBoardData.slice(0, indexToReplace)
@@ -826,7 +857,7 @@ function Compose() {
                 const stepsToReplace = calculateSteps(updatedBoardData[indexToReplace].duration)
                 const sliceLen = updatedBoardData.filter(piece => piece.occupied == false).length
                 
-                if(itemSteps > sliceLen + stepsToReplace)return
+                if(itemSteps > sliceLen + stepsToReplace){alert.show('This Note doesnt fit into the actual measure!');  return}
                 else{
                 if(itemSteps == stepsToReplace){
                     const firstPart = updatedBoardData.slice(0, indexToReplace)
@@ -868,7 +899,7 @@ function Compose() {
                 const stepsToReplace = calculateSteps(updatedBoardData[indexToReplace].duration)
                 const sliceLen = updatedBoardData.filter(piece => piece.occupied == false).length
                 
-                if(itemSteps > sliceLen + stepsToReplace)return
+                if(itemSteps > sliceLen + stepsToReplace){alert.show('This Note doesnt fit into the actual measure!');  return}
                 else{
                 if(itemSteps == stepsToReplace){
                     const firstPart = updatedBoardData.slice(0, indexToReplace)
@@ -910,7 +941,7 @@ function Compose() {
                 const stepsToReplace = calculateSteps(updatedBoardData[indexToReplace].duration)
                 const sliceLen = updatedBoardData.filter(piece => piece.occupied == false).length
                 
-                if(itemSteps > sliceLen + stepsToReplace)return
+                if(itemSteps > sliceLen + stepsToReplace){alert.show('This Note doesnt fit into the actual measure!');  return}
                 else{
                 if(itemSteps == stepsToReplace){
                     const firstPart = updatedBoardData.slice(0, indexToReplace)
@@ -952,7 +983,7 @@ function Compose() {
                 const stepsToReplace = calculateSteps(updatedBoardData[indexToReplace].duration)
                 const sliceLen = updatedBoardData.filter(piece => piece.occupied == false).length
                 
-                if(itemSteps > sliceLen + stepsToReplace)return
+                if(itemSteps > sliceLen + stepsToReplace){alert.show('This Note doesnt fit into the actual measure!');  return}
                 else{
                 if(itemSteps == stepsToReplace){
                     const firstPart = updatedBoardData.slice(0, indexToReplace)
@@ -1275,6 +1306,7 @@ function Compose() {
                 return true
             }
             else {
+                
                 return false
             }
 
@@ -1284,17 +1316,17 @@ function Compose() {
 
         
         const addPitch = (item) => {
-            console.log(item)
-            playSynth(item['type'][0].replace('/',''),1)
+            
             const index = activeNote
             const steps = calculateSteps(item.duration)
             
             if (activeMeasure == 0) {
                 
                 const fit = checkMatch(index,steps,measure1)
+            
             if(fit){
-
-
+                
+                playSynth(item['type'][0].replace('/',''),1)
                 if (activeNote % measure1Meter == 0) {
                     const index = 1
                     setMeasure1(measure1 =>{
@@ -1368,15 +1400,21 @@ function Compose() {
             const currentMeasure_ =  [...measure1]
             const sliceLen = currentMeasure_.filter(piece => piece.occupied == false).length
             if(sliceLen > 0){
-                return
+                
+                    alert.show('This Note doesnt fit into the actual measure!');  return
+                
+                
             }
-            const lastNoteofMeasure = calculateLastNoteIndex(currentMeasure_)
             
+            const lastNoteofMeasure = calculateLastNoteIndex(currentMeasure_)
             if (activeNote == lastNoteofMeasure) {
+                
                 setPointer(1)
                 const fit = checkMatch(index,steps,measure2)
                 
-                if(!fit)return
+                if (!fit) {
+                    alert.show('This Note doesnt fit into the actual measure!');  return
+                }
                 
                 
                 
@@ -1384,7 +1422,7 @@ function Compose() {
                     
                     
                     
-                        console.log(pointer)
+                        
                         const updatedBoardData = measure2.slice(0,measure2Meter)
                         const restboard = measure2.slice(measure2Meter,measure2.length)
                         
@@ -1421,9 +1459,10 @@ function Compose() {
             else if (activeMeasure == 1) {
                 
                 const fit = checkMatch(index,steps,measure2)
+                
             if(fit){
 
-
+                playSynth(item['type'][0].replace('/',''),1)
                 if (activeNote % measure2Meter == 0) {
                     const index = 1
                     setMeasure2(measure2 =>{
@@ -1504,7 +1543,7 @@ function Compose() {
             const sliceLen = currentMeasure_.filter(piece => piece.occupied == false).length
             
             if(sliceLen > 0){
-                return
+                alert.show('This Note doesnt fit into the actual measure!'); return
             }
             const lastNoteofMeasure = calculateLastNoteIndex(currentMeasure_)
             
@@ -1514,7 +1553,9 @@ function Compose() {
                 setPointer(1)
                 const fit = checkMatch(index,steps,measure3)
                 
-                if(!fit)return
+                if (!fit) {
+                    alert.show('This Note doesnt fit into the actual measure!'); return
+                }
 
                 setMeasure3(measure3 =>{
                     
@@ -1556,9 +1597,10 @@ function Compose() {
             else if (activeMeasure == 2) {
 
                 const fit = checkMatch(index,steps,measure3)
+                
             if(fit){
 
-
+                playSynth(item['type'][0].replace('/',''),1)
                 if (activeNote % measure3Meter == 0) {
                     const index = 1
                     setMeasure3(measure3 =>{
@@ -1639,7 +1681,7 @@ function Compose() {
             const currentMeasure_ =  [...measure3]
             const sliceLen = currentMeasure_.filter(piece => piece.occupied == false).length
             if(sliceLen > 0){
-                return
+                alert.show('This Note doesnt fit into the actual measure!');  return
             }
             const lastNoteofMeasure = calculateLastNoteIndex(currentMeasure_)
             
@@ -1648,7 +1690,9 @@ function Compose() {
                 setPointer(1)
                 const fit = checkMatch(index,steps,measure4)
                 
-                if(!fit)return
+                if (!fit) {
+                    alert.show('This Note doesnt fit into the actual measure!'); return
+                }
 
 
                 setMeasure4(measure4 =>{
@@ -1696,9 +1740,10 @@ function Compose() {
             else if (activeMeasure == 3) {
                 
                 const fit = checkMatch(index,steps,measure4)
+                
             if(fit){
 
-
+                playSynth(item['type'][0].replace('/',''),1)
                 if (activeNote % measure4Meter == 0) {
                     const index = 1
                     setMeasure4(measure4 =>{
@@ -1779,7 +1824,7 @@ function Compose() {
             const sliceLen = currentMeasure_.filter(piece => piece.occupied == false).length
             
             if(sliceLen > 0){
-                return
+                alert.show('This Note doesnt fit into the actual measure!');  return
             }
             const lastNoteofMeasure = calculateLastNoteIndex(currentMeasure_)
             
@@ -1789,7 +1834,9 @@ function Compose() {
                 setPointer(1)
                 const fit = checkMatch(index,steps,measure5)
                 
-                if(!fit)return
+                if (!fit) {
+                    alert.show('This Note doesnt fit into the actual measure!'); return
+                }
 
                 setMeasure5(measure5 =>{
                     
@@ -1841,9 +1888,10 @@ function Compose() {
                 
                 
                 const fit = checkMatch(index,steps,measure5)
+                
             if(fit){
                 
-
+                playSynth(item['type'][0].replace('/',''),1)
                 if (activeNote % measure5Meter == 0) {
                     const index = 1
                     setMeasure5(measure5 =>{
@@ -1925,7 +1973,7 @@ function Compose() {
             console.log(currentMeasure_)
             if(sliceLen > 0){
                 
-                return
+                alert.show('This Note doesnt fit into the actual measure!');  return
             }
             const lastNoteofMeasure = calculateLastNoteIndex(currentMeasure_)
             
@@ -1934,8 +1982,10 @@ function Compose() {
                 
                 setPointer(1)
                 const fit = checkMatch(index,steps,measure6)
-                console.log(fit)
-                if(!fit)return
+                
+                if (!fit) {
+                    alert.show('This Note doesnt fit into the actual measure!'); return
+                }
 
                 setMeasure6(measure6 =>{
                     
@@ -1979,9 +2029,10 @@ function Compose() {
             else if (activeMeasure == 5) {
                 
                 const fit = checkMatch(index,steps,measure6)
+                
             if(fit){
 
-
+                playSynth(item['type'][0].replace('/',''),1)
                 if (activeNote % measure6Meter == 0) {
                     const index = 1
                     setMeasure6(measure6 =>{
@@ -2062,7 +2113,7 @@ function Compose() {
             const sliceLen = currentMeasure_.filter(piece => piece.occupied == false).length
             
             if(sliceLen > 0){
-                return
+                alert.show('This Note doesnt fit into the actual measure!');  return
             }
             const lastNoteofMeasure = calculateLastNoteIndex(currentMeasure_)
             
@@ -2072,7 +2123,9 @@ function Compose() {
                 setPointer(1)
                 const fit = checkMatch(index,steps,measure7)
                 
-                if(!fit)return
+                if (!fit) {
+                    alert.show('This Note doesnt fit into the actual measure!'); return
+                }
 
                 setMeasure7(measure7 =>{
                     
@@ -2115,9 +2168,10 @@ function Compose() {
             else if (activeMeasure == 6) {
                 
                 const fit = checkMatch(index,steps,measure7)
+                
             if(fit){
 
-
+                playSynth(item['type'][0].replace('/',''),1)
                 if (activeNote % measure7Meter == 0) {
                     const index = 1
                     setMeasure7(measure7 =>{
@@ -2198,7 +2252,7 @@ function Compose() {
             const sliceLen = currentMeasure_.filter(piece => piece.occupied == false).length
             
             if(sliceLen > 0){
-                return
+                alert.show('This Note doesnt fit into the actual measure!');  return
             }
             const lastNoteofMeasure = calculateLastNoteIndex(currentMeasure_)
             
@@ -2208,7 +2262,9 @@ function Compose() {
                 setPointer(1)
                 const fit = checkMatch(index,steps,measure8)
                 
-                if(!fit)return
+                if (!fit) {
+                    alert.show('This Note doesnt fit into the actual measure!'); return
+                }
 
                 setMeasure8(measure8 =>{
                     
@@ -2251,9 +2307,10 @@ function Compose() {
             else if (activeMeasure == 7) {
                 
                 const fit = checkMatch(index,steps,measure8)
+                
             if(fit){
 
-
+                playSynth(item['type'][0].replace('/',''),1)
                 if (activeNote % measure8Meter == 0) {
                     const index = 1
                     setMeasure8(measure8 =>{
@@ -2487,12 +2544,12 @@ function getRandomInt(max) {
   }
 
 const playSuggestion = () => {
-    playsuggestion(inspirations)
+    playsuggestion(playSuggestionStateVar)
 }
 
 const getSuggestions = () => {
     setOption()
-    setinspirations([])
+    //setinspirations([])
     setInspirationFlag(true)
     const composition= [measure1,measure2,measure3,measure4,measure5,
         measure6,measure7,measure8]
@@ -2501,6 +2558,7 @@ const getSuggestions = () => {
     let payload = {
         data: finalComposition,
         meter: meterIndex1,
+        temperature:temperatureValue,
         jwtToken: jwtToken
         
     }
@@ -2518,11 +2576,12 @@ const getSuggestions = () => {
         
         
         
-        setinspirations(response.data.suggestions[randomIndex])
+        //setinspirations(response.data.suggestions[randomIndex])
 
+        processInspirations(response.data.suggestions)
         setOption(value)
         
-        console.log(option)
+        
         
         setInspirationFlag(false)
         
@@ -2533,11 +2592,120 @@ const getSuggestions = () => {
     });
 }
 
+const calculateSortedIndices = (list) => {
+    const tmpList = [...list]
+    let result = []
+    for (let index = 0; index < tmpList.length; index++) {
+        const element = tmpList[index];
+        result.push({ind:index,elem:element})
+        
+    }
+    result.sort((a,b) => {
+        return a.elem - b.elem
+    }).reverse()
+
+    return result
+
+    
+
+}
+
+
+
+const setWholeMeasure = (inspirations) => {
+    let result = []
+    
+    for (let index = 0; index < inspirations.length; index++) {
+        const element = inspirations[index][0].length;
+        result.push(element)
+
+        
+    }
+    const Indices = calculateSortedIndices(result)
+    const indicesLen = Math.floor(Indices.length / 2)
+    const best = Indices.slice(0, indicesLen)
+    console.log(best)
+    const randomIndex = getRandomInt(best.length)
+    
+    setShowWholeMeasure(inspirations[best[randomIndex].ind])
+    const randPlay = getRandomInt(best.length)
+    setPlaySuggestionStateVar(inspirations[best[randPlay].ind])
+    const randPitches = getRandomInt(best.length)
+    setShowPitches(inspirations[best[randPitches].ind][1])
+    setShowPitchesAccents(inspirations[best[randPitches].ind][2])
+    const randDurations = getRandomInt(best.length)
+    setShowDurations(inspirations[best[randDurations].ind][0])
+    const randColorInspirations = getRandomInt(best.length)
+    setColorInspirations(inspirations[best[randColorInspirations].ind])
+    const randNarmourInspirations = getRandomInt(best.length)
+    const narmour = getNarmourEncodings(calculatePitches(inspirations[best[randNarmourInspirations].ind]))
+    console.log(narmour)
+    setShowEugeneStructures(narmour)
+    
+
+}
+
 useEffect(() => {
-   
+
+    if (showEugeneStructures.length == 0) {
+        setNarmourFlag(true)
+    }
+    else{
+        setNarmourFlag(false)
+    }
+          
 
 
-}, [narmourEncodingsState])
+
+}, [showEugeneStructures])
+
+const setColorInspirations = (inspirations) => {
+
+    
+        const colors = calculateColorbrightness(inspirations)
+        if (colors == undefined) {
+            return
+        }
+        const brightnessess = []
+        const minColor = Math.min(...colors.filter(note => note!="R"))
+        const maxColor = Math.max(...colors.filter(note => note!="R"))
+        let difference = 0
+        for (let index = 0; index < colors.length; index++) {
+            const element = colors[index];
+            if (element == "R") {
+                brightnessess.push("R")
+                continue
+            }
+            difference = element - minColor
+            if (difference == 0) {
+                brightnessess.push("50%")
+                
+            }
+            else{
+                const brightness = 50 + (difference * 5)
+                brightnessess.push(brightness.toString()+"%")
+            }
+            
+        }
+
+        setShowColors(brightnessess)
+
+}
+
+
+const setNarmourInspirations = (inspirations) => {
+    
+}
+
+
+const processInspirations = (inspirations) => {
+
+    setWholeMeasure(inspirations)
+
+
+}
+
+
 
 
 const testScoring = () => {
@@ -2607,8 +2775,8 @@ const testScoring = () => {
                     onChange={() => changeVolume1(setvolumeMeasure1,'volume1') }
                     valueLabelDisplay="auto"
                     getAriaValueText={`${volumeMeasure1}`}
-                    min={-12}
-                    max={20}
+                    min={-24}
+                    max={8}
                     step={4}
                     color="secondary"
                     aria-label="Temperature"
@@ -2657,7 +2825,7 @@ const testScoring = () => {
                     valueLabelDisplay="auto"
                     getAriaValueText={`${volumeMeasure2}`}
                     min={-12}
-                    max={20}
+                    max={8}
                     step={4}
                     color="secondary"
                     aria-label="Temperature"
@@ -2705,8 +2873,8 @@ const testScoring = () => {
                                     onChange={() => changeVolume1(setvolumeMeasure3,'volume3') }
                                     valueLabelDisplay="auto"
                                     getAriaValueText={`${volumeMeasure3}`}
-                                    min={-12}
-                                    max={20}
+                                    min={-20}
+                                    max={8}
                                     step={4}
                                     color="secondary"
                                     aria-label="Temperature"
@@ -2752,7 +2920,7 @@ const testScoring = () => {
                                 valueLabelDisplay="auto"
                                 getAriaValueText={`${volumeMeasure4}`}
                                 min={-12}
-                                max={20}
+                                max={8}
                                 step={4}
                                 color="secondary"
                                 aria-label="Temperature"
@@ -2801,7 +2969,7 @@ const testScoring = () => {
                                 valueLabelDisplay="auto"
                                 getAriaValueText={`${volumeMeasure5}`}
                                 min={-12}
-                                max={20}
+                                max={8}
                                 step={4}
                                 color="secondary"
                                 aria-label="Temperature"
@@ -2847,7 +3015,7 @@ const testScoring = () => {
                                 valueLabelDisplay="auto"
                                 getAriaValueText={`${volumeMeasure6}`}
                                 min={-12}
-                                max={20}
+                                max={8}
                                 step={4}
                                 color="secondary"
                                 aria-label="Temperature"
@@ -2898,7 +3066,7 @@ const testScoring = () => {
                                     valueLabelDisplay="auto"
                                     getAriaValueText={`${volumeMeasure7}`}
                                     min={-12}
-                                    max={20}
+                                    max={8}
                                     step={4}
                                     color="secondary"
                                     aria-label="Temperature"
@@ -2945,7 +3113,7 @@ const testScoring = () => {
                                 valueLabelDisplay="auto"
                                 getAriaValueText={`${volumeMeasure8}`}
                                 min={-12}
-                                max={20}
+                                max={8}
                                 step={4}
                                 color="secondary"
                                 aria-label="Temperature"
@@ -3040,10 +3208,24 @@ const testScoring = () => {
                     
                     
                    
-                <div style={{"marginTop":"60px", "marginLeft":"270px" }}>
-                    <Button disabled={inspirationFlag} style={{"fontWeight": "bold","borderRadius":"5px","color":"white","height":"50px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}} variant="contained" endIcon={<LightbulbCircleSharpIcon />}  size="large"  onClick={getSuggestions}>Get Inspiration</Button>
-                    
+                <div style={{marginBottom:"18px","marginTop":"60px", "marginLeft":"150px" }}>
+                    <Button disabled={inspirationFlag} style={{marginRight:"20px","fontWeight": "bold","borderRadius":"5px","color":"white","height":"50px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}} variant="contained" endIcon={<LightbulbCircleSharpIcon />}  size="large"  onClick={getSuggestions}>Get Inspiration</Button>
+                    <FormControl>
+      <FormLabel id="demo-controlled-radio-buttons-group">Choose a Creativity degree for the AI</FormLabel>
+      <RadioGroup
+      row
+        aria-labelledby="demo-controlled-radio-buttons-group"
+        name="controlled-radio-buttons-group"
+        value={temperatureValue}
+        onChange={handleTemperatureChange}
+      ><ReactTooltip type="info" multiline={true} />
+      <FormControlLabel  data-tip="This option makes the inspiration less creative" value={0.8} control={<Radio  />} label="less creative" />
+        <FormControlLabel data-tip="This option is the default value" value={1.0} control={<Radio />} label="default" />
+        <FormControlLabel data-tip="This option makes the inspiration more creative" value={1.2} control={<Radio />} label="more creative" />
+        </RadioGroup>
+    </FormControl>
                     </div>
+                    
                     <FormControl>
       <FormLabel id="demo-controlled-radio-buttons-group">Choose an Inspiration Type</FormLabel>
       <RadioGroup
@@ -3052,46 +3234,63 @@ const testScoring = () => {
         name="controlled-radio-buttons-group"
         value={value}
         onChange={handleChange}
-      >
-        <FormControlLabel value="playSuggestion" control={<Radio />} label="playSuggestion" />
-        <FormControlLabel value="showDurations" control={<Radio />} label="Durations" />
-        <FormControlLabel value="showPitches" control={<Radio />} label="Pitches" />
-        <FormControlLabel value="showColors" control={<Radio />} label="Colors" />
-        <FormControlLabel value="showWholeMeasure" control={<Radio />} label="WholeMeasure" />
-        <FormControlLabel value="showEugeneStructures" control={<Radio />} label="EugeneStructures" />
+      ><ReactTooltip type="info" multiline={true} />
+      <FormControlLabel data-tip="This option displays Symbols from Eugene Narmour Implication Realization Model<br>
+        It describes melodic intervalic motion and registral direction. Your task is to decode these symbols into a melody. In the following each symbol is described. If you want to look at some examples please open the tutorial and look it up.<br>
+       <br> P (process): similar intervallic motion (small to small; large to large); same
+        registral direction
+        <br> IP (intervallic process): similar intervallic motion (small to small; large to
+            large); different registral directions
+        <br>VP (registral process): differentiated intervallic motion (small to relatively
+            large); same registral direction
+            <br>D (duplication): same intervallic motion; lateral registral direction
+            <br>ID (intervallic duplication): same intervallic motion (small to small; large to
+                large); different registral directions
+            <br>R (reversal): differentiated intervallic motion (large to relatively small);
+            different registral directions
+            <br>IR (intervallic reversal): differentiated intervallic motion (large to relatively
+                small); same registral direction
+            <br>VR (registral reversal): differentiated intervallic motion (small to relatively
+                large); different registral directions" disabled={narmourFlag} value="showEugeneStructures" control={<Radio />} label="EugeneStructures" />
+        <FormControlLabel  data-tip="This option plays the whole inspiration" value="playSuggestion" control={<Radio  />} label="playSuggestion" />
+        <FormControlLabel data-tip="This option provides the durations of the suggested notes" value="showDurations" control={<Radio />} label="Durations" />
+        <FormControlLabel data-tip="This option provides the pitch heights of the suggested notes" value="showPitches" control={<Radio />} label="Pitches" />
+        <FormControlLabel data-tip="This option provides pitch height as colors.<br> Choose a reference note for the first color and then from there look at the upcoming colors <br> and decide which notes come next depending on the brightness difference" value="showColors" control={<Radio />} label="Colors" />
+        <FormControlLabel data-tip="This option provides the whole suggestion <br> with pitch heights and duration of the notes" value="showWholeMeasure" control={<Radio />} label="WholeMeasure" />
+        
       </RadioGroup>
     </FormControl>
                     <div>
                     { inspirationFlag
-                    ?<div style={{marginTop:"80px", marginRight:"150px" }}> <div style={{fontWeight: "bold",fontSize:"22px",marginBottom:"30px", textAlign:"center", backgroundColor:"#399ddb"}}>Waiting for the AI to compute the next Notes</div> 
-                    <div style={{marginLeft:"280px"}}><ReactLoading type={"spin"} color={"ffffff"} height={'25%'} width={'25%'} /></div></div>
+                    ?<div style={{marginTop:"80px", marginRight:"100px" }}> <div style={{fontWeight: "bold",fontSize:"22px",marginBottom:"30px", textAlign:"center", backgroundColor:"#399ddb"}}>Waiting for the AI to compute the next Notes</div> 
+                    <div style={{marginLeft:"250px"}}><ReactLoading type={"spin"} color={"ffffff"} height={'25%'} width={'25%'} /></div></div>
 
                    : <div style={{border:"solid 4px silver",borderRadius:"20px",backgroundColor:"#debd90"}}  className='EmptyInspiration'>
                         {(() => {
-                            switch (option) {
+                            switch (value) {
                                 case "playSuggestion":
                                     
                                     return <Button style={{"marginLeft":"55px","fontWeight": "bold","borderRadius":"5px","color":"white","height":"50px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}} variant="contained" endIcon={<MusicNoteIcon />}  size="large"  onClick = {playSuggestion}>PlaySuggestion</Button>
                                 case "showDurations":
                                     
                                     return <div>
-                                        <ShowImages images={inspirations[0]} /></div>
+                                        <ShowImages images={showDurations} /></div>
                                 case "showPitches":
                                     
-                                    return <div>{inspirations[1].map( (note,idx) => {
+                                    return <div>{showPitches.map( (note,idx) => {
               
                                         return(
-                                            <div style={{textAlign:"center",fontSize:"50px",height:"80px",width:"65px",border:"2px solid gray",margin:"10px",float:"left"}}>{noteCharDict[note.charAt(0)]+ accentDict[inspirations[2][idx]]}</div>
+                                            <div style={{textAlign:"center",fontSize:"50px",height:"80px",width:"65px",border:"2px solid gray",margin:"10px",float:"left"}}>{noteCharDict[note.charAt(0)]+ accentDict[showPitchesAccents[idx]]}</div>
                                         )})}</div>
                                 case "showColors":
                                     
-                                    return <div>{brightnessColors.map( (note,idx) => {
+                                    return <div >{showColors.map( (note,idx) => {
               
                                         return(
                                             <div style={{float:"left"}}>
                                               {  note=='R' 
-                                              ?<div style={{textAlign:"center",fontSize:"50px",height:"80px",width:"50px",border:"1px solid gray",margin:"10px",float:"left"}}>R</div>
-                                            :<div style={{height:"80px",width:"50px",backgroundColor:"green", filter:"brightness("+note+")",margin:"10px",float:"left"}}>{note}</div>
+                                              ?<div style={{textAlign:"center",fontSize:"50px",height:"60px",width:"50px",border:"1px solid gray",margin:"10px",float:"left"}}>R</div>
+                                            :<div style={{textAlign:"center",height:"60px",width:"50px",backgroundColor:"green", filter:"brightness("+note+")",margin:"10px",float:"left"}}></div>
                                               }
                                             </div>
                                         )})}</div>
@@ -3099,14 +3298,14 @@ const testScoring = () => {
                                     
                                 case "showWholeMeasure":
                                    
-                                    return <div>{ inspirations.length>0 &&
-                                        <ScoreBox notes={inspirations} timeSign="4/4" violin={false}/>
+                                    return <div>{ showWholeMeasure.length>0 &&
+                                        <ScoreBox notes={showWholeMeasure} timeSign="4/4" violin={false}/>
                                         }</div>
                                 case "showEugeneStructures":
                                    
-                                    return <div >{narmourEncodingsState.map((struct,idx)=> {
+                                    return <div >{showEugeneStructures.map((struct,idx)=> {
                                         return(
-                                            <div style={{textAlign:"center",float:"left", fontSize:"50px",height:"80px",width:"65px", margin:"10px"}} >{struct} </div>
+                                            <div  style={{textAlign:"center",float:"left", fontSize:"50px",height:"80px",width:"65px", margin:"10px"}} >{struct} </div>
                                         )
                                     })}</div>
                                 default:
@@ -3117,7 +3316,7 @@ const testScoring = () => {
                     </div>
 }
                     </div>
-                        <div style={{marginLeft:"180px",marginTop:"55px",marginBottom:"55px"}}>
+                        <div style={{marginLeft:"180px",marginTop:"45px",marginBottom:"55px"}}>
                     <div style={{float:"left"}}>
                     <SubmitComposition composition={[measure1,measure2,measure3,measure4,measure5,
                         measure6,measure7,measure8]} meter={selectedOption['value']} />
@@ -3125,7 +3324,7 @@ const testScoring = () => {
                 
                 
                 </div>
-                <div style={{border:"solid 4px silver",borderRadius:"20px",backgroundColor:"#debd90" ,width:"700px", height:"300px", marginTop:"200px",alignItems:"center",display:"flex",justifyContent:"center"}}>
+                <div style={{border:"solid 4px silver",borderRadius:"20px",backgroundColor:"#debd90" ,width:"700px", height:"250px", marginTop:"130px",alignItems:"center",display:"flex",justifyContent:"center"}}>
                 <div style={{float:"left"}}>
                     <div style={{borderRadius:"8px",textAlign: "center",height:"30px",width:"130px","fontWeight": "bold",backgroundColor:"#399ddb" ,marginBottom:"30px"}}>
                     Flexability Score

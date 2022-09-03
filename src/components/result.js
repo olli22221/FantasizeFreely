@@ -6,7 +6,7 @@ import { measure1 as measure1Atom,measure2 as measure2Atom,
     measure3 as measure3Atom,measure4 as measure4Atom,measure5 as measure5Atom,measure6 as measure6Atom,
     measure7 as measure7Atom,measure8 as measure8Atom, musicatResponse as musicatResponseAtom,originalityScore as originalityScoreAtom,
     fluencyScore as fluencyScoreAtom,flexabilityScore as flexabilityScoreAtom,
-    submissions as submissionsAtom} from '../redux/store'
+    submissions as submissionsAtom, jwtToken as jwtTokenAtom} from '../redux/store'
     
 import { Progress } from 'react-sweet-progress';
 import { Button } from '@mui/material';
@@ -27,6 +27,7 @@ function Result() {
     const [fluencyScore, setFluencyScore] = useRecoilState(fluencyScoreAtom);
     const [image, setImage] = useState("");
     const [submissions, setSubmissions] = useRecoilState(submissionsAtom);
+    const [jwtToken, setJwtToken] = useRecoilState(jwtTokenAtom);
   
 
 
@@ -38,7 +39,7 @@ function Result() {
     }
 
     const endTask = () => {
-
+        setJwtToken([])
         nav("/")
         
     }

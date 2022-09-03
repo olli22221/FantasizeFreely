@@ -10,9 +10,11 @@ import { calculateSteps } from './util';
 import { useNavigate } from "react-router-dom";
 import SendIcon from '@mui/icons-material/Send';
 import Button from '@mui/material/Button';
+import { useAlert } from 'react-alert'
 
 function SubmitComposition({composition,meter}) {
   let nav = useNavigate();
+  const alert = useAlert()
 
 const jwtToken = useRecoilValue(jwtTokenAtom)
 const midiFiles = useRecoilValue(midiFilesAtom);
@@ -88,7 +90,7 @@ const prepareComposition = (composition_) => {
 
     const check = checkComposition(composition,meter)
     if(!check){
-      console.log("Composition is not complete")
+      alert.show('Composition is not complete. You need to compose at least 2 phrases');
       return
     }
     let cnt = counter
