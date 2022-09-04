@@ -6,7 +6,8 @@ import { measure1 as measure1Atom,measure2 as measure2Atom,
     measure3 as measure3Atom,measure4 as measure4Atom,measure5 as measure5Atom,measure6 as measure6Atom,
     measure7 as measure7Atom,measure8 as measure8Atom, musicatResponse as musicatResponseAtom,originalityScore as originalityScoreAtom,
     fluencyScore as fluencyScoreAtom,flexabilityScore as flexabilityScoreAtom,
-    submissions as submissionsAtom, jwtToken as jwtTokenAtom} from '../redux/store'
+    submissions as submissionsAtom, jwtToken as jwtTokenAtom,
+analogies as analogiesAtom, groups as groupsAtom} from '../redux/store'
     
 import { Progress } from 'react-sweet-progress';
 import { Button } from '@mui/material';
@@ -18,17 +19,19 @@ function Result() {
 
     let nav = useNavigate();
 
-    const flexMax = 800
+    const flexMax = 550
     const origMax = 100
-    const fluencyMax = 950
+    const fluencyMax = 500
     const musicatResult = useRecoilValue(musicatResponseAtom);
+    const analogies = useRecoilValue(analogiesAtom);
+    const groups = useRecoilValue(groupsAtom);
     const [originalityScore, setOriginalityScore] = useRecoilState(originalityScoreAtom);
     const [flexabilityScore, setFlexabilityScore] = useRecoilState(flexabilityScoreAtom);
     const [fluencyScore, setFluencyScore] = useRecoilState(fluencyScoreAtom);
     const [image, setImage] = useState("");
     const [submissions, setSubmissions] = useRecoilState(submissionsAtom);
     const [jwtToken, setJwtToken] = useRecoilState(jwtTokenAtom);
-  
+    const [overallScore, setOverallScore] = useState(0);
 
 
     const nextComposition = () => {
@@ -40,15 +43,22 @@ function Result() {
 
     const endTask = () => {
         setJwtToken([])
+        setSubmissions(0)
         nav("/")
         
     }
 
     useEffect(() => {
 
-        console.log(musicatResult)
+        if (submissions > 5) {
+            setJwtToken([])
+        }
+
         setImage("data:image/jpeg;charset=utf-8;base64,"+musicatResult)
-   
+
+        const musicatScore = (analogies + groups)/2
+        console.log(musicatScore)
+        setOverallScore(Math.floor((musicatScore+(((Math.floor((originalityScore/origMax)*100))+(Math.floor((fluencyScore/fluencyMax)*100))+(Math.floor((flexabilityScore/flexMax)*100)))/3))/2))
 
     },[musicatResult])
     
@@ -60,7 +70,7 @@ function Result() {
             <div style={{float:"left", margin:"50px",backgroundColor:"whitesmoke"}}>
            
                 <img
-                    width={700}
+                    width={600}
                     height={600}
                     src= {image}
                 />
@@ -69,27 +79,15 @@ function Result() {
             </div>
             <div>
                 <div>
-            <div style={{border:"solid 4px silver",borderRadius:"20px",backgroundColor:"#debd90" ,width:"700px", height:"300px", marginTop:"200px",alignItems:"center",display:"flex",justifyContent:"center"}}>
+            <div style={{border:"solid 4px silver",borderRadius:"20px",backgroundColor:"#debd90" ,width:"400px", height:"300px", marginTop:"200px",alignItems:"center",display:"flex",justifyContent:"center"}}>
                 <div style={{float:"left"}}>
+                   
+            <div style={{float:"left"}}>
                     <div style={{borderRadius:"8px",textAlign: "center",height:"30px",width:"130px","fontWeight": "bold",backgroundColor:"#399ddb" ,marginBottom:"30px"}}>
-                    Flexability Score
+                    Overall Score
                     </div>
-            <Progress  type="circle" percent={Math.floor((flexabilityScore/flexMax)*100)}  />
-
+            <Progress  type="circle" percent={overallScore}  />
             </div>
-            <div style={{float:"left", marginLeft:"60px"}}>
-                    <div style={{borderRadius:"8px",textAlign: "center",height:"30px",width:"130px","fontWeight": "bold",backgroundColor:"#399ddb" ,marginBottom:"30px"}}>
-                    Fluency Score
-                    </div>
-            <Progress  type="circle" percent={Math.floor((fluencyScore/fluencyMax)*100)}  />
-
-            </div>
-            <div style={{float:"left",marginLeft:"60px"}}>
-                    <div style={{borderRadius:"8px",textAlign: "center",height:"30px",width:"130px","fontWeight": "bold",backgroundColor:"#399ddb" ,marginBottom:"30px"}}>
-                    Originality Score
-                    </div>
-            <Progress  type="circle" percent={Math.floor((originalityScore/origMax)*100)}  />
-
             </div>
             </div>
             </div>

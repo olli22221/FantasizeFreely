@@ -5,6 +5,16 @@ import {defaultpitches,defaultpitchesoccupied,defaultPitchesArray,defaultPitches
 const { persistAtom } = recoilPersist()
 
 
+export const analogies = atom ({
+    key: "analogies",
+    default: [], 
+    effects_UNSTABLE: [persistAtom],
+})
+export const groups = atom ({
+    key: "groups",
+    default: [], 
+    effects_UNSTABLE: [persistAtom],
+})
 
 export const inspirationFlag = atom ({
     key: "inspirationFlag",

@@ -3,7 +3,8 @@ import {midiFiles as midiFilesAtom, jwtToken as jwtTokenAtom,
   subjectId as subjectIdAtom, counter as counterAtom, 
   musicatResponse as musicatResponseAtom, originalityScore as originalityScoreAtom,
   fluencyScore as fluencyScoreAtom,flexabilityScore as flexabilityScoreAtom,
-submissions as submissionsAtom, inspirationFlag as inspirationFlagAtom } from '../redux/store'
+submissions as submissionsAtom, inspirationFlag as inspirationFlagAtom ,
+groups as groupsAtom, analogies as analogiesAtom} from '../redux/store'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import axios from "axios";
 import { calculateSteps } from './util';
@@ -11,15 +12,21 @@ import { useNavigate } from "react-router-dom";
 import SendIcon from '@mui/icons-material/Send';
 import Button from '@mui/material/Button';
 import { useAlert } from 'react-alert'
+import ReactLoading from 'react-loading';
+
 
 function SubmitComposition({composition,meter}) {
   let nav = useNavigate();
   const alert = useAlert()
 
+  const [submitCompositionFlag,setSubmitCompositionFlag] = useState(false)
+
 const jwtToken = useRecoilValue(jwtTokenAtom)
 const midiFiles = useRecoilValue(midiFilesAtom);
 const inspirationFlag = useRecoilValue(inspirationFlagAtom);
 let id = useRecoilValue(subjectIdAtom);
+const [groups, setGroups] = useRecoilState(groupsAtom);
+const [analogies, setAnalogies] = useRecoilState(analogiesAtom);
 const [counter, setCounter] = useRecoilState(counterAtom);
 const [submissions, setSubmissions] = useRecoilState(submissionsAtom);
 const [musicatResponse, setmusicatResponse] = useRecoilState(musicatResponseAtom);
@@ -93,9 +100,17 @@ const prepareComposition = (composition_) => {
       alert.show('Composition is not complete. You need to compose at least 2 phrases');
       return
     }
-    let cnt = counter
+
+    else{
+
+      setSubmitCompositionFlag(true)
+    
     
     const finalComposition = prepareComposition(composition)
+    const numberOfMeasures = finalComposition.length
+    const maxAnalogies =  Math.floor(numberOfMeasures / 4)
+    const maxGroups =  Math.floor(numberOfMeasures / 2)
+
 
     let payload = {
         data: finalComposition,
@@ -115,6 +130,8 @@ const prepareComposition = (composition_) => {
         setFluencyScore(response.data['fluency'])
         setOriginalityScore(response.data['originality'])
         setmusicatResponse(response.data['musicatPNG'])
+        setAnalogies(response.data['analogies'].length / maxAnalogies)
+        setGroups(response.data['groups'].length / maxGroups)
         const submissionCount = submissions + 1
         setSubmissions(submissionCount)
         
@@ -122,6 +139,7 @@ const prepareComposition = (composition_) => {
         nav("/Result")
 
     }).catch((error) => {
+      setSubmitCompositionFlag(false)
       console.log(error)
     });
     
@@ -142,7 +160,7 @@ const prepareComposition = (composition_) => {
     cnt++;
     setCounter(cnt)
     console.log(counter)*/
-
+  }
 
     
   };
@@ -156,9 +174,14 @@ const prepareComposition = (composition_) => {
 
   return (
     <div >
+       { submitCompositionFlag
+                    ?<div > <div style={{fontWeight: "bold",fontSize:"22px",marginBottom:"30px", textAlign:"center", backgroundColor:"#399ddb"}}>Musicat runs in the background</div> 
+                    <div style={{marginLeft:"200px"}}><ReactLoading type={"spin"} color={"ffffff"} height={'25%'} width={'25%'} /></div></div>
+
+                   :
        <Button onClick={handleSubmit} style={{"fontWeight": "bold","borderRadius":"5px","color":"white","height":"50px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}} variant="contained" endIcon={<SendIcon />}>
         Submit Composition
-      </Button>
+      </Button>}
       </div>
   );
 }

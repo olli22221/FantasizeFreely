@@ -1,7 +1,7 @@
 import React from "react";
 import './css/Main.css';
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { jwtToken as jwtTokenAtom } from "./redux/store";
@@ -22,23 +22,7 @@ function Main() {
   
 
     let nav = useNavigate();
-    const handleStart = () => {
-
-        /*axios.get("http://192.168.178.46:5000/start").then((response) => {
-            console.log(response.data)
-            setjwtToken(response.data)
-            nav("/CreativityTask")
-
-        }).catch((error) => {
-            console.log(error)
-        });*/
-
-       
-        nav("/CreativityTask")
-        
-        
-
-    }
+    
 
     const navToComposePanel = () => {
 
@@ -84,7 +68,7 @@ function Main() {
         />
             </div >
             
-            <Button style={{height:"150px",padding:"0px",backgroundColor:"#403c3b",marginTop:"70px",marginLeft:"230px","borderRadius":"5px","font-weight": "bold","height":"50px","width":"255px","border":"gold 2px solid"}} onClick={handleStart}>Tutorial</Button>
+            <Button style={{height:"150px",padding:"0px",backgroundColor:"#403c3b",marginTop:"70px",marginLeft:"230px","borderRadius":"5px","font-weight": "bold","height":"50px","width":"255px","border":"gold 2px solid"}}><Link style={{color:'white',textDecoration: 'none'}} to="/tutorial" target="_blank">Tutorial</Link></Button>
             <Button style={{height:"150px",padding:"0px",backgroundColor:"#403c3b",marginTop:"70px",marginLeft:"50px","borderRadius":"5px","font-weight": "bold","height":"50px","width":"265px","border":"gold 2px solid"}} onClick={navToComposePanel}>Start Composing</Button>
 
         </div>

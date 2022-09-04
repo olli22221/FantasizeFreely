@@ -77,7 +77,7 @@ function Compose() {
         
       };
     let nav = useNavigate();
-    const flexMax = 400
+    const flexMax = 550
     const origMax = 100
     const fluencyMax = 500
     const [temperatureValue, setTemperatureValue] = useState(1)
@@ -2571,8 +2571,7 @@ const getSuggestions = () => {
         
         console.log(response)
         
-        const lenOfSuggestions = response.data.suggestions.length
-        const randomIndex = getRandomInt(lenOfSuggestions)
+        
         
         
         
@@ -3186,7 +3185,6 @@ const testScoring = () => {
                     <Button disabled= {inspirationFlag} style={{"margin":"3px","font-weight": "bold","borderRadius":"5px","color":"white","height":"40px","width":"125px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}} onClick={() => {changeDuration("sixteenth")}}> Sixteenth Notes </Button>
                     <div className='columnBottom'>
                         <Button disabled= {inspirationFlag} style={{"margin":"3px","font-weight": "bold","borderRadius":"5px","color":"white","height":"40px","width":"125px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}} onClick={() => {changeAccent("sharp")}}> Sharp </Button>
-                        <Button disabled= {inspirationFlag} style={{"margin":"3px","font-weight": "bold","borderRadius":"5px","color":"white","height":"40px","width":"125px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}} onClick={() => {changeAccent("minor")}}> Flat </Button>
                         <Button disabled= {inspirationFlag} style={{"margin":"3px","font-weight": "bold","borderRadius":"5px","color":"white","height":"40px","width":"125px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}} onClick={() => {changeAccent("none")}}> None </Button>
                         <Button disabled= {inspirationFlag} style={{"margin":"3px","font-weight": "bold","borderRadius":"5px","color":"white","height":"40px","width":"125px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}} onClick={deleteItem} variant="outlined" startIcon={<DeleteIcon />}> Delete </Button>
                     <Button disabled= {inspirationFlag} style={{"margin":"3px","font-weight": "bold","borderRadius":"5px","color":"white","height":"40px","width":"125px","backgroundColor":"#403c3b",border: replaceActivated? '3px solid white':'#403c3b' }} onClick={changeStateOfReplace} > Replace </Button>
@@ -3318,6 +3316,7 @@ const testScoring = () => {
                     </div>
                         <div style={{marginLeft:"180px",marginTop:"45px",marginBottom:"55px"}}>
                     <div style={{float:"left"}}>
+                        
                     <SubmitComposition composition={[measure1,measure2,measure3,measure4,measure5,
                         measure6,measure7,measure8]} meter={selectedOption['value']} />
                 </div>
