@@ -2716,6 +2716,7 @@ const testScoring = () => {
 
     let payload = {
         data: momentaryComposition,
+        jwtToken: jwtToken
         
     }
     axios.post("https://fantasifreely.de/calculateCreativity", JSON.stringify(payload), {
