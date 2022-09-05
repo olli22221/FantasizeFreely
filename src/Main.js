@@ -4,7 +4,8 @@ import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { jwtToken as jwtTokenAtom } from "./redux/store";
+import { jwtToken as jwtTokenAtom, originalityScore as originalityScoreAtom,
+flexabilityScore as flexabilityScoreAtom, fluencyScore as fluencyScoreAtom } from "./redux/store";
 import  { useState,useCallback,useEffect } from 'react';
 import Typewriter from 'typewriter-effect';
 
@@ -19,6 +20,10 @@ const Button = styled.button`
 
 function Main() {
     const [jwtToken, setjwtToken] = useRecoilState(jwtTokenAtom);
+
+    const [originalityScore, setOriginalityScore] = useRecoilState(originalityScoreAtom);
+    const [flexabilityScore, setFlexabilityScore] = useRecoilState(flexabilityScoreAtom);
+    const [fluencyScore, setFluencyScore] = useRecoilState(fluencyScoreAtom);
   
 
     let nav = useNavigate();
@@ -29,6 +34,9 @@ function Main() {
        axios.get('https://fantasifreely.de/'+"start").then((response) => {
             console.log(response.data)
             setjwtToken(response.data)
+            setFlexabilityScore([])
+            setFluencyScore([])
+            setOriginalityScore([])
             nav("/Compose")
             caches.keys().then((names) => {
                 names.forEach((name) => {

@@ -134,6 +134,50 @@ export const measure8Meter = atom({
     default: 17, 
     effects_UNSTABLE: [persistAtom],
 })
+export const measure9Meter = atom({
+    key: "meter9",
+    default: 17, 
+    effects_UNSTABLE: [persistAtom],
+})
+
+export const measure10Meter = atom({
+    key: "meter10",
+    default: 17, 
+    effects_UNSTABLE: [persistAtom],
+})
+export const measure11Meter = atom({
+    key: "meter11",
+    default: 17, 
+    effects_UNSTABLE: [persistAtom],
+})
+
+export const measure12Meter = atom({
+    key: "meter12",
+    default: 17, 
+    effects_UNSTABLE: [persistAtom],
+})
+
+export const measure13Meter = atom({
+    key: "meter13",
+    default: 17, 
+    effects_UNSTABLE: [persistAtom],
+})
+export const measure14Meter = atom({
+    key: "meter14",
+    default: 17, 
+    effects_UNSTABLE: [persistAtom],
+})
+
+export const measure15Meter = atom({
+    key: "meter15",
+    default: 17, 
+    effects_UNSTABLE: [persistAtom],
+})
+export const measure16Meter = atom({
+    key: "meter16",
+    default: 17, 
+    effects_UNSTABLE: [persistAtom],
+})
 
 
 export const measure1 = atom({
@@ -176,6 +220,50 @@ export const measure7 = atom({
 })
 
 export const measure8 = atom({
+    key: "board7",
+    default: defaultPitchesArray_(17), 
+    effects_UNSTABLE: [persistAtom],
+})
+export const measure9 = atom({
+    key: "board",
+    default: defaultPitchesArray_(17), 
+    effects_UNSTABLE: [persistAtom],
+})
+export const measure10 = atom({
+    key: "board1",
+    default: defaultPitchesArray_(17), 
+    effects_UNSTABLE: [persistAtom],
+})
+
+export const measure11 = atom({
+    key: "board2",
+    default: defaultPitchesArray_(17), 
+    effects_UNSTABLE: [persistAtom],
+})
+
+export const measure12 = atom({
+    key: "board3",
+    default: defaultPitchesArray_(17), 
+    effects_UNSTABLE: [persistAtom],
+})
+export const measure13 = atom({
+    key: "board4",
+    default: defaultPitchesArray_(17), 
+    effects_UNSTABLE: [persistAtom],
+})
+
+export const measure14 = atom({
+    key: "board5",
+    default: defaultPitchesArray_(17), 
+    effects_UNSTABLE: [persistAtom],
+})
+export const measure15 = atom({
+    key: "board6",
+    default: defaultPitchesArray_(17), 
+    effects_UNSTABLE: [persistAtom],
+})
+
+export const measure16 = atom({
     key: "board7",
     default: defaultPitchesArray_(17), 
     effects_UNSTABLE: [persistAtom],

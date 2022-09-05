@@ -16,7 +16,9 @@ import ReactTooltip from 'react-tooltip';
 import LightbulbCircleSharpIcon from '@mui/icons-material/LightbulbCircleSharp';
 import {activeMeasure as activeMeasureAtom,measure1 as measure1Atom,measure2 as measure2Atom,
     measure3 as measure3Atom,measure4 as measure4Atom,measure5 as measure5Atom,measure6 as measure6Atom,
-    measure7 as measure7Atom,measure8 as measure8Atom,
+    measure7 as measure7Atom,measure8 as measure8Atom,measure9 as measure9Atom,measure10 as measure10Atom,
+    measure11 as measure11Atom,measure12 as measure12Atom,measure13 as measure13Atom,measure14 as measure14Atom,
+    measure15 as measure15Atom,measure16 as measure16Atom,
     meter as meterAtom, dragging as dragAtom, 
     hovering as hoverAtom,activeNote as activeNoteAtom, pointer as pointerAtom, 
     replaceActivated as replaceActivatedAtom, activePanel as activePanelAtom,
@@ -24,7 +26,10 @@ import {activeMeasure as activeMeasureAtom,measure1 as measure1Atom,measure2 as 
     fluencyScore as fluencyScoreAtom,flexabilityScore as flexabilityScoreAtom} from '../redux/store'
 import { measure1Meter as measure1MeterAtom,measure2Meter as measure2MeterAtom,measure3Meter as measure3MeterAtom,
     measure4Meter as measure4MeterAtom,measure5Meter as measure5MeterAtom,measure6Meter as measure6MeterAtom,
-    measure7Meter as measure7MeterAtom,measure8Meter as measure8MeterAtom , inspirationFlag as inspirationFlagAtom } from '../redux/store';
+    measure7Meter as measure7MeterAtom,measure8Meter as measure8MeterAtom ,measure9Meter as measure9MeterAtom,measure10Meter as measure10MeterAtom,
+    measure11Meter as measure11MeterAtom,
+    measure12Meter as measure12MeterAtom,measure13Meter as measure13MeterAtom,measure14Meter as measure14MeterAtom,
+    measure15Meter as measure15MeterAtom,measure16Meter as measure16MeterAtom , inspirationFlag as inspirationFlagAtom } from '../redux/store';
 import { useRecoilValue,useRecoilState } from 'recoil';
 import {pitches,halfpitches,wholepitches,sixteenthpitches,eightpitches,
     defaultpitches,defaultpitchesoccupied, defaultPitchesArray_,sixteenthpitchesSharp,
@@ -87,7 +92,7 @@ function Compose() {
     ,"d/5":74,"e/5":76,"f/5":77,"g/5":79,"a/5":81,"b/5":83,"c/6":84}
     const options = ["showWholeMeasure","playSuggestion","showDurations",
     "showPitches","showColors","showEugeneStructures"]
-    const accentDict = {0:"",1:"#",2:"b"}
+    const accentDict = {0:"",1:"#"}
     const [showWholeMeasure, setShowWholeMeasure] = useState([]);
     const [playSuggestionStateVar, setPlaySuggestionStateVar] = useState([]);
     const [showDurations, setShowDurations] = useState([]);
@@ -113,6 +118,14 @@ function Compose() {
     const [volumeMeasure6,setvolumeMeasure6] = useState(0)
     const [volumeMeasure7,setvolumeMeasure7] = useState(0)
     const [volumeMeasure8,setvolumeMeasure8] = useState(0)
+    const [volumeMeasure9,setvolumeMeasure9] = useState(0)
+    const [volumeMeasure10,setvolumeMeasure10] = useState(0)
+    const [volumeMeasure11,setvolumeMeasure11] = useState(0)
+    const [volumeMeasure12,setvolumeMeasure12] = useState(0)
+    const [volumeMeasure13,setvolumeMeasure13] = useState(0)
+    const [volumeMeasure14,setvolumeMeasure14] = useState(0)
+    const [volumeMeasure15,setvolumeMeasure15] = useState(0)
+    const [volumeMeasure16,setvolumeMeasure16] = useState(0)
     const [meterscr1, setMetersrc1] = useState(fourQuarter);
     const musicatResult = useRecoilValue(musicatResponseAtom);
     const [isActive, setIsActive] = useState(false);
@@ -130,6 +143,14 @@ function Compose() {
     const [measure6Meter, setmeasure6Meter] = useRecoilState(measure6MeterAtom);
     const [measure7Meter, setmeasure7Meter] = useRecoilState(measure7MeterAtom);
     const [measure8Meter, setmeasure8Meter] = useRecoilState(measure8MeterAtom);
+    const [measure9Meter, setmeasure9Meter] = useRecoilState(measure9MeterAtom);
+    const [measure10Meter, setmeasure10Meter] = useRecoilState(measure10MeterAtom);
+    const [measure11Meter, setmeasure11Meter] = useRecoilState(measure11MeterAtom);
+    const [measure12Meter, setmeasure12Meter] = useRecoilState(measure12MeterAtom);
+    const [measure13Meter, setmeasure13Meter] = useRecoilState(measure13MeterAtom);
+    const [measure14Meter, setmeasure14Meter] = useRecoilState(measure14MeterAtom);
+    const [measure15Meter, setmeasure15Meter] = useRecoilState(measure15MeterAtom);
+    const [measure16Meter, setmeasure16Meter] = useRecoilState(measure16MeterAtom);
     const [showPitchesAccents, setShowPitchesAccents] = useState([])
     const [originalityScore, setOriginalityScore] = useRecoilState(originalityScoreAtom);
     const [flexabilityScore, setFlexabilityScore] = useRecoilState(flexabilityScoreAtom);
@@ -519,12 +540,24 @@ function Compose() {
         const notesMeasure6 =  measure6.filter(piece => piece.show == true && piece.locked == false)
         const notesMeasure7 =  measure7.filter(piece => piece.show == true && piece.locked == false)
         const notesMeasure8 =  measure8.filter(piece => piece.show == true && piece.locked == false)
+        const notesMeasure9 =  measure9.filter(piece => piece.show == true && piece.locked == false)
+        const notesMeasure10 =  measure10.filter(piece => piece.show == true && piece.locked == false)
+        const notesMeasure11 =  measure11.filter(piece => piece.show == true && piece.locked == false)
+        const notesMeasure12 =  measure12.filter(piece => piece.show == true && piece.locked == false)
+        const notesMeasure13 =  measure13.filter(piece => piece.show == true && piece.locked == false)
+        const notesMeasure14 =  measure14.filter(piece => piece.show == true && piece.locked == false)
+        const notesMeasure15 =  measure15.filter(piece => piece.show == true && piece.locked == false)
+        const notesMeasure16 =  measure16.filter(piece => piece.show == true && piece.locked == false)
         const wholeComposition = [notesMeasure1,notesMeasure2,notesMeasure3,notesMeasure4,
-            notesMeasure5,notesMeasure6,notesMeasure7,notesMeasure8]
+            notesMeasure5,notesMeasure6,notesMeasure7,notesMeasure8,
+            notesMeasure9,notesMeasure10,notesMeasure11,notesMeasure12,
+            notesMeasure13,notesMeasure14,notesMeasure15,notesMeasure16]
        
                 playMelody(wholeComposition,[volumeMeasure1,volumeMeasure2,volumeMeasure3,
                     volumeMeasure4,volumeMeasure5,volumeMeasure6,
-                    volumeMeasure7,volumeMeasure8 ])
+                    volumeMeasure7,volumeMeasure8, volumeMeasure9,volumeMeasure10,volumeMeasure11,
+                    volumeMeasure12,volumeMeasure13,volumeMeasure14,
+                    volumeMeasure15,volumeMeasure16 ])
                 
                         
     }
@@ -543,6 +576,14 @@ function Compose() {
     const [measure6,setMeasure6] = useRecoilState(measure6Atom);
     const [measure7,setMeasure7] = useRecoilState(measure7Atom);
     const [measure8,setMeasure8] = useRecoilState(measure8Atom);
+    const [measure9,setMeasure9] = useRecoilState(measure9Atom);
+    const [measure10,setMeasure10] = useRecoilState(measure10Atom);
+    const [measure11,setMeasure11] = useRecoilState(measure11Atom);
+    const [measure12,setMeasure12] = useRecoilState(measure12Atom);
+    const [measure13,setMeasure13] = useRecoilState(measure13Atom);
+    const [measure14,setMeasure14] = useRecoilState(measure14Atom);
+    const [measure15,setMeasure15] = useRecoilState(measure15Atom);
+    const [measure16,setMeasure16] = useRecoilState(measure16Atom);
 
     const [pointer,setPointer] = useRecoilState(pointerAtom);
     
@@ -1016,6 +1057,343 @@ function Compose() {
                 playSynth(pitch.replace('/',''),1)
             }
             }
+
+            if(activeMeasure == 8){
+                const updatedBoardData = measure9.slice(0,measure9Meter)
+                const restboard = measure9.slice(measure9Meter,measure9.length)
+                const stepsToReplace = calculateSteps(updatedBoardData[indexToReplace].duration)
+                const sliceLen = updatedBoardData.filter(piece => piece.occupied == false).length
+                if(itemSteps > sliceLen + stepsToReplace){alert.show('This Note doesnt fit into the actual measure!');  return}
+                else{
+                if(itemSteps == stepsToReplace){
+                    const firstPart = updatedBoardData.slice(0, indexToReplace)
+                    const middlePart = [item].concat(new Array(itemSteps-1).fill(defaultpitchesoccupied))
+                    const endPart = updatedBoardData.slice(indexToReplace + stepsToReplace,measure1Meter)
+                    const result = firstPart.concat(middlePart).concat(endPart).concat(restboard)
+                    console.log(result)
+                    setMeasure9(result)
+
+                }
+                else if(itemSteps < stepsToReplace){
+                    const diffDuration = stepsToReplace - itemSteps
+                    const firstPart = updatedBoardData.slice(0, indexToReplace)
+                    const middlePart = [item].concat(new Array(itemSteps-1).fill(defaultpitchesoccupied))
+                    const endPart = updatedBoardData.slice(indexToReplace + stepsToReplace,updatedBoardData.length).concat(new Array(diffDuration).fill(defaultpitches))
+                    const result = firstPart.concat(middlePart).concat(endPart).concat(restboard)
+                    console.log(middlePart)
+                    setMeasure9(result)
+
+                }
+                else{
+                    const diffDuration = itemSteps - stepsToReplace
+                    const firstPart = updatedBoardData.slice(0, indexToReplace)
+                    const middlePart = [item].concat(new Array(itemSteps-1).fill(defaultpitchesoccupied))
+                    const endPart = updatedBoardData.slice(indexToReplace + stepsToReplace,updatedBoardData.length-diffDuration)
+                    const result = firstPart.concat(middlePart).concat(endPart).concat(restboard)
+                    console.log(result)
+                    setMeasure9(result)
+
+                }
+                const pitch = item['type'][0]
+            
+                playSynth(pitch.replace('/',''),1)
+            }
+                
+            }
+            else if(activeMeasure == 9){
+                const updatedBoardData = measure10.slice(0,measure10Meter)
+                const restboard = measure10.slice(measure10Meter,measure10.length)
+                const stepsToReplace = calculateSteps(updatedBoardData[indexToReplace].duration)
+                const sliceLen = updatedBoardData.filter(piece => piece.occupied == false).length
+                console.log(item)
+                if(itemSteps > sliceLen + stepsToReplace){alert.show('This Note doesnt fit into the actual measure!');  return}
+                else{
+                if(itemSteps == stepsToReplace){
+                    console.log(item)
+                    const firstPart = updatedBoardData.slice(0, indexToReplace)
+                    const middlePart = [item].concat(new Array(itemSteps-1).fill(defaultpitchesoccupied))
+                    const endPart = updatedBoardData.slice(indexToReplace + stepsToReplace,measure1Meter)
+                    const result = firstPart.concat(middlePart).concat(endPart).concat(restboard)
+                    console.log(result)
+                    setMeasure10(result)
+
+                }
+                else if(itemSteps < stepsToReplace){
+                    const diffDuration = stepsToReplace - itemSteps
+                    const firstPart = updatedBoardData.slice(0, indexToReplace)
+                    const middlePart = [item].concat(new Array(itemSteps-1).fill(defaultpitchesoccupied))
+                    const endPart = updatedBoardData.slice(indexToReplace + stepsToReplace,updatedBoardData.length).concat(new Array(diffDuration).fill(defaultpitches))
+                    const result = firstPart.concat(middlePart).concat(endPart).concat(restboard)
+                    console.log(middlePart)
+                    setMeasure10(result)
+
+                }
+                else{
+                    const diffDuration = itemSteps - stepsToReplace
+                    const firstPart = updatedBoardData.slice(0, indexToReplace)
+                    const middlePart = [item].concat(new Array(itemSteps-1).fill(defaultpitchesoccupied))
+                    const endPart = updatedBoardData.slice(indexToReplace + stepsToReplace,updatedBoardData.length-diffDuration)
+                    const result = firstPart.concat(middlePart).concat(endPart).concat(restboard)
+                    console.log(result)
+                    setMeasure10(result)
+
+                }
+                const pitch = item['type'][0]
+                playSynth(pitch.replace('/',''),1)
+            }
+            }
+            else if(activeMeasure == 10){
+                const updatedBoardData = measure11.slice(0,measure11Meter)
+                const restboard = measure11.slice(measure11Meter,measure11.length)
+                const stepsToReplace = calculateSteps(updatedBoardData[indexToReplace].duration)
+                const sliceLen = updatedBoardData.filter(piece => piece.occupied == false).length
+                console.log(item)
+                if(itemSteps > sliceLen + stepsToReplace){alert.show('This Note doesnt fit into the actual measure!');  return}
+                else{
+                if(itemSteps == stepsToReplace){
+                    const firstPart = updatedBoardData.slice(0, indexToReplace)
+                    const middlePart = [item].concat(new Array(itemSteps-1).fill(defaultpitchesoccupied))
+                    const endPart = updatedBoardData.slice(indexToReplace + stepsToReplace,measure1Meter)
+                    const result = firstPart.concat(middlePart).concat(endPart).concat(restboard)
+                    console.log(result)
+                    setMeasure11(result)
+
+                }
+                else if(itemSteps < stepsToReplace){
+                    const diffDuration = stepsToReplace - itemSteps
+                    const firstPart = updatedBoardData.slice(0, indexToReplace)
+                    const middlePart = [item].concat(new Array(itemSteps-1).fill(defaultpitchesoccupied))
+                    const endPart = updatedBoardData.slice(indexToReplace + stepsToReplace,updatedBoardData.length).concat(new Array(diffDuration).fill(defaultpitches))
+                    const result = firstPart.concat(middlePart).concat(endPart).concat(restboard)
+                    console.log(middlePart)
+                    setMeasure11(result)
+
+                }
+                else{
+                    const diffDuration = itemSteps - stepsToReplace
+                    const firstPart = updatedBoardData.slice(0, indexToReplace)
+                    const middlePart = [item].concat(new Array(itemSteps-1).fill(defaultpitchesoccupied))
+                    const endPart = updatedBoardData.slice(indexToReplace + stepsToReplace,updatedBoardData.length-diffDuration)
+                    const result = firstPart.concat(middlePart).concat(endPart).concat(restboard)
+                    console.log(result)
+                    setMeasure11(result)
+
+                }
+                const pitch = item['type'][0]
+            
+                playSynth(pitch.replace('/',''),1)
+            }
+            }
+
+
+            else if(activeMeasure == 11){
+                const updatedBoardData = measure12.slice(0,measure12Meter)
+                const restboard = measure12.slice(measure12Meter,measure12.length)
+                const stepsToReplace = calculateSteps(updatedBoardData[indexToReplace].duration)
+                const sliceLen = updatedBoardData.filter(piece => piece.occupied == false).length
+                
+                if(itemSteps > sliceLen + stepsToReplace){alert.show('This Note doesnt fit into the actual measure!');  return}
+                else{
+                if(itemSteps == stepsToReplace){
+                    const firstPart = updatedBoardData.slice(0, indexToReplace)
+                    const middlePart = [item].concat(new Array(itemSteps-1).fill(defaultpitchesoccupied))
+                    const endPart = updatedBoardData.slice(indexToReplace + stepsToReplace,measure1Meter)
+                    const result = firstPart.concat(middlePart).concat(endPart).concat(restboard)
+                    console.log(result)
+                    setMeasure12(result)
+
+                }
+                else if(itemSteps < stepsToReplace){
+                    const diffDuration = stepsToReplace - itemSteps
+                    const firstPart = updatedBoardData.slice(0, indexToReplace)
+                    const middlePart = [item].concat(new Array(itemSteps-1).fill(defaultpitchesoccupied))
+                    const endPart = updatedBoardData.slice(indexToReplace + stepsToReplace,updatedBoardData.length).concat(new Array(diffDuration).fill(defaultpitches))
+                    const result = firstPart.concat(middlePart).concat(endPart).concat(restboard)
+                    console.log(middlePart)
+                    setMeasure12(result)
+
+                }
+                else{
+                    const diffDuration = itemSteps - stepsToReplace
+                    const firstPart = updatedBoardData.slice(0, indexToReplace)
+                    const middlePart = [item].concat(new Array(itemSteps-1).fill(defaultpitchesoccupied))
+                    const endPart = updatedBoardData.slice(indexToReplace + stepsToReplace,updatedBoardData.length-diffDuration)
+                    const result = firstPart.concat(middlePart).concat(endPart).concat(restboard)
+                    console.log(result)
+                    setMeasure12(result)
+
+                }
+                const pitch = item['type'][0]
+            
+                playSynth(pitch.replace('/',''),1)
+            }
+            }
+
+            else if(activeMeasure == 12){
+                const updatedBoardData = measure13.slice(0,measure13Meter)
+                const restboard = measure13.slice(measure13Meter,measure13.length)
+                const stepsToReplace = calculateSteps(updatedBoardData[indexToReplace].duration)
+                const sliceLen = updatedBoardData.filter(piece => piece.occupied == false).length
+                
+                if(itemSteps > sliceLen + stepsToReplace){alert.show('This Note doesnt fit into the actual measure!');  return}
+                else{
+                if(itemSteps == stepsToReplace){
+                    const firstPart = updatedBoardData.slice(0, indexToReplace)
+                    const middlePart = [item].concat(new Array(itemSteps-1).fill(defaultpitchesoccupied))
+                    const endPart = updatedBoardData.slice(indexToReplace + stepsToReplace,measure1Meter)
+                    const result = firstPart.concat(middlePart).concat(endPart).concat(restboard)
+                    console.log(result)
+                    setMeasure13(result)
+
+                }
+                else if(itemSteps < stepsToReplace){
+                    const diffDuration = stepsToReplace - itemSteps
+                    const firstPart = updatedBoardData.slice(0, indexToReplace)
+                    const middlePart = [item].concat(new Array(itemSteps-1).fill(defaultpitchesoccupied))
+                    const endPart = updatedBoardData.slice(indexToReplace + stepsToReplace,updatedBoardData.length).concat(new Array(diffDuration).fill(defaultpitches))
+                    const result = firstPart.concat(middlePart).concat(endPart).concat(restboard)
+                    setMeasure13(result)
+
+                }
+                else{
+                    const diffDuration = itemSteps - stepsToReplace
+                    const firstPart = updatedBoardData.slice(0, indexToReplace)
+                    const middlePart = [item].concat(new Array(itemSteps-1).fill(defaultpitchesoccupied))
+                    const endPart = updatedBoardData.slice(indexToReplace + stepsToReplace,updatedBoardData.length-diffDuration)
+                    const result = firstPart.concat(middlePart).concat(endPart).concat(restboard)
+                    setMeasure13(result)
+
+                }
+                const pitch = item['type'][0]
+            
+                playSynth(pitch.replace('/',''),1)
+            }
+            }
+            
+
+            else if(activeMeasure == 13){
+                const updatedBoardData = measure14.slice(0,measure14Meter)
+                const restboard = measure14.slice(measure14Meter,measure14.length)
+                const stepsToReplace = calculateSteps(updatedBoardData[indexToReplace].duration)
+                const sliceLen = updatedBoardData.filter(piece => piece.occupied == false).length
+                
+                if(itemSteps > sliceLen + stepsToReplace){alert.show('This Note doesnt fit into the actual measure!');  return}
+                else{
+                if(itemSteps == stepsToReplace){
+                    const firstPart = updatedBoardData.slice(0, indexToReplace)
+                    const middlePart = [item].concat(new Array(itemSteps-1).fill(defaultpitchesoccupied))
+                    const endPart = updatedBoardData.slice(indexToReplace + stepsToReplace,measure1Meter)
+                    const result = firstPart.concat(middlePart).concat(endPart).concat(restboard)
+                    console.log(result)
+                    setMeasure14(result)
+
+                }
+                else if(itemSteps < stepsToReplace){
+                    const diffDuration = stepsToReplace - itemSteps
+                    const firstPart = updatedBoardData.slice(0, indexToReplace)
+                    const middlePart = [item].concat(new Array(itemSteps-1).fill(defaultpitchesoccupied))
+                    const endPart = updatedBoardData.slice(indexToReplace + stepsToReplace,updatedBoardData.length).concat(new Array(diffDuration).fill(defaultpitches))
+                    const result = firstPart.concat(middlePart).concat(endPart).concat(restboard)
+                    setMeasure14(result)
+
+                }
+                else{
+                    const diffDuration = itemSteps - stepsToReplace
+                    const firstPart = updatedBoardData.slice(0, indexToReplace)
+                    const middlePart = [item].concat(new Array(itemSteps-1).fill(defaultpitchesoccupied))
+                    const endPart = updatedBoardData.slice(indexToReplace + stepsToReplace,updatedBoardData.length-diffDuration)
+                    const result = firstPart.concat(middlePart).concat(endPart).concat(restboard)
+                    setMeasure14(result)
+
+                }
+                const pitch = item['type'][0]
+            
+                playSynth(pitch.replace('/',''),1)
+            }
+            }
+            
+
+            else if(activeMeasure == 14){
+                const updatedBoardData = measure15.slice(0,measure15Meter)
+                const restboard = measure15.slice(measure15Meter,measure15.length)
+                const stepsToReplace = calculateSteps(updatedBoardData[indexToReplace].duration)
+                const sliceLen = updatedBoardData.filter(piece => piece.occupied == false).length
+                
+                if(itemSteps > sliceLen + stepsToReplace){alert.show('This Note doesnt fit into the actual measure!');  return}
+                else{
+                if(itemSteps == stepsToReplace){
+                    const firstPart = updatedBoardData.slice(0, indexToReplace)
+                    const middlePart = [item].concat(new Array(itemSteps-1).fill(defaultpitchesoccupied))
+                    const endPart = updatedBoardData.slice(indexToReplace + stepsToReplace,measure1Meter)
+                    const result = firstPart.concat(middlePart).concat(endPart).concat(restboard)
+                    console.log(result)
+                    setMeasure15(result)
+
+                }
+                else if(itemSteps < stepsToReplace){
+                    const diffDuration = stepsToReplace - itemSteps
+                    const firstPart = updatedBoardData.slice(0, indexToReplace)
+                    const middlePart = [item].concat(new Array(itemSteps-1).fill(defaultpitchesoccupied))
+                    const endPart = updatedBoardData.slice(indexToReplace + stepsToReplace,updatedBoardData.length).concat(new Array(diffDuration).fill(defaultpitches))
+                    const result = firstPart.concat(middlePart).concat(endPart).concat(restboard)
+                    setMeasure15(result)
+
+                }
+                else{
+                    const diffDuration = itemSteps - stepsToReplace
+                    const firstPart = updatedBoardData.slice(0, indexToReplace)
+                    const middlePart = [item].concat(new Array(itemSteps-1).fill(defaultpitchesoccupied))
+                    const endPart = updatedBoardData.slice(indexToReplace + stepsToReplace,updatedBoardData.length-diffDuration)
+                    const result = firstPart.concat(middlePart).concat(endPart).concat(restboard)
+                    setMeasure15(result)
+
+                }
+                const pitch = item['type'][0]
+            
+                playSynth(pitch.replace('/',''),1)
+            }
+            }
+
+
+            else if(activeMeasure == 15){
+                const updatedBoardData = measure16.slice(0,measure16Meter)
+                const restboard = measure16.slice(measure16Meter,measure16.length)
+                const stepsToReplace = calculateSteps(updatedBoardData[indexToReplace].duration)
+                const sliceLen = updatedBoardData.filter(piece => piece.occupied == false).length
+                
+                if(itemSteps > sliceLen + stepsToReplace){alert.show('This Note doesnt fit into the actual measure!');  return}
+                else{
+                if(itemSteps == stepsToReplace){
+                    const firstPart = updatedBoardData.slice(0, indexToReplace)
+                    const middlePart = [item].concat(new Array(itemSteps-1).fill(defaultpitchesoccupied))
+                    const endPart = updatedBoardData.slice(indexToReplace + stepsToReplace,measure1Meter)
+                    const result = firstPart.concat(middlePart).concat(endPart).concat(restboard)
+                    setMeasure16(result)
+
+                }
+                else if(itemSteps < stepsToReplace){
+                    const diffDuration = stepsToReplace - itemSteps
+                    const firstPart = updatedBoardData.slice(0, indexToReplace)
+                    const middlePart = [item].concat(new Array(itemSteps-1).fill(defaultpitchesoccupied))
+                    const endPart = updatedBoardData.slice(indexToReplace + stepsToReplace,updatedBoardData.length).concat(new Array(diffDuration).fill(defaultpitches))
+                    const result = firstPart.concat(middlePart).concat(endPart).concat(restboard)
+                    setMeasure16(result)
+
+                }
+                else{
+                    const diffDuration = itemSteps - stepsToReplace
+                    const firstPart = updatedBoardData.slice(0, indexToReplace)
+                    const middlePart = [item].concat(new Array(itemSteps-1).fill(defaultpitchesoccupied))
+                    const endPart = updatedBoardData.slice(indexToReplace + stepsToReplace,updatedBoardData.length-diffDuration)
+                    const result = firstPart.concat(middlePart).concat(endPart).concat(restboard)
+                    setMeasure16(result)
+
+                }
+                const pitch = item['type'][0]
+            
+                playSynth(pitch.replace('/',''),1)
+            }
+            }
             
 
             
@@ -1265,6 +1643,247 @@ function Compose() {
                 resultingMeasure = firstPart.concat(thirdPart).concat(endPart_)
                 }
                 setMeasure8(resultingMeasure)
+                
+                setactiveNote(newActivatedIndex)
+                const stepsFornewActivated = calculateSteps(resultingMeasure[newActivatedIndex].duration)
+                setPointer(newActivatedIndex + stepsFornewActivated)
+
+            }
+
+            if(activeMeasure == 8){
+                const indexToDelete = activeNote
+                const stepsToDelete = calculateSteps(measure9[indexToDelete].duration)
+                const firstPart = measure9.slice(0, indexToDelete)
+                const newActivatedIndex = calculateLastNoteIndex(firstPart)
+                const secondPart = new Array(stepsToDelete).fill(defaultpitches) 
+                const tmpPart = measure9.slice(indexToDelete+stepsToDelete, measure9.length)
+                const boundaryIndexToEmptyPlaces = calculateLastNoteIndex(tmpPart)
+                let resultingMeasure = []
+                if(tmpPart[boundaryIndexToEmptyPlaces] == undefined){
+                    resultingMeasure = firstPart.concat(secondPart)
+                    
+                }
+
+                else{
+                const space = calculateSteps(tmpPart[boundaryIndexToEmptyPlaces].duration)
+                const thirdPart = tmpPart.slice(0,boundaryIndexToEmptyPlaces+space)
+                const endPart = tmpPart.slice(boundaryIndexToEmptyPlaces+space, tmpPart.length)
+                const endPart_ = secondPart.concat(endPart)
+                resultingMeasure = firstPart.concat(thirdPart).concat(endPart_)
+                }
+                setMeasure9(resultingMeasure)
+                
+                setactiveNote(newActivatedIndex)
+                const stepsFornewActivated = calculateSteps(resultingMeasure[newActivatedIndex].duration)
+                setPointer(newActivatedIndex + stepsFornewActivated)
+            }
+
+            if(activeMeasure == 9){
+                
+                const indexToDelete = activeNote
+                const stepsToDelete = calculateSteps(measure10[indexToDelete].duration)
+                const firstPart = measure10.slice(0, indexToDelete)
+                const newActivatedIndex = calculateLastNoteIndex(firstPart)
+                const secondPart = new Array(stepsToDelete).fill(defaultpitches) 
+                const tmpPart = measure10.slice(indexToDelete+stepsToDelete, measure10.length)
+                const boundaryIndexToEmptyPlaces = calculateLastNoteIndex(tmpPart)
+                let resultingMeasure = []
+                if(tmpPart[boundaryIndexToEmptyPlaces] == undefined){
+                    resultingMeasure = firstPart.concat(secondPart)
+                    
+                }
+
+                else{
+                    const space = calculateSteps(tmpPart[boundaryIndexToEmptyPlaces].duration)
+                const thirdPart = tmpPart.slice(0,boundaryIndexToEmptyPlaces+space)
+                const endPart = tmpPart.slice(boundaryIndexToEmptyPlaces+space, tmpPart.length)
+                const endPart_ = secondPart.concat(endPart)
+                resultingMeasure = firstPart.concat(thirdPart).concat(endPart_)
+
+                }
+                
+                setMeasure10(resultingMeasure)
+                
+                setactiveNote(newActivatedIndex)
+                const stepsFornewActivated = calculateSteps(resultingMeasure[newActivatedIndex].duration)
+                setPointer(newActivatedIndex + stepsFornewActivated)
+
+                }
+            
+
+            if(activeMeasure == 10){
+
+                const indexToDelete = activeNote
+                const stepsToDelete = calculateSteps(measure11[indexToDelete].duration)
+                const firstPart = measure11.slice(0, indexToDelete)
+                const newActivatedIndex = calculateLastNoteIndex(firstPart)
+                const secondPart = new Array(stepsToDelete).fill(defaultpitches) 
+                const tmpPart = measure11.slice(indexToDelete+stepsToDelete, measure11.length)
+                const boundaryIndexToEmptyPlaces = calculateLastNoteIndex(tmpPart)
+                let resultingMeasure = []
+                if(tmpPart[boundaryIndexToEmptyPlaces] == undefined){
+                    resultingMeasure = firstPart.concat(secondPart)
+                    
+                }
+
+                else{
+                const space = calculateSteps(tmpPart[boundaryIndexToEmptyPlaces].duration)
+                const thirdPart = tmpPart.slice(0,boundaryIndexToEmptyPlaces+space)
+                const endPart = tmpPart.slice(boundaryIndexToEmptyPlaces+space, tmpPart.length)
+                const endPart_ = secondPart.concat(endPart)
+                resultingMeasure = firstPart.concat(thirdPart).concat(endPart_)
+                }
+                setMeasure11(resultingMeasure)
+                
+                setactiveNote(newActivatedIndex)
+                const stepsFornewActivated = calculateSteps(resultingMeasure[newActivatedIndex].duration)
+                setPointer(newActivatedIndex + stepsFornewActivated)
+
+            }
+
+            if(activeMeasure == 11){
+
+                const indexToDelete = activeNote
+                const stepsToDelete = calculateSteps(measure12[indexToDelete].duration)
+                const firstPart = measure12.slice(0, indexToDelete)
+                const newActivatedIndex = calculateLastNoteIndex(firstPart)
+                const secondPart = new Array(stepsToDelete).fill(defaultpitches) 
+                const tmpPart = measure12.slice(indexToDelete+stepsToDelete, measure12.length)
+                const boundaryIndexToEmptyPlaces = calculateLastNoteIndex(tmpPart)
+                let resultingMeasure = []
+                if(tmpPart[boundaryIndexToEmptyPlaces] == undefined){
+                    resultingMeasure = firstPart.concat(secondPart)
+                    
+                }
+
+                else{
+                const space = calculateSteps(tmpPart[boundaryIndexToEmptyPlaces].duration)
+                const thirdPart = tmpPart.slice(0,boundaryIndexToEmptyPlaces+space)
+                const endPart = tmpPart.slice(boundaryIndexToEmptyPlaces+space, tmpPart.length)
+                const endPart_ = secondPart.concat(endPart)
+                resultingMeasure = firstPart.concat(thirdPart).concat(endPart_)
+                }
+                setMeasure12(resultingMeasure)
+                
+                setactiveNote(newActivatedIndex)
+                const stepsFornewActivated = calculateSteps(resultingMeasure[newActivatedIndex].duration)
+                setPointer(newActivatedIndex + stepsFornewActivated)
+
+            }
+
+            if(activeMeasure == 12){
+
+                const indexToDelete = activeNote
+                const stepsToDelete = calculateSteps(measure13[indexToDelete].duration)
+                const firstPart = measure13.slice(0, indexToDelete)
+                const newActivatedIndex = calculateLastNoteIndex(firstPart)
+                const secondPart = new Array(stepsToDelete).fill(defaultpitches) 
+                const tmpPart = measure13.slice(indexToDelete+stepsToDelete, measure13.length)
+                const boundaryIndexToEmptyPlaces = calculateLastNoteIndex(tmpPart)
+                let resultingMeasure = []
+                if(tmpPart[boundaryIndexToEmptyPlaces] == undefined){
+                    resultingMeasure = firstPart.concat(secondPart)
+                    
+                }
+
+                else{
+                const space = calculateSteps(tmpPart[boundaryIndexToEmptyPlaces].duration)
+                const thirdPart = tmpPart.slice(0,boundaryIndexToEmptyPlaces+space)
+                const endPart = tmpPart.slice(boundaryIndexToEmptyPlaces+space, tmpPart.length)
+                const endPart_ = secondPart.concat(endPart)
+                resultingMeasure = firstPart.concat(thirdPart).concat(endPart_)
+                }
+                setMeasure13(resultingMeasure)
+                
+                setactiveNote(newActivatedIndex)
+                const stepsFornewActivated = calculateSteps(resultingMeasure[newActivatedIndex].duration)
+                setPointer(newActivatedIndex + stepsFornewActivated)
+
+            }
+
+            if(activeMeasure == 13){
+
+                const indexToDelete = activeNote
+                const stepsToDelete = calculateSteps(measure14[indexToDelete].duration)
+                const firstPart = measure14.slice(0, indexToDelete)
+                const newActivatedIndex = calculateLastNoteIndex(firstPart)
+                const secondPart = new Array(stepsToDelete).fill(defaultpitches) 
+                const tmpPart = measure14.slice(indexToDelete+stepsToDelete, measure14.length)
+                const boundaryIndexToEmptyPlaces = calculateLastNoteIndex(tmpPart)
+                let resultingMeasure = []
+                if(tmpPart[boundaryIndexToEmptyPlaces] == undefined){
+                    resultingMeasure = firstPart.concat(secondPart)
+                    
+                }
+
+                else{
+                const space = calculateSteps(tmpPart[boundaryIndexToEmptyPlaces].duration)
+                const thirdPart = tmpPart.slice(0,boundaryIndexToEmptyPlaces+space)
+                const endPart = tmpPart.slice(boundaryIndexToEmptyPlaces+space, tmpPart.length)
+                const endPart_ = secondPart.concat(endPart)
+                resultingMeasure = firstPart.concat(thirdPart).concat(endPart_)
+                }
+                setMeasure14(resultingMeasure)
+                
+                setactiveNote(newActivatedIndex)
+                const stepsFornewActivated = calculateSteps(resultingMeasure[newActivatedIndex].duration)
+                setPointer(newActivatedIndex + stepsFornewActivated)
+
+            }
+
+            if(activeMeasure == 14){
+
+                const indexToDelete = activeNote
+                const stepsToDelete = calculateSteps(measure15[indexToDelete].duration)
+                const firstPart = measure15.slice(0, indexToDelete)
+                const newActivatedIndex = calculateLastNoteIndex(firstPart)
+                const secondPart = new Array(stepsToDelete).fill(defaultpitches) 
+                const tmpPart = measure15.slice(indexToDelete+stepsToDelete, measure15.length)
+                const boundaryIndexToEmptyPlaces = calculateLastNoteIndex(tmpPart)
+                let resultingMeasure = []
+                if(tmpPart[boundaryIndexToEmptyPlaces] == undefined){
+                    resultingMeasure = firstPart.concat(secondPart)
+                    
+                }
+
+                else{
+                const space = calculateSteps(tmpPart[boundaryIndexToEmptyPlaces].duration)
+                const thirdPart = tmpPart.slice(0,boundaryIndexToEmptyPlaces+space)
+                const endPart = tmpPart.slice(boundaryIndexToEmptyPlaces+space, tmpPart.length)
+                const endPart_ = secondPart.concat(endPart)
+                resultingMeasure = firstPart.concat(thirdPart).concat(endPart_)
+                }
+                setMeasure15(resultingMeasure)
+                
+                setactiveNote(newActivatedIndex)
+                const stepsFornewActivated = calculateSteps(resultingMeasure[newActivatedIndex].duration)
+                setPointer(newActivatedIndex + stepsFornewActivated)
+
+            }
+
+            if(activeMeasure == 15){
+
+                const indexToDelete = activeNote
+                const stepsToDelete = calculateSteps(measure16[indexToDelete].duration)
+                const firstPart = measure16.slice(0, indexToDelete)
+                const newActivatedIndex = calculateLastNoteIndex(firstPart)
+                const secondPart = new Array(stepsToDelete).fill(defaultpitches) 
+                const tmpPart = measure16.slice(indexToDelete+stepsToDelete, measure16.length)
+                const boundaryIndexToEmptyPlaces = calculateLastNoteIndex(tmpPart)
+                let resultingMeasure = []
+                if(tmpPart[boundaryIndexToEmptyPlaces] == undefined){
+                    resultingMeasure = firstPart.concat(secondPart)
+                    
+                }
+
+                else{
+                const space = calculateSteps(tmpPart[boundaryIndexToEmptyPlaces].duration)
+                const thirdPart = tmpPart.slice(0,boundaryIndexToEmptyPlaces+space)
+                const endPart = tmpPart.slice(boundaryIndexToEmptyPlaces+space, tmpPart.length)
+                const endPart_ = secondPart.concat(endPart)
+                resultingMeasure = firstPart.concat(thirdPart).concat(endPart_)
+                }
+                setMeasure16(resultingMeasure)
                 
                 setactiveNote(newActivatedIndex)
                 const stepsFornewActivated = calculateSteps(resultingMeasure[newActivatedIndex].duration)
@@ -2388,6 +3007,1075 @@ function Compose() {
         
                 
             }
+
+            if (activeMeasure == 8) {
+                
+                const fit = checkMatch(index,steps,measure9)
+            
+            if(fit){
+                
+                playSynth(item['type'][0].replace('/',''),1)
+                if (activeNote % measure9Meter == 0) {
+                    const index = 1
+                    setMeasure9(measure9 =>{
+                    
+                    
+                    
+                        
+                        const updatedBoardData = measure9.slice(0,measure9Meter)
+                        const restboard = measure9.slice(measure9Meter,measure9.length)
+                        
+                        const startSlice = updatedBoardData.slice(0,index)
+                        const tmpDefaultPitches = defaultpitchesoccupied
+                        const middleSlice = [item].concat(new Array(steps-1).fill(tmpDefaultPitches))
+                        const endSlice = updatedBoardData.slice(index,updatedBoardData.length-steps)
+                        
+                        const updatedBoardData_ = startSlice.concat(middleSlice).concat(endSlice).concat(restboard)
+                        return updatedBoardData_
+    
+                    })
+
+                    setactiveNote(index)
+                    setPointer(pointer =>{
+                        const followUpPointer = index + steps
+                        if(followUpPointer % 17 == 0 ){
+                        return index + steps+1}
+                        else{
+                            return index + steps
+                        }
+                    })
+
+                }
+               else{
+ 
+                    const activeItem = calculateSteps( measure9[index].duration)
+
+                setMeasure9(measure9 =>{
+                    
+                    const updatedBoardData = measure9.slice(0,measure1Meter)
+                    const restboard = measure9.slice(measure9Meter,measure9.length)
+                    const steps_ = calculateSteps(updatedBoardData[index].duration) 
+                    const startSlice = updatedBoardData.slice(0,index+steps_)
+                    const  tmpDefaultPitches = defaultpitchesoccupied
+                    const middleSlice = [item].concat(new Array(steps-1).fill(tmpDefaultPitches))
+                    const endSlice = updatedBoardData.slice(index+steps_,updatedBoardData.length-steps)
+                    
+                    
+                    const updatedBoardData_ = startSlice.concat(middleSlice).concat(endSlice).concat(restboard)
+                    console.log(updatedBoardData_)
+                    return updatedBoardData_
+
+                })
+                setactiveNote(index+activeItem)
+                setPointer(pointer =>{
+                    const followUpPointer = index+activeItem + steps
+                    if(followUpPointer % measure1Meter == 0 ){
+                    return index + steps+1}
+                    else{
+                        return index + steps
+                    }
+                })
+                
+                
+            }
+
+
+        }
+
+
+        else{
+
+            const currentMeasure_ =  [...measure9]
+            const sliceLen = currentMeasure_.filter(piece => piece.occupied == false).length
+            if(sliceLen > 0){
+                
+                    alert.show('This Note doesnt fit into the actual measure!');  return
+                
+                
+            }
+            
+            const lastNoteofMeasure = calculateLastNoteIndex(currentMeasure_)
+            if (activeNote == lastNoteofMeasure) {
+                
+                setPointer(1)
+                const fit = checkMatch(index,steps,measure10)
+                
+                if (!fit) {
+                    alert.show('This Note doesnt fit into the actual measure!');  return
+                }
+                
+                
+                
+                    setMeasure10(measure10 =>{
+                    
+                    
+                    
+                        
+                        const updatedBoardData = measure10.slice(0,measure10Meter)
+                        const restboard = measure10.slice(measure10Meter,measure10.length)
+                        
+                        const startSlice = updatedBoardData.slice(0,1)
+                        const tmpDefaultPitches = defaultpitchesoccupied
+                        const middleSlice = [item].concat(new Array(steps-1).fill(tmpDefaultPitches))
+                        const endSlice = updatedBoardData.slice(1,updatedBoardData.length-steps)
+                        
+                        const updatedBoardData_ = startSlice.concat(middleSlice).concat(endSlice).concat(restboard)
+                        return updatedBoardData_
+                
+            })
+
+            setactiveMeasure(9)
+                setactiveNote(10)
+                
+                setPointer(pointer =>{
+                   
+                    return index + steps
+                   
+                })
+        }
+
+            else{
+
+            }
+
+
+
+
+        }
+                 
+            }
+            else if (activeMeasure == 9) {
+                
+                const fit = checkMatch(index,steps,measure10)
+                
+            if(fit){
+
+                playSynth(item['type'][0].replace('/',''),1)
+                if (activeNote % measure10Meter == 0) {
+                    const index = 1
+                    setMeasure10(measure10 =>{
+                    
+                    
+                    
+                        
+                        const updatedBoardData = measure10.slice(0,measure10Meter)
+                        const restboard = measure10.slice(measure10Meter,measure10.length)
+                        
+                        const startSlice = updatedBoardData.slice(0,index)
+                        const tmpDefaultPitches = defaultpitchesoccupied
+                        const middleSlice = [item].concat(new Array(steps-1).fill(tmpDefaultPitches))
+                        const endSlice = updatedBoardData.slice(index,updatedBoardData.length-steps)
+                        
+                        const updatedBoardData_ = startSlice.concat(middleSlice).concat(endSlice).concat(restboard)
+                        console.log(updatedBoardData_)
+                        return updatedBoardData_
+    
+                    })
+
+                    setactiveNote(index)
+                    setPointer(pointer =>{
+                        const followUpPointer = index + steps
+                        if(followUpPointer % measure10Meter == 0 ){
+                        return index + steps+1}
+                        else{
+                            return index + steps
+                        }
+                    })
+
+                    
+                }
+
+                else{
+
+                    
+                    const activeItem = calculateSteps( measure10[index].duration)
+
+                setMeasure10(measure10 =>{
+                    
+                    
+                    
+                    
+                    const updatedBoardData = measure10.slice(0,measure10Meter)
+                    const restboard = measure10.slice(measure10Meter,measure10.length)
+                    const steps_ = calculateSteps(updatedBoardData[index].duration) 
+                    const startSlice = updatedBoardData.slice(0,index+steps_)
+                    const  tmpDefaultPitches = defaultpitchesoccupied
+                    const middleSlice = [item].concat(new Array(steps-1).fill(tmpDefaultPitches))
+                    const endSlice = updatedBoardData.slice(index+steps_,updatedBoardData.length-steps)
+                    
+                    
+                    const updatedBoardData_ = startSlice.concat(middleSlice).concat(endSlice).concat(restboard)
+                    return updatedBoardData_
+
+                })
+                setactiveNote(index+activeItem)
+                setPointer(pointer =>{
+                    const followUpPointer = index+activeItem + steps
+                    if(followUpPointer % measure10Meter == 0 ){
+                    return index + steps+1}
+                    else{
+                        return index + steps
+                    }
+                })
+                
+                
+            }
+
+
+        }
+
+
+        else{
+
+            const currentMeasure_ =  [...measure10]
+            const sliceLen = currentMeasure_.filter(piece => piece.occupied == false).length
+            
+            if(sliceLen > 0){
+                alert.show('This Note doesnt fit into the actual measure!'); return
+            }
+            const lastNoteofMeasure = calculateLastNoteIndex(currentMeasure_)
+            
+            
+            if (activeNote == lastNoteofMeasure) {
+                
+                setPointer(1)
+                const fit = checkMatch(index,steps,measure11)
+                
+                if (!fit) {
+                    alert.show('This Note doesnt fit into the actual measure!'); return
+                }
+
+                setMeasure11(measure11 =>{
+                    
+                    
+                    
+                    
+                    const updatedBoardData = measure11.slice(0,measure11Meter)
+                    const restboard = measure11.slice(measure11Meter,measure11.length)
+                    
+                    const startSlice = updatedBoardData.slice(0,1)
+                    const tmpDefaultPitches = defaultpitchesoccupied
+                    const middleSlice = [item].concat(new Array(steps-1).fill(tmpDefaultPitches))
+                    const endSlice = updatedBoardData.slice(1,updatedBoardData.length-steps)
+                    
+                    const updatedBoardData_ = startSlice.concat(middleSlice).concat(endSlice).concat(restboard)
+                    return updatedBoardData_
+            
+        })
+                setactiveMeasure(10)
+                setactiveNote(1)
+
+                setPointer(pointer =>{
+                   
+                    return index + steps
+                   
+                })
+                
+            }
+
+            else{
+
+            }
+
+
+
+        }
+                
+            }
+            else if (activeMeasure == 10) {
+
+                const fit = checkMatch(index,steps,measure11)
+                
+            if(fit){
+
+                playSynth(item['type'][0].replace('/',''),1)
+                if (activeNote % measure11Meter == 0) {
+                    const index = 1
+                    setMeasure11(measure11 =>{
+                    
+                    
+                    
+                        
+                        const updatedBoardData = measure11.slice(0,measure11Meter)
+                        const restboard = measure11.slice(measure11Meter,measure11.length)
+                        
+                        const startSlice = updatedBoardData.slice(0,index)
+                        const tmpDefaultPitches = defaultpitchesoccupied
+                        const middleSlice = [item].concat(new Array(steps-1).fill(tmpDefaultPitches))
+                        const endSlice = updatedBoardData.slice(index,updatedBoardData.length-steps)
+                        
+                        const updatedBoardData_ = startSlice.concat(middleSlice).concat(endSlice).concat(restboard)
+                        console.log(updatedBoardData_)
+                        return updatedBoardData_
+    
+                    })
+
+                    setactiveNote(index)
+                    setPointer(pointer =>{
+                        const followUpPointer = index + steps
+                        if(followUpPointer % measure11Meter == 0 ){
+                        return index + steps+1}
+                        else{
+                            return index + steps
+                        }
+                    })
+
+                    
+                }
+
+                else{
+
+                    
+                    const activeItem = calculateSteps( measure11[index].duration)
+
+                setMeasure11(measure11 =>{
+                    
+                    
+                    
+                    
+                    
+                    const updatedBoardData = measure11.slice(0,measure11Meter)
+                    const restboard = measure11.slice(measure11Meter,measure11.length)
+                    const steps_ = calculateSteps(updatedBoardData[index].duration) 
+                    const startSlice = updatedBoardData.slice(0,index+steps_)
+                    const  tmpDefaultPitches = defaultpitchesoccupied
+                    const middleSlice = [item].concat(new Array(steps-1).fill(tmpDefaultPitches))
+                    const endSlice = updatedBoardData.slice(index+steps_,updatedBoardData.length-steps)
+                    
+                    
+                    const updatedBoardData_ = startSlice.concat(middleSlice).concat(endSlice).concat(restboard)
+                    console.log(updatedBoardData_)
+                    return updatedBoardData_
+
+                })
+                setactiveNote(index+activeItem)
+                setPointer(pointer =>{
+                    const followUpPointer = index+activeItem + steps
+                    if(followUpPointer % measure11Meter == 0 ){
+                    return index + steps+1}
+                    else{
+                        return index + steps
+                    }
+                })
+                
+                
+            }
+
+
+        }
+
+
+        else{
+            const currentMeasure_ =  [...measure11]
+            const sliceLen = currentMeasure_.filter(piece => piece.occupied == false).length
+            if(sliceLen > 0){
+                alert.show('This Note doesnt fit into the actual measure!');  return
+            }
+            const lastNoteofMeasure = calculateLastNoteIndex(currentMeasure_)
+            
+            if (activeNote == lastNoteofMeasure) {
+                
+                setPointer(1)
+                const fit = checkMatch(index,steps,measure12)
+                
+                if (!fit) {
+                    alert.show('This Note doesnt fit into the actual measure!'); return
+                }
+
+
+                setMeasure12(measure12 =>{
+                    
+                    
+                    const updatedBoardData = measure12.slice(0,measure12Meter)
+                    const restboard = measure12.slice(measure12Meter,measure12.length)
+                    console.log(restboard)
+                    const startSlice = updatedBoardData.slice(0,1)
+                    const tmpDefaultPitches = defaultpitchesoccupied
+                    const middleSlice = [item].concat(new Array(steps-1).fill(tmpDefaultPitches))
+                    const endSlice = updatedBoardData.slice(1,updatedBoardData.length-steps)
+                    
+                    const updatedBoardData_ = startSlice.concat(middleSlice).concat(endSlice).concat(restboard)
+                    console.log(startSlice)
+                    console.log(middleSlice)
+                    console.log(endSlice)
+                    console.log(restboard)
+                    return updatedBoardData_
+            
+        })
+
+            setactiveMeasure(11)
+                setactiveNote(1)
+                
+                setPointer(pointer =>{
+                   
+                    return index + steps
+                   
+                })
+                
+            }
+            else{
+
+            }
+
+
+
+
+        }
+                
+            }
+
+            
+            else if (activeMeasure == 11) {
+                
+                const fit = checkMatch(index,steps,measure12)
+                
+            if(fit){
+
+                playSynth(item['type'][0].replace('/',''),1)
+                if (activeNote % measure12Meter == 0) {
+                    const index = 1
+                    setMeasure12(measure12 =>{
+                    
+                    
+                    
+                        
+                        const updatedBoardData = measure12.slice(0,measure12Meter)
+                        const restboard = measure12.slice(measure12Meter,measure12.length)
+                        
+                        const startSlice = updatedBoardData.slice(0,index)
+                        const tmpDefaultPitches = defaultpitchesoccupied
+                        const middleSlice = [item].concat(new Array(steps-1).fill(tmpDefaultPitches))
+                        const endSlice = updatedBoardData.slice(index,updatedBoardData.length-steps)
+                        
+                        const updatedBoardData_ = startSlice.concat(middleSlice).concat(endSlice).concat(restboard)
+                        console.log(updatedBoardData_)
+                        return updatedBoardData_
+    
+                    })
+
+                    setactiveNote(index)
+                    setPointer(pointer =>{
+                        const followUpPointer = index + steps
+                        if(followUpPointer % measure12Meter == 0 ){
+                        return index + steps+1}
+                        else{
+                            return index + steps
+                        }
+                    })
+
+                    
+                }
+
+                else{
+
+                    
+                    const activeItem = calculateSteps( measure12[index].duration)
+
+                setMeasure12(measure12 =>{
+                    
+                    
+                    
+                    
+                    const updatedBoardData = measure12.slice(0,measure12Meter)
+                    const restboard = measure12.slice(measure12Meter,measure12.length)
+                    const steps_ = calculateSteps(updatedBoardData[index].duration) 
+                    const startSlice = updatedBoardData.slice(0,index+steps_)
+                    const  tmpDefaultPitches = defaultpitchesoccupied
+                    const middleSlice = [item].concat(new Array(steps-1).fill(tmpDefaultPitches))
+                    const endSlice = updatedBoardData.slice(index+steps_,updatedBoardData.length-steps)
+                    
+                    
+                    const updatedBoardData_ = startSlice.concat(middleSlice).concat(endSlice).concat(restboard)
+                    return updatedBoardData_
+
+                })
+                setactiveNote(index+activeItem)
+                setPointer(pointer =>{
+                    const followUpPointer = index+activeItem + steps
+                    if(followUpPointer % measure12Meter == 0 ){
+                    return index + steps+1}
+                    else{
+                        return index + steps
+                    }
+                })
+                
+                
+            }
+
+
+        }
+
+
+        else{
+
+            const currentMeasure_ =  [...measure12]
+            const sliceLen = currentMeasure_.filter(piece => piece.occupied == false).length
+            
+            if(sliceLen > 0){
+                alert.show('This Note doesnt fit into the actual measure!');  return
+            }
+            const lastNoteofMeasure = calculateLastNoteIndex(currentMeasure_)
+            
+            
+            if (activeNote == lastNoteofMeasure) {
+                
+                setPointer(1)
+                const fit = checkMatch(index,steps,measure13)
+                
+                if (!fit) {
+                    alert.show('This Note doesnt fit into the actual measure!'); return
+                }
+
+                setMeasure13(measure13 =>{
+                    
+                    
+                    
+                    
+                    console.log(measure13)
+                    const updatedBoardData = measure5.slice(0,measure13Meter)
+                    
+                    const restboard = measure13.slice(measure13Meter,measure13.length)
+                    console.log(measure13Meter)
+                    console.log(measure13)
+                    const startSlice = updatedBoardData.slice(0,1)
+                    const tmpDefaultPitches = defaultpitchesoccupied
+                    const middleSlice = [item].concat(new Array(steps-1).fill(tmpDefaultPitches))
+                    const endSlice = updatedBoardData.slice(1,updatedBoardData.length-steps)
+                    
+                    const updatedBoardData_ = startSlice.concat(middleSlice).concat(endSlice).concat(restboard)
+                    console.log(startSlice)
+                    console.log(middleSlice)
+                    console.log(endSlice)
+                    console.log(restboard)
+                    return updatedBoardData_
+            
+        })
+                setactiveMeasure(12)
+                setactiveNote(1)
+
+                setPointer(pointer =>{
+                   
+                    return index + steps
+                   
+                })
+                
+            }
+
+            else{
+
+            }
+
+
+
+        }
+                
+            }
+
+
+            else if (activeMeasure == 12) {
+                
+                
+                const fit = checkMatch(index,steps,measure13)
+                
+            if(fit){
+                
+                playSynth(item['type'][0].replace('/',''),1)
+                if (activeNote % measure13Meter == 0) {
+                    const index = 1
+                    setMeasure13(measure13 =>{
+                    
+                    
+                    
+                        
+                        const updatedBoardData = measure13.slice(0,measure13Meter)
+                        const restboard = measure13.slice(measure13Meter,measure13.length)
+                        
+                        const startSlice = updatedBoardData.slice(0,index)
+                        const tmpDefaultPitches = defaultpitchesoccupied
+                        const middleSlice = [item].concat(new Array(steps-1).fill(tmpDefaultPitches))
+                        const endSlice = updatedBoardData.slice(index,updatedBoardData.length-steps)
+                        
+                        const updatedBoardData_ = startSlice.concat(middleSlice).concat(endSlice).concat(restboard)
+                        console.log(updatedBoardData_)
+                        return updatedBoardData_
+    
+                    })
+
+                    setactiveNote(index)
+                    setPointer(pointer =>{
+                        const followUpPointer = index + steps
+                        if(followUpPointer % measure13Meter == 0 ){
+                        return index + steps+1}
+                        else{
+                            return index + steps
+                        }
+                    })
+
+                    
+                }
+
+                else{
+
+                    
+                    const activeItem = calculateSteps( measure13[index].duration)
+
+                setMeasure13(measure13 =>{
+                    
+                    
+                    
+                    
+                    const updatedBoardData = measure13.slice(0,measure13Meter)
+                    const restboard = measure13.slice(measure13Meter,measure13.length)
+                    const steps_ = calculateSteps(updatedBoardData[index].duration) 
+                    const startSlice = updatedBoardData.slice(0,index+steps_)
+                    const  tmpDefaultPitches = defaultpitchesoccupied
+                    const middleSlice = [item].concat(new Array(steps-1).fill(tmpDefaultPitches))
+                    const endSlice = updatedBoardData.slice(index+steps_,updatedBoardData.length-steps)
+                    
+                    
+                    const updatedBoardData_ = startSlice.concat(middleSlice).concat(endSlice).concat(restboard)
+                    return updatedBoardData_
+
+                })
+                setactiveNote(index+activeItem)
+                setPointer(pointer =>{
+                    const followUpPointer = index+activeItem + steps
+                    if(followUpPointer % measure13Meter == 0 ){
+                    return index + steps+1}
+                    else{
+                        return index + steps
+                    }
+                })
+                
+                
+            }
+
+
+        }
+
+
+        else{
+            
+            const currentMeasure_ =  [...measure13]
+            const sliceLen = currentMeasure_.filter(piece => piece.occupied == false).length
+            console.log(currentMeasure_)
+            if(sliceLen > 0){
+                
+                alert.show('This Note doesnt fit into the actual measure!');  return
+            }
+            const lastNoteofMeasure = calculateLastNoteIndex(currentMeasure_)
+            
+            
+            if (activeNote == lastNoteofMeasure) {
+                
+                setPointer(1)
+                const fit = checkMatch(index,steps,measure14)
+                
+                if (!fit) {
+                    alert.show('This Note doesnt fit into the actual measure!'); return
+                }
+
+                setMeasure14(measure14 =>{
+                    
+                    
+                    
+                    
+                    const updatedBoardData = measure14.slice(0,measure14Meter)
+                    const restboard = measure14.slice(measure14Meter,measure14.length)
+                    
+                    const startSlice = updatedBoardData.slice(0,1)
+                    const tmpDefaultPitches = defaultpitchesoccupied
+                    const middleSlice = [item].concat(new Array(steps-1).fill(tmpDefaultPitches))
+                    const endSlice = updatedBoardData.slice(1,updatedBoardData.length-steps)
+                    
+                    const updatedBoardData_ = startSlice.concat(middleSlice).concat(endSlice).concat(restboard)
+                    return updatedBoardData_
+            
+        })
+                setactiveMeasure(13)
+                setactiveNote(1)
+
+                setPointer(pointer =>{
+                   
+                    return index + steps
+                   
+                })
+                
+            }
+
+            else{
+
+            }
+
+
+
+        }
+                
+            }
+            
+            
+            else if (activeMeasure == 13) {
+                
+                const fit = checkMatch(index,steps,measure14)
+                
+            if(fit){
+
+                playSynth(item['type'][0].replace('/',''),1)
+                if (activeNote % measure14Meter == 0) {
+                    const index = 1
+                    setMeasure14(measure14 =>{
+                    
+                    
+                    
+                        
+                        const updatedBoardData = measure14.slice(0,measure14Meter)
+                        const restboard = measure14.slice(measure14Meter,measure14.length)
+                        
+                        const startSlice = updatedBoardData.slice(0,index)
+                        const tmpDefaultPitches = defaultpitchesoccupied
+                        const middleSlice = [item].concat(new Array(steps-1).fill(tmpDefaultPitches))
+                        const endSlice = updatedBoardData.slice(index,updatedBoardData.length-steps)
+                        
+                        const updatedBoardData_ = startSlice.concat(middleSlice).concat(endSlice).concat(restboard)
+                        console.log(updatedBoardData_)
+                        return updatedBoardData_
+    
+                    })
+
+                    setactiveNote(index)
+                    setPointer(pointer =>{
+                        const followUpPointer = index + steps
+                        if(followUpPointer % measure14Meter == 0 ){
+                        return index + steps+1}
+                        else{
+                            return index + steps
+                        }
+                    })
+
+                    
+                }
+
+                else{
+
+                    
+                    const activeItem = calculateSteps( measure14[index].duration)
+
+                setMeasure14(measure14 =>{
+                    
+                    
+                    
+                    
+                    const updatedBoardData = measure14.slice(0,measure14Meter)
+                    const restboard = measure14.slice(measure14Meter,measure14.length)
+                    const steps_ = calculateSteps(updatedBoardData[index].duration) 
+                    const startSlice = updatedBoardData.slice(0,index+steps_)
+                    const  tmpDefaultPitches = defaultpitchesoccupied
+                    const middleSlice = [item].concat(new Array(steps-1).fill(tmpDefaultPitches))
+                    const endSlice = updatedBoardData.slice(index+steps_,updatedBoardData.length-steps)
+                    
+                    
+                    const updatedBoardData_ = startSlice.concat(middleSlice).concat(endSlice).concat(restboard)
+                    return updatedBoardData_
+
+                })
+                setactiveNote(index+activeItem)
+                setPointer(pointer =>{
+                    const followUpPointer = index+activeItem + steps
+                    if(followUpPointer % measure14Meter == 0 ){
+                    return index + steps+1}
+                    else{
+                        return index + steps
+                    }
+                })
+                
+                
+            }
+
+
+        }
+
+
+        else{
+
+            const currentMeasure_ =  [...measure14]
+            const sliceLen = currentMeasure_.filter(piece => piece.occupied == false).length
+            
+            if(sliceLen > 0){
+                alert.show('This Note doesnt fit into the actual measure!');  return
+            }
+            const lastNoteofMeasure = calculateLastNoteIndex(currentMeasure_)
+            
+            
+            if (activeNote == lastNoteofMeasure) {
+                
+                setPointer(1)
+                const fit = checkMatch(index,steps,measure15)
+                
+                if (!fit) {
+                    alert.show('This Note doesnt fit into the actual measure!'); return
+                }
+
+                setMeasure15(measure15 =>{
+                    
+                    
+                    
+                    
+                    const updatedBoardData = measure15.slice(0,measure15Meter)
+                    const restboard = measure15.slice(measure15Meter,measure15.length)
+                    
+                    const startSlice = updatedBoardData.slice(0,1)
+                    const tmpDefaultPitches = defaultpitchesoccupied
+                    const middleSlice = [item].concat(new Array(steps-1).fill(tmpDefaultPitches))
+                    const endSlice = updatedBoardData.slice(1,updatedBoardData.length-steps)
+                    
+                    const updatedBoardData_ = startSlice.concat(middleSlice).concat(endSlice).concat(restboard)
+                    return updatedBoardData_
+            
+        })
+                setactiveMeasure(14)
+                setactiveNote(1)
+
+                setPointer(pointer =>{
+                   
+                    return index + steps
+                   
+                })
+                
+            }
+
+            else{
+
+            }
+
+
+
+        }
+                
+            }
+            
+            else if (activeMeasure == 14) {
+                
+                const fit = checkMatch(index,steps,measure15)
+                
+            if(fit){
+
+                playSynth(item['type'][0].replace('/',''),1)
+                if (activeNote % measure15Meter == 0) {
+                    const index = 1
+                    setMeasure15(measure15 =>{
+                    
+                    
+                    
+                        
+                        const updatedBoardData = measure15.slice(0,measure15Meter)
+                        const restboard = measure15.slice(measure15Meter,measure15.length)
+                        
+                        const startSlice = updatedBoardData.slice(0,index)
+                        const tmpDefaultPitches = defaultpitchesoccupied
+                        const middleSlice = [item].concat(new Array(steps-1).fill(tmpDefaultPitches))
+                        const endSlice = updatedBoardData.slice(index,updatedBoardData.length-steps)
+                        
+                        const updatedBoardData_ = startSlice.concat(middleSlice).concat(endSlice).concat(restboard)
+                        console.log(updatedBoardData_)
+                        return updatedBoardData_
+    
+                    })
+
+                    setactiveNote(index)
+                    setPointer(pointer =>{
+                        const followUpPointer = index + steps
+                        if(followUpPointer % measure15Meter == 0 ){
+                        return index + steps+1}
+                        else{
+                            return index + steps
+                        }
+                    })
+
+                    
+                }
+
+                else{
+
+                    
+                    const activeItem = calculateSteps( measure15[index].duration)
+
+                setMeasure15(measure15 =>{
+                    
+                    
+                    
+                    
+                    const updatedBoardData = measure15.slice(0,measure15Meter)
+                    const restboard = measure15.slice(measure15Meter,measure15.length)
+                    const steps_ = calculateSteps(updatedBoardData[index].duration) 
+                    const startSlice = updatedBoardData.slice(0,index+steps_)
+                    const  tmpDefaultPitches = defaultpitchesoccupied
+                    const middleSlice = [item].concat(new Array(steps-1).fill(tmpDefaultPitches))
+                    const endSlice = updatedBoardData.slice(index+steps_,updatedBoardData.length-steps)
+                    
+                    
+                    const updatedBoardData_ = startSlice.concat(middleSlice).concat(endSlice).concat(restboard)
+                    return updatedBoardData_
+
+                })
+                setactiveNote(index+activeItem)
+                setPointer(pointer =>{
+                    const followUpPointer = index+activeItem + steps
+                    if(followUpPointer % measure15Meter == 0 ){
+                    return index + steps+1}
+                    else{
+                        return index + steps
+                    }
+                })
+                
+                
+            }
+
+
+        }
+
+
+        else{
+
+            const currentMeasure_ =  [...measure15]
+            const sliceLen = currentMeasure_.filter(piece => piece.occupied == false).length
+            
+            if(sliceLen > 0){
+                alert.show('This Note doesnt fit into the actual measure!');  return
+            }
+            const lastNoteofMeasure = calculateLastNoteIndex(currentMeasure_)
+            
+            
+            if (activeNote == lastNoteofMeasure) {
+                
+                setPointer(1)
+                const fit = checkMatch(index,steps,measure16)
+                
+                if (!fit) {
+                    alert.show('This Note doesnt fit into the actual measure!'); return
+                }
+
+                setMeasure16(measure16 =>{
+                    
+                    
+                    
+                    
+                    const updatedBoardData = measure16.slice(0,measure16Meter)
+                    const restboard = measure16.slice(measure16Meter,measure16.length)
+                    
+                    const startSlice = updatedBoardData.slice(0,1)
+                    const tmpDefaultPitches = defaultpitchesoccupied
+                    const middleSlice = [item].concat(new Array(steps-1).fill(tmpDefaultPitches))
+                    const endSlice = updatedBoardData.slice(1,updatedBoardData.length-steps)
+                    
+                    const updatedBoardData_ = startSlice.concat(middleSlice).concat(endSlice).concat(restboard)
+                    return updatedBoardData_
+            
+        })
+                setactiveMeasure(15)
+                setactiveNote(1)
+
+                setPointer(pointer =>{
+                   
+                    return index + steps
+                   
+                })
+                
+            }
+
+            else{
+
+            }
+
+
+
+        }
+                
+            }
+
+            else if (activeMeasure == 15) {
+                
+                const fit = checkMatch(index,steps,measure8)
+                
+            if(fit){
+
+                playSynth(item['type'][0].replace('/',''),1)
+                if (activeNote % measure16Meter == 0) {
+                    const index = 1
+                    setMeasure8(measure16 =>{
+                    
+                    
+                    
+                        
+                        const updatedBoardData = measure16.slice(0,measure16Meter)
+                        const restboard = measure16.slice(measure16Meter,measure16.length)
+                        
+                        const startSlice = updatedBoardData.slice(0,index)
+                        const tmpDefaultPitches = defaultpitchesoccupied
+                        const middleSlice = [item].concat(new Array(steps-1).fill(tmpDefaultPitches))
+                        const endSlice = updatedBoardData.slice(index,updatedBoardData.length-steps)
+                        
+                        const updatedBoardData_ = startSlice.concat(middleSlice).concat(endSlice).concat(restboard)
+                        console.log(updatedBoardData_)
+                        return updatedBoardData_
+    
+                    })
+
+                    setactiveNote(index)
+                    setPointer(pointer =>{
+                        const followUpPointer = index + steps
+                        if(followUpPointer % measure16Meter == 0 ){
+                        return index + steps+1}
+                        else{
+                            return index + steps
+                        }
+                    })
+
+                    
+                }
+
+                else{
+
+                    
+                    const activeItem = calculateSteps( measure16[index].duration)
+
+                setMeasure16(measure16 =>{
+                    
+                    
+                    
+                    
+                    const updatedBoardData = measure16.slice(0,measure16Meter)
+                    const restboard = measure16.slice(measure16Meter,measure16.length)
+                    const steps_ = calculateSteps(updatedBoardData[index].duration) 
+                    const startSlice = updatedBoardData.slice(0,index+steps_)
+                    const  tmpDefaultPitches = defaultpitchesoccupied
+                    const middleSlice = [item].concat(new Array(steps-1).fill(tmpDefaultPitches))
+                    const endSlice = updatedBoardData.slice(index+steps_,updatedBoardData.length-steps)
+                    
+                    
+                    const updatedBoardData_ = startSlice.concat(middleSlice).concat(endSlice).concat(restboard)
+                    return updatedBoardData_
+
+                })
+                setactiveNote(index+activeItem)
+                setPointer(pointer =>{
+                    const followUpPointer = index+activeItem + steps
+                    if(followUpPointer % measure16Meter == 0 ){
+                    return index + steps+1}
+                    else{
+                        return index + steps
+                    }
+                })
+                
+                
+            }
+
+
+        }
+
+
+        
+                
+            }
             testScoring()
             
             
@@ -2403,6 +4091,14 @@ function Compose() {
                 setMeasure6(defaultPitchesArray_(selectedOption['value']))
                 setMeasure7(defaultPitchesArray_(selectedOption['value']))
                 setMeasure8(defaultPitchesArray_(selectedOption['value']))
+                setMeasure9(defaultPitchesArray_(selectedOption['value']))
+                setMeasure10(defaultPitchesArray_(selectedOption['value']))
+                setMeasure11(defaultPitchesArray_(selectedOption['value']))
+                setMeasure12(defaultPitchesArray_(selectedOption['value']))
+                setMeasure13(defaultPitchesArray_(selectedOption['value']))
+                setMeasure14(defaultPitchesArray_(selectedOption['value']))
+                setMeasure15(defaultPitchesArray_(selectedOption['value']))
+                setMeasure16(defaultPitchesArray_(selectedOption['value']))
                 setactiveMeasure(0)
                 setactiveNote(0)
                 setPointer(1)
@@ -2415,6 +4111,14 @@ function Compose() {
                 setmeasure6Meter(selectedOption['value'])
                 setmeasure7Meter(selectedOption['value'])
                 setmeasure8Meter(selectedOption['value'])
+                setmeasure9Meter(selectedOption['value'])
+                setmeasure10Meter(selectedOption['value'])
+                setmeasure11Meter(selectedOption['value'])
+                setmeasure12Meter(selectedOption['value'])
+                setmeasure13Meter(selectedOption['value'])
+                setmeasure14Meter(selectedOption['value'])
+                setmeasure15Meter(selectedOption['value'])
+                setmeasure16Meter(selectedOption['value'])
                 console.log(selectedOption['value'])
     
    
@@ -2552,7 +4256,8 @@ const getSuggestions = () => {
     //setinspirations([])
     setInspirationFlag(true)
     const composition= [measure1,measure2,measure3,measure4,measure5,
-        measure6,measure7,measure8]
+        measure6,measure7,measure8,measure9,measure10,measure11,measure12,measure13,
+        measure14,measure15,measure16]
     const finalComposition = prepareComposition(composition)
     console.log(finalComposition)
     let payload = {
@@ -2623,7 +4328,6 @@ const setWholeMeasure = (inspirations) => {
     const Indices = calculateSortedIndices(result)
     const indicesLen = Math.floor(Indices.length / 2)
     const best = Indices.slice(0, indicesLen)
-    console.log(best)
     const randomIndex = getRandomInt(best.length)
     
     setShowWholeMeasure(inspirations[best[randomIndex].ind])
@@ -2638,7 +4342,7 @@ const setWholeMeasure = (inspirations) => {
     setColorInspirations(inspirations[best[randColorInspirations].ind])
     const randNarmourInspirations = getRandomInt(best.length)
     const narmour = getNarmourEncodings(calculatePitches(inspirations[best[randNarmourInspirations].ind]))
-    console.log(narmour)
+    console.log(showPitches)
     setShowEugeneStructures(narmour)
     
 
@@ -2749,6 +4453,7 @@ const testScoring = () => {
         <div className='div-toptop' >
         <div className='chooseMeter-container'>
         <Select
+        
         defaultValue={selectedOption}
         onChange={setSelectedOption}
         options={meterSelect}
@@ -3146,6 +4851,389 @@ const testScoring = () => {
             
         </div>
         
+        <div className='rowA' >
+                <div className='sliderWidth'>
+            <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
+            <VolumeDownIcon
+    fontSize="inherit"
+    style={{ fontSize: "20px" }}
+  />
+        <Slider 
+                    className='volume9'
+                    onChange={() => changeVolume1(setvolumeMeasure9,'volume9') }
+                    valueLabelDisplay="auto"
+                    getAriaValueText={`${volumeMeasure9}`}
+                    min={-24}
+                    max={8}
+                    step={4}
+                    color="secondary"
+                    aria-label="Temperature"
+                    
+
+                    
+                     />
+                     
+                     
+                      <VolumeUpIcon
+    fontSize="inherit"
+    style={{ fontSize: "20px" }}
+  />
+ 
+  </Stack>
+  </div>
+           
+            <div    className="flex-container"  >
+                <div className="flex-container">
+                     
+                {measure9.slice(0,17).map( (note ,idx) => {
+                    return <Pitches measure={8}  url={note} activated={activeNote}  index={idx} item={note}  board={measure9} />
+                })} </div>
+
+               
+                    
+            </div>
+            
+
+</div>
+            
+            
+            
+
+        <div className='rowA'>
+
+        <div className='sliderWidth'>
+            <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
+            <VolumeDownIcon
+    fontSize="inherit"
+    style={{ fontSize: "20px" }}
+  />
+        <Slider 
+                    className='volume10'
+                    onChange={() => changeVolume1(setvolumeMeasure10,'volume10') }
+                    valueLabelDisplay="auto"
+                    getAriaValueText={`${volumeMeasure10}`}
+                    min={-12}
+                    max={8}
+                    step={4}
+                    color="secondary"
+                    aria-label="Temperature"
+                    
+
+                    
+                     />
+                     
+                     
+                      <VolumeUpIcon
+    fontSize="inherit"
+    style={{ fontSize: "20px" }}
+  />
+ 
+  </Stack>
+  </div>
+                    
+            
+            <div    className="flex-container"  >
+                
+                <div className="flex-container">
+                     
+                {measure10.slice(0,17).map( (note ,idx) => {
+                    return <Pitches measure={9}  url={note} activated={activeNote}  index={idx} item={note} board={measure10}  />
+                })} </div>
+
+                
+                    
+            </div>
+            
+            </div>
+            </div>
+
+            <div    className="row" >
+            <div className='rowA' id='measure3'>
+
+                            <div className='sliderWidth'>
+                            <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
+                            <VolumeDownIcon
+                    fontSize="inherit"
+                    style={{ fontSize: "20px" }}
+                />
+                        <Slider 
+                                    className='volume11'
+                                    onChange={() => changeVolume1(setvolumeMeasure11,'volume11') }
+                                    valueLabelDisplay="auto"
+                                    getAriaValueText={`${volumeMeasure11}`}
+                                    min={-20}
+                                    max={8}
+                                    step={4}
+                                    color="secondary"
+                                    aria-label="Temperature"
+                                    
+
+                                    
+                                    />
+                                    
+                                    
+                                    <VolumeUpIcon
+                    fontSize="inherit"
+                    style={{ fontSize: "20px" }}
+                />
+                
+                </Stack>
+                </div>
+                            
+            <div   className="flex-container"  >
+                
+                 <div className="flex-container">
+                     
+                {measure11.slice(0,17).map( (note ,idx) => {
+                    return <Pitches measure={10}  url={note} activated={activeNote}  index={idx} item={note} board={measure11} />
+                })} </div>
+
+                
+                    
+            </div>
+            
+        </div>        
+
+        <div className='rowA' id='measure3'>
+
+                    <div className='sliderWidth'>
+                        <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
+                        <VolumeDownIcon
+                fontSize="inherit"
+                style={{ fontSize: "20px" }}
+            />
+                    <Slider 
+                                className='volume12'
+                                onChange={() => changeVolume1(setvolumeMeasure12,'volume12') }
+                                valueLabelDisplay="auto"
+                                getAriaValueText={`${volumeMeasure12}`}
+                                min={-12}
+                                max={8}
+                                step={4}
+                                color="secondary"
+                                aria-label="Temperature"
+                                
+
+                                
+                                />
+                                
+                                
+                                <VolumeUpIcon
+                fontSize="inherit"
+                style={{ fontSize: "20px" }}
+            />
+            
+            </Stack>
+            </div>
+            
+            <div   className="flex-container"  >
+                
+                <div className="flex-container">
+                     
+                {measure12.slice(0,17).map( (note ,idx) => {
+                    return <Pitches measure={11}  url={note} activated={activeNote}  index={idx} item={note} board={measure12} />
+                })} </div>
+
+                
+                    
+            </div>
+            
+        </div>        
+  
+            </div>
+
+            <div    className="row" >
+            <div className='rowA' id='measure3'>
+
+                        <div className='sliderWidth'>
+                        <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
+                        <VolumeDownIcon
+                fontSize="inherit"
+                style={{ fontSize: "20px" }}
+            />
+                    <Slider 
+                                className='volume13'
+                                onChange={() => changeVolume1(setvolumeMeasure13,'volume13') }
+                                valueLabelDisplay="auto"
+                                getAriaValueText={`${volumeMeasure13}`}
+                                min={-12}
+                                max={8}
+                                step={4}
+                                color="secondary"
+                                aria-label="Temperature"
+                                
+
+                                
+                                />
+                                
+                                
+                                <VolumeUpIcon
+                fontSize="inherit"
+                style={{ fontSize: "20px" }}
+            />
+            
+            </Stack>
+            </div>
+            
+            <div className="flex-container"  >
+                
+                <div className="flex-container">
+                     
+                {measure13.slice(0,17).map( (note ,idx) => {
+                    return <Pitches measure={12}  url={note} activated={activeNote}  index={idx} item={note} board={measure13} />
+                })} </div>
+
+               
+                    
+            </div>
+            
+        </div>        
+
+        <div className='rowA' id='measure3'>
+
+                    <div className='sliderWidth'>
+                        <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
+                        <VolumeDownIcon
+                fontSize="inherit"
+                style={{ fontSize: "20px" }}
+            />
+                    <Slider 
+                                className='volume14'
+                                onChange={() => changeVolume1(setvolumeMeasure14,'volume14') }
+                                valueLabelDisplay="auto"
+                                getAriaValueText={`${volumeMeasure14}`}
+                                min={-12}
+                                max={8}
+                                step={4}
+                                color="secondary"
+                                aria-label="Temperature"
+                                
+
+                                
+                                />
+                                
+                                
+                                <VolumeUpIcon
+                fontSize="inherit"
+                style={{ fontSize: "20px" }}
+            />
+            
+            </Stack>
+            </div>
+            <div    className="flex-container"  >
+                
+                
+                    <div className="flex-container">
+                     
+                {measure14.slice(0,17).map( (note ,idx) => {
+                    return <Pitches measure={13}  url={note} activated={activeNote}  index={idx} item={note} board={measure13} />
+                })} </div>
+
+                    
+            </div>
+            
+        </div>
+        
+                
+  
+            </div>
+            
+            
+            <div    className="row" >
+            <div className='rowA' id='measure3'>
+
+                            <div className='sliderWidth'>
+                            <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
+                            <VolumeDownIcon
+                    fontSize="inherit"
+                    style={{ fontSize: "20px" }}
+                />
+                        <Slider 
+                                    className='volume15'
+                                    onChange={() => changeVolume1(setvolumeMeasure15,'volume15') }
+                                    valueLabelDisplay="auto"
+                                    getAriaValueText={`${volumeMeasure15}`}
+                                    min={-12}
+                                    max={8}
+                                    step={4}
+                                    color="secondary"
+                                    aria-label="Temperature"
+                                    
+
+                                    
+                                    />
+                                    
+                                    
+                                    <VolumeUpIcon
+                    fontSize="inherit"
+                    style={{ fontSize: "20px" }}
+                />
+                
+                </Stack>
+                </div>
+            
+            <div className="flex-container"  >
+                
+                
+                    <div className="flex-container">
+                     
+                {measure15.slice(0,17).map( (note ,idx) => {
+                    return <Pitches measure={14}  url={note} activated={activeNote}  index={idx} item={note} board={measure16} />
+                })} </div>
+
+               
+                    
+            </div>
+            
+        </div>        
+
+        <div className='rowA' id='measure3'>
+
+                    <div className='sliderWidth'>
+                        <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
+                        <VolumeDownIcon
+                fontSize="inherit"
+                style={{ fontSize: "20px" }}
+            />
+                    <Slider 
+                                className='volume16'
+                                onChange={() => changeVolume1(setvolumeMeasure16,'volume16') }
+                                valueLabelDisplay="auto"
+                                getAriaValueText={`${volumeMeasure16}`}
+                                min={-12}
+                                max={8}
+                                step={4}
+                                color="secondary"
+                                aria-label="Temperature"
+                                
+
+                                
+                                />
+                                
+                                
+                                <VolumeUpIcon
+                fontSize="inherit"
+                style={{ fontSize: "20px" }}
+            />
+            
+            </Stack>
+            </div>
+            
+            <div    className="flex-container"  >
+                
+               
+                    <div className="flex-container">
+                     
+                {measure16.slice(0,17).map( (note ,idx) => {
+                    return <Pitches measure={15}  url={note} activated={activeNote}  index={idx} item={note} board={measure16} />
+                })} </div>
+
+                
+                    
+            </div>
+            
+        </div>
+        
                 
   
             </div>
@@ -3319,7 +5407,8 @@ const testScoring = () => {
                     <div style={{float:"left"}}>
                         
                     <SubmitComposition composition={[measure1,measure2,measure3,measure4,measure5,
-                        measure6,measure7,measure8]} meter={selectedOption['value']} />
+                        measure6,measure7,measure8,measure9,measure10,measure11,measure12,measure13,
+                        measure14,measure15,measure16]} meter={selectedOption['value']} />
                 </div>
                 
                 

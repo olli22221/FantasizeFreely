@@ -19,9 +19,9 @@ function Result() {
 
     let nav = useNavigate();
 
-    const flexMax = 550
-    const origMax = 100
-    const fluencyMax = 500
+    const flexMax = 650
+    const origMax = 75
+    const fluencyMax = 400
     const musicatResult = useRecoilValue(musicatResponseAtom);
     const analogies = useRecoilValue(analogiesAtom);
     const groups = useRecoilValue(groupsAtom);
@@ -50,13 +50,13 @@ function Result() {
 
     useEffect(() => {
 
-        if (submissions > 5) {
-            setJwtToken([])
-        }
+        
 
         setImage("data:image/jpeg;charset=utf-8;base64,"+musicatResult)
+        console.log(analogies)
 
-        const musicatScore = (analogies + groups)/2
+        console.log(groups)
+        const musicatScore = ((analogies + groups)/2)*100
         console.log(musicatScore)
         setOverallScore(Math.floor((musicatScore+(((Math.floor((originalityScore/origMax)*100))+(Math.floor((fluencyScore/fluencyMax)*100))+(Math.floor((flexabilityScore/flexMax)*100)))/3))/2))
 
@@ -70,8 +70,8 @@ function Result() {
             <div style={{float:"left", margin:"50px",backgroundColor:"whitesmoke"}}>
            
                 <img
-                    width={600}
-                    height={600}
+                    width={1100}
+                    height={800}
                     src= {image}
                 />
                 

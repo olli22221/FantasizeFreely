@@ -56,11 +56,14 @@ const clefAndTimeWidth = 60;
     //const notes_ =  notes.filter(piece => piece.show == true && piece.locked == false)
    // console.log(notes)
     const noteType = notes[1]
+    const noteSharp = notes[2]
     for (let index = 0; index < noteType.length; index++) {
         const element = noteType[index];
+        
         if (element == 'r') {
             noteType[index] = 'b/4'
         }
+        
         
     }
     const durations = notes[0]
@@ -69,7 +72,13 @@ const clefAndTimeWidth = 60;
     if(notes != undefined){
     for (let index = 0; index < noteType.length; index++) {
         if(noteType[index] != undefined){
-        measureNotes1.push(new StaveNote({ keys: [noteType[index]], duration: durations[index] }))
+            if (noteSharp[index] == 1) {
+
+                measureNotes1.push(new StaveNote({ keys: [noteType[index]], duration: durations[index] }).addModifier(new Accidental("#")))
+            }
+            else{
+                measureNotes1.push(new StaveNote({ keys: [noteType[index]], duration: durations[index] }))
+            }
         }
     }
 }

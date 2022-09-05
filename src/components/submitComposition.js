@@ -108,8 +108,9 @@ const prepareComposition = (composition_) => {
     
     const finalComposition = prepareComposition(composition)
     const numberOfMeasures = finalComposition.length
-    const maxAnalogies =  Math.floor(numberOfMeasures / 4)
+    const maxAnalogies =  Math.floor(numberOfMeasures / 2)
     const maxGroups =  Math.floor(numberOfMeasures / 2)
+    
 
 
     let payload = {

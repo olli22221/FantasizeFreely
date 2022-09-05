@@ -43,7 +43,7 @@ function PitchesDraggable({item ,url,index, moveItem, target,addPitch,replacePit
                 setButtonActivated(true); setPanelsrc(true)
             }} onMouseUp={()=>{setButtonActivated(false);setPanelsrc(false)}}> 
            <div className='h5'>{url.display} </div>
-                   <div style={{marginLeft:"30px"}}>
+                   <div style={{marginLeft:"30px",cursor:"pointer"}}>
                     
         <img 
             

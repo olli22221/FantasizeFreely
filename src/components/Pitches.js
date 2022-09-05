@@ -66,7 +66,7 @@ function Pitches({measure,item ,url,index, deleteItem, moveItem, addItem,board,f
             height="128px" 
             width="27px"
             src={url.src} 
-            style={{border: isActive? '2px solid red' : ''}} 
+            style={{border: isActive? '2px solid red' : '',cursor:"pointer"}} 
             onClick={changeColor}
             
         /> </div>
