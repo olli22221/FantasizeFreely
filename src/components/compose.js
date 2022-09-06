@@ -2646,7 +2646,7 @@ function Compose() {
             
             
             else if (activeMeasure == 5) {
-                
+                console.log("Testo")
                 const fit = checkMatch(index,steps,measure6)
                 
             if(fit){
@@ -2926,9 +2926,9 @@ function Compose() {
             else if (activeMeasure == 7) {
                 
                 const fit = checkMatch(index,steps,measure8)
-                
+            
             if(fit){
-
+                
                 playSynth(item['type'][0].replace('/',''),1)
                 if (activeNote % measure8Meter == 0) {
                     const index = 1
@@ -2946,7 +2946,6 @@ function Compose() {
                         const endSlice = updatedBoardData.slice(index,updatedBoardData.length-steps)
                         
                         const updatedBoardData_ = startSlice.concat(middleSlice).concat(endSlice).concat(restboard)
-                        console.log(updatedBoardData_)
                         return updatedBoardData_
     
                     })
@@ -2954,27 +2953,21 @@ function Compose() {
                     setactiveNote(index)
                     setPointer(pointer =>{
                         const followUpPointer = index + steps
-                        if(followUpPointer % measure8Meter == 0 ){
+                        if(followUpPointer % 17 == 0 ){
                         return index + steps+1}
                         else{
                             return index + steps
                         }
                     })
 
-                    
                 }
-
-                else{
-
-                    
+               else{
+ 
                     const activeItem = calculateSteps( measure8[index].duration)
 
                 setMeasure8(measure8 =>{
                     
-                    
-                    
-                    
-                    const updatedBoardData = measure8.slice(0,measure8Meter)
+                    const updatedBoardData = measure8.slice(0,measure1Meter)
                     const restboard = measure8.slice(measure8Meter,measure8.length)
                     const steps_ = calculateSteps(updatedBoardData[index].duration) 
                     const startSlice = updatedBoardData.slice(0,index+steps_)
@@ -2984,13 +2977,14 @@ function Compose() {
                     
                     
                     const updatedBoardData_ = startSlice.concat(middleSlice).concat(endSlice).concat(restboard)
+                    console.log(updatedBoardData_)
                     return updatedBoardData_
 
                 })
                 setactiveNote(index+activeItem)
                 setPointer(pointer =>{
                     const followUpPointer = index+activeItem + steps
-                    if(followUpPointer % measure8Meter == 0 ){
+                    if(followUpPointer % measure1Meter == 0 ){
                     return index + steps+1}
                     else{
                         return index + steps
@@ -3004,11 +2998,66 @@ function Compose() {
         }
 
 
-        
+        else{
+
+            const currentMeasure_ =  [...measure8]
+            const sliceLen = currentMeasure_.filter(piece => piece.occupied == false).length
+            if(sliceLen > 0){
+                
+                    alert.show('This Note doesnt fit into the actual measure!');  return
+                
+                
+            }
+            
+            const lastNoteofMeasure = calculateLastNoteIndex(currentMeasure_)
+            if (activeNote == lastNoteofMeasure) {
+                
+                setPointer(1)
+                const fit = checkMatch(index,steps,measure9)
+                
+                if (!fit) {
+                    alert.show('This Note doesnt fit into the actual measure!');  return
+                }
+                
+                
+                
+                    setMeasure9(measure9 =>{
+                    
+                    
+                    
+                        
+                        const updatedBoardData = measure9.slice(0,measure9Meter)
+                        const restboard = measure9.slice(measure9Meter,measure9.length)
+                        
+                        const startSlice = updatedBoardData.slice(0,1)
+                        const tmpDefaultPitches = defaultpitchesoccupied
+                        const middleSlice = [item].concat(new Array(steps-1).fill(tmpDefaultPitches))
+                        const endSlice = updatedBoardData.slice(1,updatedBoardData.length-steps)
+                        
+                        const updatedBoardData_ = startSlice.concat(middleSlice).concat(endSlice).concat(restboard)
+                        return updatedBoardData_
+                
+            })
+
+            setactiveMeasure(8)
+                setactiveNote(1)
+                
+                setPointer(pointer =>{
+                   
+                    return index + steps
+                   
+                })
+        }
+
+            else{
+
+            }
+
+        }
                 
             }
 
-            if (activeMeasure == 8) {
+            else if (activeMeasure == 8) {
                 
                 const fit = checkMatch(index,steps,measure9)
             
@@ -3125,7 +3174,7 @@ function Compose() {
             })
 
             setactiveMeasure(9)
-                setactiveNote(10)
+                setactiveNote(1)
                 
                 setPointer(pointer =>{
                    
@@ -3146,10 +3195,11 @@ function Compose() {
             }
             else if (activeMeasure == 9) {
                 
+                
                 const fit = checkMatch(index,steps,measure10)
                 
             if(fit){
-
+                
                 playSynth(item['type'][0].replace('/',''),1)
                 if (activeNote % measure10Meter == 0) {
                     const index = 1
@@ -3226,12 +3276,13 @@ function Compose() {
 
 
         else{
-
+            
             const currentMeasure_ =  [...measure10]
             const sliceLen = currentMeasure_.filter(piece => piece.occupied == false).length
-            
+            console.log(currentMeasure_)
             if(sliceLen > 0){
-                alert.show('This Note doesnt fit into the actual measure!'); return
+                
+                alert.show('This Note doesnt fit into the actual measure!');  return
             }
             const lastNoteofMeasure = calculateLastNoteIndex(currentMeasure_)
             
@@ -3532,7 +3583,7 @@ function Compose() {
                     
                     
                     console.log(measure13)
-                    const updatedBoardData = measure5.slice(0,measure13Meter)
+                    const updatedBoardData = measure13.slice(0,measure13Meter)
                     
                     const restboard = measure13.slice(measure13Meter,measure13.length)
                     console.log(measure13Meter)
@@ -3994,14 +4045,14 @@ function Compose() {
 
             else if (activeMeasure == 15) {
                 
-                const fit = checkMatch(index,steps,measure8)
+                const fit = checkMatch(index,steps,measure16)
                 
             if(fit){
 
                 playSynth(item['type'][0].replace('/',''),1)
                 if (activeNote % measure16Meter == 0) {
                     const index = 1
-                    setMeasure8(measure16 =>{
+                    setMeasure16(measure16 =>{
                     
                     
                     
@@ -4119,7 +4170,7 @@ function Compose() {
                 setmeasure14Meter(selectedOption['value'])
                 setmeasure15Meter(selectedOption['value'])
                 setmeasure16Meter(selectedOption['value'])
-                console.log(selectedOption['value'])
+                
     
    
 
@@ -4850,6 +4901,8 @@ const testScoring = () => {
             </div>
             
         </div>
+        </div>
+        <div className='row' >
         
         <div className='rowA' >
                 <div className='sliderWidth'>
@@ -5126,7 +5179,7 @@ const testScoring = () => {
                     <div className="flex-container">
                      
                 {measure14.slice(0,17).map( (note ,idx) => {
-                    return <Pitches measure={13}  url={note} activated={activeNote}  index={idx} item={note} board={measure13} />
+                    return <Pitches measure={13}  url={note} activated={activeNote}  index={idx} item={note} board={measure14} />
                 })} </div>
 
                     
@@ -5178,7 +5231,7 @@ const testScoring = () => {
                     <div className="flex-container">
                      
                 {measure15.slice(0,17).map( (note ,idx) => {
-                    return <Pitches measure={14}  url={note} activated={activeNote}  index={idx} item={note} board={measure16} />
+                    return <Pitches measure={14}  url={note} activated={activeNote}  index={idx} item={note} board={measure15} />
                 })} </div>
 
                

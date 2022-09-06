@@ -4,7 +4,7 @@ import {midiFiles as midiFilesAtom, jwtToken as jwtTokenAtom,
   musicatResponse as musicatResponseAtom, originalityScore as originalityScoreAtom,
   fluencyScore as fluencyScoreAtom,flexabilityScore as flexabilityScoreAtom,
 submissions as submissionsAtom, inspirationFlag as inspirationFlagAtom ,
-groups as groupsAtom, analogies as analogiesAtom} from '../redux/store'
+groups as groupsAtom, analogies as analogiesAtom, totalResult as totalResultAtom} from '../redux/store'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import axios from "axios";
 import { calculateSteps } from './util';
@@ -30,14 +30,11 @@ const [analogies, setAnalogies] = useRecoilState(analogiesAtom);
 const [counter, setCounter] = useRecoilState(counterAtom);
 const [submissions, setSubmissions] = useRecoilState(submissionsAtom);
 const [musicatResponse, setmusicatResponse] = useRecoilState(musicatResponseAtom);
-const [originalityScore, setOriginalityScore] = useRecoilState(originalityScoreAtom);
-const [flexabilityScore, setFlexabilityScore] = useRecoilState(flexabilityScoreAtom);
-const [fluencyScore, setFluencyScore] = useRecoilState(fluencyScoreAtom);
+const [totalResult, setTotalResult] = useRecoilState(totalResultAtom);
+
 
 const checkComposition = (composition_,meter_) => {
-  console.log(composition_)
-  console.log(meter_)
-
+  let measureCnt = 0;
   for (let index = 0; index < composition_.length; index++) {
     const measure = composition_[index].filter(element => element.locked == false && element.occupied==true)
     let meterInformation = meter_ - 1
@@ -46,12 +43,24 @@ const checkComposition = (composition_,meter_) => {
         meterInformation = meterInformation - dur
       
     }
-    if (meterInformation > 0) {
-      return false
+    if (measureCnt < 8) {
+      if (meterInformation > 0) {
+        return false
+      }
+      else{measureCnt++}
+      
     }
+      
 
 
   }
+
+  if(measureCnt < 8){
+    return false
+  }
+
+
+
   return true
     
 
@@ -74,7 +83,9 @@ const prepareComposition = (composition_) => {
   for (let index = 0; index < composition_.length; index++) {
 
     const measure = composition_[index].filter(element => element.locked == false && element.occupied==true)
-    
+    if (measure.length < 1) {
+      return result
+    }
     let tmpMeasure = []
     for (let idx = 0; idx < measure.length; idx++) {
       let tmpNote = {
@@ -82,9 +93,16 @@ const prepareComposition = (composition_) => {
         duration: measure[idx].duration,
         accented: measure[idx].accented
       }
+      if (measure.length > 0) {
       tmpMeasure.push(tmpNote)
 
+      }
+      else{
+        return result
+      }
+
     }
+
     result.push(tmpMeasure)
   }
   
@@ -107,9 +125,7 @@ const prepareComposition = (composition_) => {
     
     
     const finalComposition = prepareComposition(composition)
-    const numberOfMeasures = finalComposition.length
-    const maxAnalogies =  Math.floor(numberOfMeasures / 2)
-    const maxGroups =  Math.floor(numberOfMeasures / 2)
+    
     
 
 
@@ -127,12 +143,9 @@ const prepareComposition = (composition_) => {
         }
     }).then((response) => {
         console.log(response)
-        setFlexabilityScore(response.data['flexability'])
-        setFluencyScore(response.data['fluency'])
-        setOriginalityScore(response.data['originality'])
+        
         setmusicatResponse(response.data['musicatPNG'])
-        setAnalogies(response.data['analogies'].length / maxAnalogies)
-        setGroups(response.data['groups'].length / maxGroups)
+        setTotalResult(response.data['totalScore'])
         const submissionCount = submissions + 1
         setSubmissions(submissionCount)
         

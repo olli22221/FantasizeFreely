@@ -16,6 +16,13 @@ export const groups = atom ({
     effects_UNSTABLE: [persistAtom],
 })
 
+export const totalResult = atom ({
+    key: "totalResult",
+    default: 0, 
+    effects_UNSTABLE: [persistAtom],
+})
+
+
 export const inspirationFlag = atom ({
     key: "inspirationFlag",
     default: false, 
@@ -225,46 +232,46 @@ export const measure8 = atom({
     effects_UNSTABLE: [persistAtom],
 })
 export const measure9 = atom({
-    key: "board",
+    key: "boar8",
     default: defaultPitchesArray_(17), 
     effects_UNSTABLE: [persistAtom],
 })
 export const measure10 = atom({
-    key: "board1",
+    key: "board9",
     default: defaultPitchesArray_(17), 
     effects_UNSTABLE: [persistAtom],
 })
 
 export const measure11 = atom({
-    key: "board2",
+    key: "board10",
     default: defaultPitchesArray_(17), 
     effects_UNSTABLE: [persistAtom],
 })
 
 export const measure12 = atom({
-    key: "board3",
+    key: "board11",
     default: defaultPitchesArray_(17), 
     effects_UNSTABLE: [persistAtom],
 })
 export const measure13 = atom({
-    key: "board4",
+    key: "board12",
     default: defaultPitchesArray_(17), 
     effects_UNSTABLE: [persistAtom],
 })
 
 export const measure14 = atom({
-    key: "board5",
+    key: "board13",
     default: defaultPitchesArray_(17), 
     effects_UNSTABLE: [persistAtom],
 })
 export const measure15 = atom({
-    key: "board6",
+    key: "board14",
     default: defaultPitchesArray_(17), 
     effects_UNSTABLE: [persistAtom],
 })
 
 export const measure16 = atom({
-    key: "board7",
+    key: "board15",
     default: defaultPitchesArray_(17), 
     effects_UNSTABLE: [persistAtom],
 })

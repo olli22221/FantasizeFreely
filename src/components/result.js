@@ -7,7 +7,7 @@ import { measure1 as measure1Atom,measure2 as measure2Atom,
     measure7 as measure7Atom,measure8 as measure8Atom, musicatResponse as musicatResponseAtom,originalityScore as originalityScoreAtom,
     fluencyScore as fluencyScoreAtom,flexabilityScore as flexabilityScoreAtom,
     submissions as submissionsAtom, jwtToken as jwtTokenAtom,
-analogies as analogiesAtom, groups as groupsAtom} from '../redux/store'
+analogies as analogiesAtom, groups as groupsAtom, totalResult as totalResultAtom} from '../redux/store'
     
 import { Progress } from 'react-sweet-progress';
 import { Button } from '@mui/material';
@@ -18,20 +18,20 @@ import { Button } from '@mui/material';
 function Result() {
 
     let nav = useNavigate();
-
-    const flexMax = 650
-    const origMax = 75
-    const fluencyMax = 400
+    const maxTotalResult = 400
+    
     const musicatResult = useRecoilValue(musicatResponseAtom);
     const analogies = useRecoilValue(analogiesAtom);
     const groups = useRecoilValue(groupsAtom);
-    const [originalityScore, setOriginalityScore] = useRecoilState(originalityScoreAtom);
-    const [flexabilityScore, setFlexabilityScore] = useRecoilState(flexabilityScoreAtom);
-    const [fluencyScore, setFluencyScore] = useRecoilState(fluencyScoreAtom);
+    const totalResult = useRecoilValue(totalResultAtom);
+    
     const [image, setImage] = useState("");
     const [submissions, setSubmissions] = useRecoilState(submissionsAtom);
+    const [flexabilityScore, setFlexabilityScore] = useRecoilState(flexabilityScoreAtom);
+    const [fluencyScore, setFluencyScore] = useRecoilState(fluencyScoreAtom);
+    const [originalityScore, setOriginalityScore] = useRecoilState(originalityScoreAtom);
     const [jwtToken, setJwtToken] = useRecoilState(jwtTokenAtom);
-    const [overallScore, setOverallScore] = useState(0);
+
 
 
     const nextComposition = () => {
@@ -44,6 +44,9 @@ function Result() {
     const endTask = () => {
         setJwtToken([])
         setSubmissions(0)
+        setFlexabilityScore(0)
+        setFluencyScore(0)
+        setOriginalityScore(0)
         nav("/")
         
     }
@@ -53,12 +56,8 @@ function Result() {
         
 
         setImage("data:image/jpeg;charset=utf-8;base64,"+musicatResult)
-        console.log(analogies)
+        
 
-        console.log(groups)
-        const musicatScore = ((analogies + groups)/2)*100
-        console.log(musicatScore)
-        setOverallScore(Math.floor((musicatScore+(((Math.floor((originalityScore/origMax)*100))+(Math.floor((fluencyScore/fluencyMax)*100))+(Math.floor((flexabilityScore/flexMax)*100)))/3))/2))
 
     },[musicatResult])
     
@@ -67,7 +66,7 @@ function Result() {
     return (
 
         <div>
-            <div style={{float:"left", margin:"50px",backgroundColor:"whitesmoke"}}>
+            <div style={{float:"left", margin:"25px",backgroundColor:"whitesmoke"}}>
            
                 <img
                     width={1100}
@@ -79,20 +78,20 @@ function Result() {
             </div>
             <div>
                 <div>
-            <div style={{border:"solid 4px silver",borderRadius:"20px",backgroundColor:"#debd90" ,width:"400px", height:"300px", marginTop:"200px",alignItems:"center",display:"flex",justifyContent:"center"}}>
+            <div style={{border:"solid 4px silver",borderRadius:"20px",backgroundColor:"#debd90" ,width:"400px", height:"300px", marginTop:"100px",alignItems:"center",display:"flex",justifyContent:"center"}}>
                 <div style={{float:"left"}}>
                    
             <div style={{float:"left"}}>
                     <div style={{borderRadius:"8px",textAlign: "center",height:"30px",width:"130px","fontWeight": "bold",backgroundColor:"#399ddb" ,marginBottom:"30px"}}>
-                    Overall Score
+                    Creativity Score
                     </div>
-            <Progress  type="circle" percent={overallScore}  />
+            <Progress  type="circle" percent={(Math.floor((totalResult/maxTotalResult)*100))}  />
             </div>
             </div>
             </div>
             </div>
-            {submissions < 5 && <Button onClick={nextComposition} style={{"fontWeight": "bold","borderRadius":"5px","color":"white","height":"50px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}}>Another Composition</Button>}
-            {submissions > 3 && <Button onClick={endTask} style={{"fontWeight": "bold","borderRadius":"5px","color":"white","height":"50px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}}>End Task</Button>}
+            {submissions < 5 && <Button onClick={nextComposition} style={{margin:"50px","fontWeight": "bold","borderRadius":"5px","color":"white","height":"50px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}}>Another Composition</Button>}
+            {submissions > 3 && <Button onClick={endTask} style={{margin:"50px","fontWeight": "bold","borderRadius":"5px","color":"white","height":"50px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}}>End Task</Button>}
 
 
             </div>
