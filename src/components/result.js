@@ -24,6 +24,7 @@ function Result() {
     const analogies = useRecoilValue(analogiesAtom);
     const groups = useRecoilValue(groupsAtom);
     const totalResult = useRecoilValue(totalResultAtom);
+
     
     const [image, setImage] = useState("");
     const [submissions, setSubmissions] = useRecoilState(submissionsAtom);
@@ -31,6 +32,7 @@ function Result() {
     const [fluencyScore, setFluencyScore] = useRecoilState(fluencyScoreAtom);
     const [originalityScore, setOriginalityScore] = useRecoilState(originalityScoreAtom);
     const [jwtToken, setJwtToken] = useRecoilState(jwtTokenAtom);
+    const [creativityCategory, setCreativityCategory] = useState(null);
 
 
 
@@ -53,10 +55,19 @@ function Result() {
 
     useEffect(() => {
 
-        
-
+        console.log(totalResult)
+        if (totalResult < 200) {
+            setCreativityCategory(0)
+            
+        }
+        else if(totalResult >= 200 && totalResult < 350) {
+            setCreativityCategory(1)
+        }
+        else if(totalResult >= 350) {
+            setCreativityCategory(2)
+        }
         setImage("data:image/jpeg;charset=utf-8;base64,"+musicatResult)
-        
+        console.log(creativityCategory)
 
 
     },[musicatResult])
@@ -66,11 +77,13 @@ function Result() {
     return (
 
         <div>
+            <div style={{marginBottom:"30px",fontSize:"40px","fontWeight": "bold",textAlign:"center"}}> Grading your Composition  </div>
+
             <div style={{float:"left", margin:"25px",backgroundColor:"whitesmoke"}}>
-           
+           <div style={{marginTop:"30px",fontSize:"25px","fontWeight": "bold",textAlign:"center"}}> Musicat Listening Result </div>
                 <img
-                    width={1100}
-                    height={800}
+                    width={1200}
+                    height={700}
                     src= {image}
                 />
                 
@@ -87,15 +100,29 @@ function Result() {
                     </div>
             <Progress  type="circle" percent={(Math.floor((totalResult/maxTotalResult)*100))}  />
             </div>
+            
             </div>
             </div>
+            
             </div>
             {submissions < 5 && <Button onClick={nextComposition} style={{margin:"50px","fontWeight": "bold","borderRadius":"5px","color":"white","height":"50px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}}>Another Composition</Button>}
             {submissions > 3 && <Button onClick={endTask} style={{margin:"50px","fontWeight": "bold","borderRadius":"5px","color":"white","height":"50px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}}>End Task</Button>}
 
 
             </div>
+            <div style={{backgroundColor:"#debd90",height:"350px"}}>
+            {creativityCategory==2 && <div>    <span style={{fontSize: "200px", float:"left"}}>🤩</span>
+                        <span style={{"fontWeight": "bold",fontSize: "50px"}}>WOW! That was highly creative. Congratulation!</span>
+                        </div>}
+            {creativityCategory==1 && <div>    <span style={{fontSize: "200px", float:"left"}}>😐</span>
+                    <span style={{"fontWeight": "bold",fontSize: "40px"}}>That was moderately creative. Good Job but there is room for improvement! </span>
+                    </div>}
+            {creativityCategory==0 && <div>    <span style={{fontSize: "200px", float:"left"}}>😟</span>
+                    <span style={{"fontWeight": "bold",fontSize: "40px"}}>That was not creative at all. You have to work on yourself!</span>
+                    </div>}
 
+                    </div>
+            
         </div>
 
 

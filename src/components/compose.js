@@ -5488,8 +5488,10 @@ const testScoring = () => {
             <Progress  type="circle" percent={Math.floor((originalityScore/origMax)*100)}  />
 
             </div>
+           
             </div>
-                
+            
+            
                 
             </div>
 

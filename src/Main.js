@@ -54,9 +54,9 @@ function Main() {
        }).then((response) => {
             console.log(response.data)
             setjwtToken(response.data)
-            setFlexabilityScore([])
-            setFluencyScore([])
-            setOriginalityScore([])
+            setFlexabilityScore(0)
+            setFluencyScore(0)
+            setOriginalityScore(0)
             nav("/Compose")
             caches.keys().then((names) => {
                 names.forEach((name) => {
