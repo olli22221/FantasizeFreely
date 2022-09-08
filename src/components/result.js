@@ -77,10 +77,10 @@ function Result() {
     return (
 
         <div>
-            <div style={{marginBottom:"30px",fontSize:"40px","fontWeight": "bold",textAlign:"center"}}> Grading your Composition  </div>
+            <div style={{backgroundColor:"#debd90" ,marginBottom:"30px",fontSize:"40px","fontWeight": "bold",textAlign:"center"}}> Grading your Composition  </div>
 
-            <div style={{float:"left", margin:"25px",backgroundColor:"whitesmoke"}}>
-           <div style={{marginTop:"30px",fontSize:"25px","fontWeight": "bold",textAlign:"center"}}> Musicat Listening Result </div>
+            <div style={{borderRadius:"30px",border:"dashed 10px #debd90",float:"left", margin:"25px",backgroundColor:"whitesmoke"}}>
+           <div style={{marginTop:"30px",fontSize:"25px","fontWeight": "bold",textAlign:"center"}}> Musicats Listening Result </div>
                 <img
                     width={1200}
                     height={700}
