@@ -4133,7 +4133,7 @@ function Compose() {
 
         }
 
-       /* useEffect(() => {
+        useEffect(() => {
                 setMeasure1(defaultPitchesArray_(selectedOption['value']))
                 setMeasure2(defaultPitchesArray_(selectedOption['value']))
                 setMeasure3(defaultPitchesArray_(selectedOption['value']))
@@ -4175,7 +4175,7 @@ function Compose() {
    
 
         },[selectedOption])
-        */
+        
 
         const switchLeft = ( measureNumber) =>{
             if (meterIndex1 == 0){
