@@ -4498,7 +4498,7 @@ const testScoring = () => {
     
 
     return(
-        <div>
+        <div style={{display:"flex"}}>
 
             <div className='topColumnLeft' onMouseEnter={()=>{setHover(true)}} onMouseLeave={()=>{setHover(false)}}>
         <div className='div-toptop' >
@@ -5466,16 +5466,16 @@ const testScoring = () => {
                 
                 
                 </div>
-                <div style={{border:"solid 4px silver",borderRadius:"20px",backgroundColor:"#debd90" ,width:"700px", height:"250px", marginTop:"130px",alignItems:"center",display:"flex",justifyContent:"center"}}>
+                <div style={{display:"flex",border:"solid 4px silver",borderRadius:"20px",backgroundColor:"#debd90" ,maxWidth:"700px", maxHeight:"250px", marginTop:"130px",alignItems:"center",display:"flex",justifyContent:"center"}}>
                 <div style={{float:"left"}}>
-                    <div style={{borderRadius:"8px",textAlign: "center",height:"30px",width:"130px","fontWeight": "bold",backgroundColor:"#399ddb" ,marginBottom:"30px"}}>
+                    <div style={{display:"flex",borderRadius:"8px",textAlign: "center",maxHeight:"30px",maxWidth:"130px","fontWeight": "bold",backgroundColor:"#399ddb" ,marginBottom:"30px"}}>
                     Flexability Score
                     </div>
             <Progress  type="circle" percent={Math.floor((flexabilityScore/flexMax)*100)}  />
 
             </div>
             <div style={{float:"left", marginLeft:"60px"}}>
-                    <div style={{borderRadius:"8px",textAlign: "center",height:"30px",width:"130px","fontWeight": "bold",backgroundColor:"#399ddb" ,marginBottom:"30px"}}>
+                    <div style={{display:"flex",borderRadius:"8px",textAlign: "center",maxHeight:"30px",maxWidth:"130px","fontWeight": "bold",backgroundColor:"#399ddb" ,marginBottom:"30px"}}>
                     Fluency Score
                     </div>
             <Progress  type="circle" percent={Math.floor((fluencyScore/fluencyMax)*100)}  />

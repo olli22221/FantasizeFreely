@@ -104,11 +104,12 @@
 .topColumnRight{
   width: 830px;
   height: 800px;
+  display:"flex";
   float: right;
 }
 .topColumnLeft{
   width: 990px;
- 
+  display:"flex";
   float: left;
 }
 

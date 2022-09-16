@@ -48,8 +48,8 @@ function PitchesDraggable({item ,url,index, moveItem, target,addPitch,replacePit
         <img 
             
             className="flex-pitch"
-            height="135px" 
-            width="39px" 
+            height="115px" 
+            width="29px" 
             src= {url.panelsrc} 
            
             

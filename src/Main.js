@@ -43,7 +43,8 @@ function Main() {
 
 
             let payload = {
-                data:name
+                data:name,
+                basic:"0"
             }
         
 
@@ -65,7 +66,10 @@ function Main() {
               });
 
         }).catch((error) => {
-            console.log(error)
+            if(error.response.status == 408 ){
+                alert.show('Given Initial already exists. Please provide a different inital');  return
+            }else{
+            console.log(error)}
         })
 
     }
