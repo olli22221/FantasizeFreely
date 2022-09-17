@@ -5,7 +5,8 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { jwtToken as jwtTokenAtom, originalityScore as originalityScoreAtom,
-flexabilityScore as flexabilityScoreAtom, fluencyScore as fluencyScoreAtom } from "./redux/store";
+flexabilityScore as flexabilityScoreAtom, fluencyScore as fluencyScoreAtom 
+, submissions as submissionsAtom} from "./redux/store";
 import  { useState,useCallback,useEffect } from 'react';
 import Typewriter from 'typewriter-effect';
 import Box from '@mui/material/Box';
@@ -28,6 +29,7 @@ function Main() {
     const [originalityScore, setOriginalityScore] = useRecoilState(originalityScoreAtom);
     const [flexabilityScore, setFlexabilityScore] = useRecoilState(flexabilityScoreAtom);
     const [fluencyScore, setFluencyScore] = useRecoilState(fluencyScoreAtom);
+    const [submissions, setSubmissions] = useRecoilState(submissionsAtom);
     const [name, setName] = useState('');
     const handleChange = (event) => {
       setName(event.target.value);
@@ -58,6 +60,7 @@ function Main() {
             setFlexabilityScore(0)
             setFluencyScore(0)
             setOriginalityScore(0)
+            setSubmissions(0)
             nav("/Compose")
             caches.keys().then((names) => {
                 names.forEach((name) => {
