@@ -127,8 +127,7 @@ function Main() {
         />
             </div >
             
-            <Button style={{height:"150px",padding:"0px",backgroundColor:"#403c3b",marginTop:"70px",marginLeft:"230px","borderRadius":"5px","font-weight": "bold","height":"50px","width":"255px","border":"gold 2px solid"}}><Link style={{color:'white',textDecoration: 'none'}} to="/tutorial" target="_blank">Tutorial</Link></Button>
-            <Button style={{height:"150px",padding:"0px",backgroundColor:"#403c3b",marginTop:"70px",marginLeft:"50px","borderRadius":"5px","font-weight": "bold","height":"50px","width":"265px","border":"gold 2px solid"}} onClick={navToComposePanel}>Start Composing</Button>
+            <Button style={{height:"150px",padding:"0px",backgroundColor:"#403c3b",marginTop:"70px",marginLeft:"150px","borderRadius":"5px","font-weight": "bold","height":"50px","width":"265px","border":"gold 2px solid"}} onClick={navToComposePanel}>Start Composing</Button>
 
         </div>
     </div>
