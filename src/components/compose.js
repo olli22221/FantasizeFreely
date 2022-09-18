@@ -5466,7 +5466,7 @@ const testScoring = () => {
                 
                 
                 </div>
-                <div style={{display:"flex",border:"solid 4px silver",borderRadius:"20px",backgroundColor:"#debd90" ,maxWidth:"700px", maxHeight:"250px", marginTop:"130px",alignItems:"center",display:"flex",justifyContent:"center"}}>
+                <div style={{border:"solid 4px silver",borderRadius:"20px",backgroundColor:"#debd90" ,maxWidth:"700px", maxHeight:"250px", marginTop:"130px",alignItems:"center",justifyContent:"center"}}>
                 <div style={{float:"left"}}>
                     <div style={{display:"flex",borderRadius:"8px",textAlign: "center",maxHeight:"30px",maxWidth:"130px","fontWeight": "bold",backgroundColor:"#399ddb" ,marginBottom:"30px"}}>
                     Flexability Score
