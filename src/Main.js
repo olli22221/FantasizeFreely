@@ -12,15 +12,9 @@ import Typewriter from 'typewriter-effect';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { useAlert } from 'react-alert'
+import { Button, Stack } from '@mui/material';
 
 
-const Button = styled.button`
-    background-color: blue;
-    font-size: 30px;
-    padding: 100px 60px;
-    color: white;
-    background-color:rgb(190, 165, 132);
-`
 
 
 function Main() {
@@ -89,13 +83,27 @@ function Main() {
 
     return (
         <div>
-        <div style={{fontSize: "50px",textAlign:"center",fontFamily:"Cursive",height:"80px",width:"550px",marginLeft:"500px",marginTop:"30px", backgroundColor:"#403c3b","color":"white" }}>
+        <div style={{fontSize: "50px",textAlign:"center",fontFamily:"Cursive",height:"80px",width:"550px",marginLeft:"700px",marginTop:"30px", "color":"#2e63b8" }}>
         Fantasize Freely
     </div>
     <div style={{alignItems:"center",display:"flex",justifyContent:"center"}} >
         
+      
        
-        <div>
+        <div style={{height:"700px"}}>
+        
+            
+        
+            <div style={{textAlign:"center",fontFamily:"Cursive",borderRadius:"30px",fontSize: "22px",height:"340px",width:"1000px",marginLeft:"70px",marginTop:"60px", backgroundColor:"white","color":"black"}}>
+        <Typewriter options={{delay: 30}}
+        onInit={(typewriter) => {
+            typewriter.typeString("Welcome fellow Musician! On this platform you can test your creativity in melody composition. The main task is to compose 3-5 short melodies with a length of 8 to 16 measures. During composing you have the opportunity to listen to your melody but also you can play it on an acoustic instrument. An artificial intelligence can provide you with inspirations which are around one measure. But make sure all the previously composed measures are completely filled. Otherwise it will just reject your request. The provided material from the AI is presented to you in different forms (e.g. just showing the durations or a sequence of different strength of a color will be shown). On the bottom right 3 different creativity score are shown. They are updated in realtime while composing. When the time has come and you think your melody is ready for a submission just click on the submitComposition Button. I wish you a lot of fun!").start();
+        } }  
+        />
+            </div  >
+
+             
+        <div style={{marginTop:"50px", marginLeft:"350px"}}>
         <Box
       component="form"
       sx={{
@@ -114,20 +122,8 @@ function Main() {
       
     </Box>
     </div>
-       
-        <div style={{height:"900px"}}>
-        
             
-        
-            <div style={{textAlign:"center",fontFamily:"Cursive",borderRadius:"30px",fontSize: "25px",height:"540px",width:"800px",marginLeft:"100px",marginTop:"50px", backgroundColor:"#403c3b","color":"white"}}>
-        <Typewriter options={{delay: 30}}
-        onInit={(typewriter) => {
-            typewriter.typeString("Welcome fellow Musician! On this platform you can test your creativity in melody composition. The main task is to compose 3-5 short melodies with a length of 8 to 16 measures. During composing you have the opportunity to listen to your melody but also you can play it on an acoustic instrument. An artificial intelligence can provide you with inspirations which are around one measure. But make sure all the previously composed measures are completely filled. Otherwise it will just reject your request. The provided material from the AI is presented to you in different forms (e.g. just showing the durations or a sequence of different strength of a color will be shown). On the bottom right 3 different creativity score are shown. They are updated in realtime while composing. When the time has come and you think your melody is ready for a submission just click on the submitComposition Button. I wish you a lot of fun!").start();
-        } }  
-        />
-            </div >
-            
-            <Button style={{height:"150px",padding:"0px",backgroundColor:"#403c3b",marginTop:"70px",marginLeft:"150px","borderRadius":"5px","font-weight": "bold","height":"50px","width":"265px","border":"gold 2px solid"}} onClick={navToComposePanel}>Start Composing</Button>
+            <Button style={{height:"150px",padding:"0px",backgroundColor:"#2e63b8",marginTop:"40px",marginLeft:"400px","borderRadius":"5px","font-weight": "bold","height":"50px","width":"265px","border":"#2e63b8 2px solid",color:"white"}} onClick={navToComposePanel}>Start Composing</Button>
 
         </div>
     </div>

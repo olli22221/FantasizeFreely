@@ -93,7 +93,7 @@
 
 .chooseMeter-container {
   margin-left: 450px;
-  margin-bottom: 25px;
+  margin-bottom: 5px;
   float: left;
   
   display: flex;
@@ -102,15 +102,19 @@
 }
 
 .topColumnRight{
-  width: 830px;
-  height: 800px;
+  background-color: #e0bb88af;
+  width: 900px;
+  height: 950px;
   display:"flex";
   float: right;
+  margin-left: 10px;
 }
 .topColumnLeft{
+ 
   width: 990px;
   display:"flex";
   float: left;
+  background-color: #debe9046;
 }
 
 .h5 {
@@ -125,9 +129,10 @@
 
 
 .EmptyInspiration{
+  margin-left: 50px;
   margin-top: 50px;
   width: 800px;
-  height: 250px;
+  height: 320px;
   border: gray solid 2px;
   display: flex;
   align-items: center;
@@ -168,7 +173,7 @@
   
   margin-top: 5px;
   margin-left: 120px;
-  width: 655px;
+  width: 755px;
 }
 
 .flex-container {
@@ -197,7 +202,7 @@
   margin-top: 50px;
   margin-left: 20px;
   width: 960px;
-  height: 400px;
+  height: 325px;
   
 }
 

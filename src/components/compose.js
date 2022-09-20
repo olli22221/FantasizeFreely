@@ -5335,7 +5335,19 @@ const testScoring = () => {
                     
 
                     </div>
+                    <div style={{marginLeft:"350px",marginTop:"15px"}}>
+                    <div style={{float:"left"}}>
+                        
+                    <SubmitComposition composition={[measure1,measure2,measure3,measure4,measure5,
+                        measure6,measure7,measure8,measure9,measure10,measure11,measure12,measure13,
+                        measure14,measure15,measure16]} meter={selectedOption['value']} />
+                </div>
+                
+                
+                </div>
+                    
                     </div>
+                                     
                     
                    
                 
@@ -5346,12 +5358,14 @@ const testScoring = () => {
 
             <div className='topColumnRight'>
                     
-                    
+                    <div style={{fontSize:"25px",fontWeight:"bold", marginLeft:"160px"}}>
+                       <p> Got stuck? <br/>
+                         Click here to get some inspirations for your composition.</p>
+                    </div>
                    
-                <div style={{marginBottom:"18px","marginTop":"60px", "marginLeft":"150px" }}>
-                    <Button disabled={inspirationFlag} style={{marginRight:"20px","fontWeight": "bold","borderRadius":"5px","color":"white","height":"50px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}} variant="contained" endIcon={<LightbulbCircleSharpIcon />}  size="large"  onClick={getSuggestions}>Get Inspiration</Button>
+                <div style={{marginBottom:"18px","marginTop":"60px", "marginLeft":"100px" }}>
                     <FormControl>
-      <FormLabel id="demo-controlled-radio-buttons-group">Choose a Creativity degree for the AI</FormLabel>
+      <FormLabel style={{color:"blue"}} id="demo-controlled-radio-buttons-group">Choose a Creativity degree for the AI. The inspirations will be generated based on the selection of your creative degree.</FormLabel>
       <RadioGroup
       row
         aria-labelledby="demo-controlled-radio-buttons-group"
@@ -5365,9 +5379,12 @@ const testScoring = () => {
         </RadioGroup>
     </FormControl>
                     </div>
-                    
+                        <div style={{marginTop:"35px",marginLeft:"250px"}}>
+                    <Button disabled={inspirationFlag} style={{marginRight:"20px","fontWeight": "bold","borderRadius":"5px","color":"white","height":"50px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}} variant="contained" endIcon={<LightbulbCircleSharpIcon />}  size="large"  onClick={getSuggestions}>Get Inspiration</Button>
+                    </div>
+                    <div style={{marginTop:"100px",marginLeft:"60px"}}>
                     <FormControl>
-      <FormLabel id="demo-controlled-radio-buttons-group">Choose an Inspiration Type</FormLabel>
+      <FormLabel style={{color:"blue"}} id="demo-controlled-radio-buttons-group">Choose the type of inspiration you would like to receive. you can change this selection at any time</FormLabel>
       <RadioGroup
       row
         aria-labelledby="demo-controlled-radio-buttons-group"
@@ -5400,6 +5417,7 @@ const testScoring = () => {
         
       </RadioGroup>
     </FormControl>
+    </div>
                     <div>
                     { inspirationFlag
                     ?<div style={{marginTop:"80px", marginRight:"100px" }}> <div style={{fontWeight: "bold",fontSize:"22px",marginBottom:"30px", textAlign:"center", backgroundColor:"#399ddb"}}>Waiting for the AI to compute the next Notes</div> 
@@ -5430,7 +5448,7 @@ const testScoring = () => {
                                             <div style={{float:"left"}}>
                                               {  note=='R' 
                                               ?<div style={{textAlign:"center",fontSize:"50px",height:"60px",width:"50px",border:"1px solid gray",margin:"10px",float:"left"}}>R</div>
-                                            :<div style={{textAlign:"center",height:"60px",width:"50px",backgroundColor:"green", filter:"brightness("+note+")",margin:"10px",float:"left"}}></div>
+                                            :<div style={{textAlign:"center",height:"60px",width:"50px",backgroundColor:"yellow", filter:"brightness("+note+")",margin:"10px",float:"left"}}></div>
                                               }
                                             </div>
                                         )})}</div>
@@ -5456,40 +5474,8 @@ const testScoring = () => {
                     </div>
 }
                     </div>
-                        <div style={{marginLeft:"180px",marginTop:"45px",marginBottom:"55px"}}>
-                    <div style={{float:"left"}}>
                         
-                    <SubmitComposition composition={[measure1,measure2,measure3,measure4,measure5,
-                        measure6,measure7,measure8,measure9,measure10,measure11,measure12,measure13,
-                        measure14,measure15,measure16]} meter={selectedOption['value']} />
-                </div>
                 
-                
-                </div>
-                <div style={{border:"solid 4px silver",borderRadius:"20px",backgroundColor:"#debd90" ,maxWidth:"700px", maxHeight:"250px", marginTop:"130px",alignItems:"center",justifyContent:"center"}}>
-                <div style={{float:"left"}}>
-                    <div style={{display:"flex",borderRadius:"8px",textAlign: "center",maxHeight:"30px",maxWidth:"130px","fontWeight": "bold",backgroundColor:"#399ddb" ,marginBottom:"30px"}}>
-                    Flexability Score
-                    </div>
-            <Progress  type="circle" percent={Math.floor((flexabilityScore/flexMax)*100)}  />
-
-            </div>
-            <div style={{float:"left", marginLeft:"60px"}}>
-                    <div style={{display:"flex",borderRadius:"8px",textAlign: "center",maxHeight:"30px",maxWidth:"130px","fontWeight": "bold",backgroundColor:"#399ddb" ,marginBottom:"30px"}}>
-                    Fluency Score
-                    </div>
-            <Progress  type="circle" percent={Math.floor((fluencyScore/fluencyMax)*100)}  />
-
-            </div>
-            <div style={{float:"left",marginLeft:"60px"}}>
-                    <div style={{borderRadius:"8px",textAlign: "center",height:"30px",width:"130px","fontWeight": "bold",backgroundColor:"#399ddb" ,marginBottom:"30px"}}>
-                    Originality Score
-                    </div>
-            <Progress  type="circle" percent={Math.floor((originalityScore/origMax)*100)}  />
-
-            </div>
-           
-            </div>
             
             
                 
