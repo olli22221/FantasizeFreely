@@ -58,17 +58,7 @@ function Result() {
 
     useEffect(() => {
 
-        console.log(totalResult)
-        if (totalResult < 200) {
-            setCreativityCategory(0)
-            
-        }
-        else if(totalResult >= 200 && totalResult < 350) {
-            setCreativityCategory(1)
-        }
-        else if(totalResult >= 350) {
-            setCreativityCategory(2)
-        }
+        console.log(flexabilityScore)
         setImage("data:image/jpeg;charset=utf-8;base64,"+musicatResult)
         console.log(creativityCategory)
 
@@ -85,7 +75,7 @@ function Result() {
             
             <div style={{backgroundColor:"#debd90" ,fontSize:"40px","fontWeight": "bold",textAlign:"center"}}> Fantasize Freely  </div>
             <div style={{float:"left"}}>
-            <div style={{textAlign:"center",width:"250px",float:"left", "fontWeight": "bold",marginTop:"200px", marginLeft:"160px",backgroundColor:"#2e63b8", color:"white",fontSize:"25px"}}><p   
+            <div style={{textAlign:"center",width:"250px",float:"left", "fontWeight": "bold",marginTop:"200px", marginLeft:"160px",backgroundColor:"#2e63b8", color:"white",fontSize:"25px"}}><ReactTooltip multiline={true}/><p   
              data-tip="Circles define groups between two measures or meta groups between two groups. <br> A group in musicat is calculated based on musical gestalt principles and the theory of melody.<br>
              Connection lines between two groups are called analogies. <br> We differentiate
              between string analogies(thick lines) and weak analogies(thin lines). <br>Connection lines between measures are rhythmic realtionships or subanalogies. <br>  An analogy is calculated on the 
@@ -93,7 +83,7 @@ function Result() {
              The more circles and Lines are drawn over the whole score the better your melody is. <br> On the bottom of the image you see the happiness measures which describes how good
              structures are associated with the measure. <br>  If the color is green the measure is associated with good and strong structures. Low happiness (red color) is the consequence 
              of beaing associated with weak structures or if the measure has no association with any structures at all.
-             ">Explain Musicat</p><ReactTooltip multiline={true}/></div>   
+             ">Explain Musicat</p></div>   
            
             <div style={{float:"left",marginLeft:"200px",border:"solid 4px silver",borderRadius:"20px",backgroundColor:"#debd90" ,width:"700px", height:"200px", marginTop:"40px",alignItems:"center",display:"flex",justifyContent:"center"}}>
                 <div style={{float:"left"}}>

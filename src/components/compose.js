@@ -1398,7 +1398,7 @@ function Compose() {
 
             
             
-           testScoring()
+           
 
 
         }
@@ -1890,7 +1890,7 @@ function Compose() {
                 setPointer(newActivatedIndex + stepsFornewActivated)
 
             }
-            testScoring()
+            
         }
     
         
@@ -4127,7 +4127,7 @@ function Compose() {
         
                 
             }
-            testScoring()
+            
             
             
 
@@ -4462,7 +4462,7 @@ const processInspirations = (inspirations) => {
 
 
 
-const testScoring = () => {
+/* const testScoring = () => {
 
     const composition= [measure1,measure2,measure3,measure4,measure5,
         measure6,measure7,measure8]
@@ -4491,7 +4491,7 @@ const testScoring = () => {
     });
 
 }
-
+*/
 
         
 
@@ -5448,7 +5448,7 @@ const testScoring = () => {
                                             <div style={{float:"left"}}>
                                               {  note=='R' 
                                               ?<div style={{textAlign:"center",fontSize:"50px",height:"60px",width:"50px",border:"1px solid gray",margin:"10px",float:"left"}}>R</div>
-                                            :<div style={{textAlign:"center",height:"60px",width:"50px",backgroundColor:"yellow", filter:"brightness("+note+")",margin:"10px",float:"left"}}></div>
+                                            :<div style={{textAlign:"center",height:"60px",width:"50px",backgroundColor:"#ffff00", filter:"brightness("+note+")",margin:"10px",float:"left"}}></div>
                                               }
                                             </div>
                                         )})}</div>

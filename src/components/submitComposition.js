@@ -30,7 +30,9 @@ const [analogies, setAnalogies] = useRecoilState(analogiesAtom);
 const [counter, setCounter] = useRecoilState(counterAtom);
 const [submissions, setSubmissions] = useRecoilState(submissionsAtom);
 const [musicatResponse, setmusicatResponse] = useRecoilState(musicatResponseAtom);
-const [totalResult, setTotalResult] = useRecoilState(totalResultAtom);
+const [originalityScore, setOriginalityScore] = useRecoilState(originalityScoreAtom);
+const [flexabilityScore, setFlexabilityScore] = useRecoilState(flexabilityScoreAtom);
+const [fluencyScore, setFluencyScore] = useRecoilState(fluencyScoreAtom);
 
 
 const checkComposition = (composition_,meter_) => {
@@ -145,7 +147,9 @@ const prepareComposition = (composition_) => {
         console.log(response)
         
         setmusicatResponse(response.data['musicatPNG'])
-        setTotalResult(response.data['totalScore'])
+        setFluencyScore(response.data['fluency'])
+        setFlexabilityScore(response.data['flex'])
+        setOriginalityScore(response.data['orig'])
         const submissionCount = submissions + 1
         setSubmissions(submissionCount)
         
@@ -190,7 +194,7 @@ const prepareComposition = (composition_) => {
     <div >
        { submitCompositionFlag
                     ?<div > <div style={{fontWeight: "bold",fontSize:"12px",marginBottom:"30px", textAlign:"center", backgroundColor:"#399ddb"}}>Musicat runs in the background</div> 
-                    <div style={{marginLeft:"200px"}}><ReactLoading type={"spin"} color={"ffffff"} height={'15%'} width={'15%'} /></div></div>
+                    <div style={{marginLeft:"200px"}}><ReactLoading type={"spin"} color={"ffffff"} height={'20%'} width={'25%'} /></div></div>
 
                    :
        <Button onClick={handleSubmit} style={{"fontWeight": "bold","borderRadius":"5px","color":"white","height":"50px","backgroundColor":"#403c3b","border":"#403c3b 2px solid"}} variant="contained" endIcon={<SendIcon />}>
