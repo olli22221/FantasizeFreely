@@ -1,1 +1,6 @@
-GET "http://192.168.178.46:5000/start"
+POST "https://creativitysupporttool.de/creativity"
+Content-Type: application/json
+
+{
+    "text": "This is your text. This is your text. This is your text."
+}

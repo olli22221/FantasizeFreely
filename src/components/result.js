@@ -12,11 +12,13 @@ analogies as analogiesAtom, groups as groupsAtom, totalResult as totalResultAtom
 import { Progress } from 'react-sweet-progress';
 import { Button } from '@mui/material';
 import ReactTooltip from 'react-tooltip';
+import { allowed2 as allowedAtom2 } from "../redux/store";
+
 
 
 
 function Result() {
-
+    const [allowed2, setAllowed2] = useRecoilState(allowedAtom2);
     let nav = useNavigate();
     const maxTotalResult = 400
     const flexMax = 550
@@ -47,20 +49,19 @@ function Result() {
     }
 
     const endTask = () => {
-        setJwtToken([])
+        
         setSubmissions(0)
         setFlexabilityScore(0)
         setFluencyScore(0)
         setOriginalityScore(0)
-        nav("/")
+        setAllowed2(true)
+        nav("/SurveyEndPage")
         
     }
 
     useEffect(() => {
 
-        console.log(flexabilityScore)
         setImage("data:image/jpeg;charset=utf-8;base64,"+musicatResult)
-        console.log(creativityCategory)
 
 
     },[musicatResult])
@@ -120,7 +121,7 @@ many different perspectives.">Flexability Score</p><ReactTooltip />
             <div style={{float:"left",marginLeft:"50px",marginTop:"50px"}}> 
                
                {submissions < 5 && <Button onClick={nextComposition} style={{margin:"50px","fontWeight": "bold","borderRadius":"5px","color":"white","height":"70px","backgroundColor":"#2e63b8","border":"#2e63b8 2px solid"}}>Next Composition</Button>}
-               {submissions > 3 && <Button onClick={endTask} style={{margin:"50px","fontWeight": "bold","borderRadius":"5px","color":"white","height":"70px","backgroundColor":"#2e63b8","border":"#2e63b8 2px solid"}}>End Task</Button>}
+               {submissions > 0 && <Button onClick={endTask} style={{margin:"50px","fontWeight": "bold","borderRadius":"5px","color":"white","height":"70px","backgroundColor":"#2e63b8","border":"#2e63b8 2px solid"}}>End Task</Button>}
    
    
                </div>

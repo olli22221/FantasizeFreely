@@ -9,6 +9,9 @@ import Compose from './components/compose';
 import TestScoreBox from './components/testScoreBox';
 import Result from './components/result';
 import Tutorial from './components/tutorial';
+import SurveyPage from './components/survey';
+import SurveyEndPage from './components/surveyEnd';
+import SurveyToken from './components/surveyToken';
 import { transitions, positions,types, Provider as AlertProvider } from 'react-alert'
 import AlertTemplate from 'react-alert-template-basic'
 
@@ -38,12 +41,15 @@ function App() {
     <Router>
 
       <Routes>
-      <Route exact path='/' element={<Main/>}/>
+      <Route exact path='/' element={<SurveyPage/>}/>
+      <Route exact path='/Main' element={<Main/>}/>
       <Route exact path='/Tutorial' element={<Tutorial/>}/>
       <Route exact path='/CreativityTask' element={<CreativityTask/>}/>
       <Route exact path='/Compose' element={<Compose/>}/>
       <Route exact path='/Result' element={<Result/>}/>
       <Route exact path='/TestScoreBox' element={<TestScoreBox/>}/>
+      <Route exact path='/SurveyEndPage' element={<SurveyEndPage/>}/>
+      <Route exact path='/SurveyToken' element={<SurveyToken/>}/>
       </Routes>
 
       </Router>
