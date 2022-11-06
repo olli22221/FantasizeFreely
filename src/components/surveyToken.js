@@ -26,14 +26,18 @@ function SurveyToken() {
         }
         console.log(open)
  
-     },[allowed,open])
+     },[allowed,open]) 
 
     return(
 
         <div>
             
             <Popup open={open} closeOnDocumentClick onClose={closeModal}>   
-                 <div className="modal">     <Button>Teeeesssssttt</Button>     <a className="close" onClick={closeModal}>  
+                 <div className="modal">     <p>The following code gives you credits that can be used to get free research participants at SurveySwap.io. 
+ 
+ Go to: <a href="https://surveyswap.io/sr/91SE-6JH7-YDIX">https://surveyswap.io/sr/91SE-6JH7-YDIX </a>
+  
+ Or, alternatively, enter the code manually: 91SE-6JH7-YDIX</p>     <a className="close" onClick={closeModal}>  
                       &times;          </a>          
                         </div>  
             </Popup>
