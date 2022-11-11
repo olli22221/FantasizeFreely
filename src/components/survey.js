@@ -37,7 +37,7 @@ function SurveyPage() {
                 
                   type: "text",
                   name: "initials",
-                  title: "Enter your Initials please:",
+                  title: "Please enter your Prolific ID",
                   isRequired: true
                 }
             ,
@@ -147,7 +147,7 @@ function SurveyPage() {
 
 
 
-P.S.: This survey contains credits to get free survey responses at SurveySwap.io </div>
+ </div>
         <Survey model={survey} />;
 
         </div>
