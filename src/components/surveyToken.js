@@ -10,7 +10,7 @@ function SurveyToken() {
 
     let nav = useNavigate();
     const [open, setOpen] = useState(true);  
-    const closeModal = () => setOpen(true);
+    const closeModal = () => setOpen(false);
 
     const [allowed, setAllowed] = useRecoilState(allowedAtom);
 
